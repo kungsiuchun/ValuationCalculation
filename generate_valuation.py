@@ -15,6 +15,7 @@ DOW_30 = ["AAPL"]
 
 def get_financials(ticker):
     print(f"  [1/3] Fetching Stable FMP Income Statement for {ticker}...")
+    # 完全保留你的原始 URL
     url = f"https://financialmodelingprep.com/stable/income-statement/?symbol={ticker}&apikey={FMP_API_KEY}"
 
     try:
@@ -26,14 +27,12 @@ def get_financials(ticker):
             return None
 
         df_inc = pd.DataFrame(inc_data)
-        # 打印原始資料長度
-        print(f"  📊 Raw FMP data rows: {len(df_inc)}")
-        
-        required_cols = ['date', 'eps', 'revenue', 'weightedAverageShsOut']
-        df_inc = df_inc[required_cols]
-        df_inc['date'] = pd.to_datetime(df_inc['date'])
+        required_cols = ['date', 'eps'] # 核心需要這兩個
+        df_inc = df_inc[required_cols].copy()
+        df_inc['date'] = pd.to_datetime(df_inc['date']).dt.tz_localize(None)
         
         df_inc = df_inc.set_index('date').sort_index()
+        print(f"  ✅ Financials found: {len(df_inc)} rows")
         return df_inc
         
     except Exception as e:
@@ -47,56 +46,56 @@ def process_pipeline():
         print(f"\n🚀 Starting Pipeline for {ticker}...")
         
         financials = get_financials(ticker)
-        if financials is None: continue
+        if financials is None or financials.empty: 
+            print("  ❌ No financials found, skipping...")
+            continue
 
         print(f"  [2/3] Fetching yfinance prices...")
         stock = yf.Ticker(ticker)
-        # 獲取 10 年，確保有足夠數據計算 Rolling
         price_df = stock.history(period="10y")[['Close']]
         price_df.index = price_df.index.tz_localize(None)
-        print(f"  📊 Price data rows: {len(price_df)}")
 
-        print(f"  [3/3] Transforming Data...")
+        print(f"  [3/3] Transforming Data (Safe Interpolation)...")
         
-        # 1. Merge
-        merged = price_df.sort_index().copy()
-        merged = merged.join(financials[['eps']], how='left')
+        # --- 核心邏輯修復：使用 Concat 確保週末的財報也不會丟失 ---
+        # 創建一個包含所有日期的 DataFrame
+        combined = pd.concat([price_df, financials], axis=0).sort_index()
         
-        # 2. 關鍵修復：先填充 EPS 再計算。
-        # 如果 FMP 只有最近幾年，我們需要確保插值能運作
-        merged['eps_smooth'] = merged['eps'].interpolate(method='linear')
-        merged['eps_smooth'] = merged['eps_smooth'].bfill().ffill() # 雙向填充避免首尾出現 NaN
-
-        # 3. 計算每日 PE
+        # 在聯集時間軸上插值 (線性插值讓階梯變曲線)
+        combined['eps_smooth'] = combined['eps'].interpolate(method='time')
+        
+        # 填充首尾可能的空值
+        combined['eps_smooth'] = combined['eps_smooth'].ffill().bfill()
+        
+        # 現在只保留有股價的日期 (交易日)
+        merged = combined.dropna(subset=['Close']).copy()
+        
+        # 計算每日 PE
         merged['daily_pe'] = merged['Close'] / merged['eps_smooth']
         
-        # 4. 滾動計算：將 min_periods 設為 1，徹底解決 NaN 問題
+        # 計算滾動統計 (min_periods=1 確保不會 NaN)
         window = 504
         merged['rolling_mean'] = merged['daily_pe'].rolling(window=window, min_periods=1).mean()
         merged['rolling_std'] = merged['daily_pe'].rolling(window=window, min_periods=1).std().fillna(0)
 
-        # 5. 生成通道
+        # 生成通道價格
         merged['band_mean'] = merged['rolling_mean'] * merged['eps_smooth']
         merged['band_up2'] = (merged['rolling_mean'] + 2 * merged['rolling_std']) * merged['eps_smooth']
         merged['band_down2'] = (merged['rolling_mean'] - 2 * merged['rolling_std']) * merged['eps_smooth']
 
-        # 6. 最終過濾 (只要有 band_mean 且在 2021 之後)
-        final_df = merged[merged.index >= '2021-01-01'].copy()
-        print(f"  📊 Final processed rows (since 2021): {len(final_df)}")
+        # --- 封裝 JSON ---
+        final_df = merged[merged.index >= '2021-01-01']
         
-        if final_df.empty:
-            print(f"  ⚠️ Warning: final_df is empty for {ticker}!")
-            continue
-
         history = []
         for date, row in final_df.iterrows():
+            # 確保寫入 JSON 前轉換為原生的 Python float，避免 NaN
             history.append({
                 "date": date.strftime("%Y-%m-%d"),
-                "price": round(row['Close'], 2),
+                "price": float(round(row['Close'], 2)),
                 "bands": {
-                    "mean": round(row['band_mean'], 2),
-                    "up2": round(row['band_up2'], 2),
-                    "down2": round(row['band_down2'], 2)
+                    "mean": float(round(row['band_mean'], 2)),
+                    "up2": float(round(row['band_up2'], 2)),
+                    "down2": float(round(row['band_down2'], 2))
                 }
             })
 
@@ -104,8 +103,8 @@ def process_pipeline():
             "ticker": ticker,
             "last_updated": datetime.now().strftime("%Y-%m-%d"),
             "summary": {
-                "rolling_avg_pe": round(float(merged['rolling_mean'].iloc[-1]), 2),
-                "current_pe": round(float(merged['daily_pe'].iloc[-1]), 2)
+                "rolling_avg_pe": float(round(merged['rolling_mean'].iloc[-1], 2)),
+                "current_pe": float(round(merged['daily_pe'].iloc[-1], 2))
             },
             "data": history
         }
