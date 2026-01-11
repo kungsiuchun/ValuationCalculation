@@ -1,0 +1,38 @@
+name: Update Valuation Data
+
+on:
+  schedule:
+    # 每天美股收盤後運行 (例如 UTC 22:00，約台灣時間早上 6 點)
+    - cron: '0 22 * * *'
+  workflow_dispatch: # 允許你手動按按鈕執行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests pandas numpy yfinance
+
+    - name: Run Pipeline Script
+      env:
+        FMP_API_KEY: ${{ secrets.FMP_API_KEY }} # 建議存放在 GitHub Secrets
+      run: python valuation_pipeline.py
+
+    - name: Commit and Push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add data/*.json
+        git commit -m "🤖 Auto-update valuation data [$(date +'%Y-%m-%d')]" || exit 0
+        git push

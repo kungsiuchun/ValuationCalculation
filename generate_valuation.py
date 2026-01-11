@@ -10,7 +10,8 @@ from datetime import datetime, timedelta
 FMP_API_KEY = "F9dROu64FwpDqETGsu1relweBEoTcpID"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
-DOW_30 = ["AAPL", "MSFT", "WMT", "GOOGL", "AMZN"] 
+DOW_30 = ["AMZN"]
+## ["AAPL", "MSFT", "WMT", "GOOGL", "AMZN"] 
 
 # 定義滾動週期（以交易日計算，一年約 252 天）
 WINDOWS = {
@@ -72,44 +73,60 @@ def get_cash_flow_statement(ticker):
         print(f"  ❌ Failed to fetch Cash Flow Statement for {ticker}: {e}")
         return None
 
-def calculate_multi_period_bands(price_series, metric_series, metric_name):
+def calculate_multi_period_bands(ticker, price_series, metric_series, metric_name):
     """ 
-    核心算法：
-    1. 將股價與財務數據對齊
-    2. 線性插值填補報表間隙
-    3. 計算歷史滾動 PE/FCF 倍數
-    4. 生成 5 條估值通道線
+    修正版核心算法：
+    1. 獲取股票拆分歷史並調整財務數據 (解決 AMZN/GOOGL 拆分導致的估值斷層)
+    2. 將股價與調整後的財務數據對齊並線性插值
+    3. 計算歷史滾動 PE/FCF 倍數 (Multiple)
+    4. 生成 1Y, 2Y, 3Y, 5Y 的 5 條估值通道線
     """
-    # 對齊與插值
-    combined = pd.concat([price_series, metric_series], axis=1).sort_index()
+    # --- Step A: 股票拆分調整 (保持不變) ---
+    tk = yf.Ticker(ticker)
+    splits = tk.splits
+    adjusted_metric = metric_series.copy()
+    if not splits.empty:
+        for split_date, ratio in splits.items():
+            split_dt = split_date.tz_localize(None)
+            adjusted_metric.loc[adjusted_metric.index < split_dt] /= ratio
+
+    # --- Step B: 數據對齊 ---
+    combined = pd.concat([price_series, adjusted_metric], axis=1).sort_index()
     combined[f'{metric_name}_smooth'] = combined[metric_name].interpolate(method='time').ffill().bfill()
     df = combined.dropna(subset=['Close']).copy()
     
-    # 計算估值倍數 (Price / Value)
+    # --- Step C: 計算倍數 (修正負數問題) ---
+    # 如果財務指標為負(如 FCF < 0)，該天的 Multiple 設為 NaN，不參與滾動平均計算
     df['multiple'] = df['Close'] / df[f'{metric_name}_smooth']
+    df.loc[df[f'{metric_name}_smooth'] <= 0, 'multiple'] = np.nan 
 
     period_results = {}
     current_averages = {}
 
     for label, window_size in WINDOWS.items():
-        # 計算滾動均值與標準差 (Rolling Mean & Std)
-        df[f'mean_{label}'] = df['multiple'].rolling(window=window_size, min_periods=1).mean()
-        df[f'std_{label}'] = df['multiple'].rolling(window=window_size, min_periods=1).std().fillna(0)
+        # 計算滾動均值，跳過 NaN (即跳過負 FCF 的時期)
+        # 增加 min_periods 要求，例如至少要有該窗口 20% 的有效數據，否則不顯示，避免數據剛開始時過度重合
+        df[f'mean_{label}'] = df['multiple'].rolling(window=window_size, min_periods=max(1, int(window_size*0.1))).mean()
+        df[f'std_{label}'] = df['multiple'].rolling(window=window_size, min_periods=max(1, int(window_size*0.1))).std().fillna(0)
 
-        # 套用公式生成 5 條線: Mean, ±1σ, ±2σ
         bands = pd.DataFrame(index=df.index)
         m_col = df[f'mean_{label}']
         s_col = df[f'std_{label}']
         val_col = df[f'{metric_name}_smooth']
 
-        bands['mean'] = m_col * val_col
-        bands['up1'] = (m_col + s_col) * val_col
-        bands['up2'] = (m_col + 2 * s_col) * val_col
-        bands['down1'] = (m_col - s_col) * val_col
-        bands['down2'] = (m_col - 2 * s_col) * val_col
+        # 生成估值線 (注意：即使 Multiple 是 NaN，我們還是會根據最後的平均值畫線)
+        # 使用 ffill() 確保如果當前 FCF 是負的，它會延用最近一個正數的平均倍數
+        bands['mean'] = m_col.ffill() * val_col
+        bands['up1'] = (m_col.ffill() + s_col.ffill()) * val_col
+        bands['up2'] = (m_col.ffill() + 2 * s_col.ffill()) * val_col
+        bands['down1'] = (m_col.ffill() - s_col.ffill()) * val_col
+        bands['down2'] = (m_col.ffill() - 2 * s_col.ffill()) * val_col
         
         period_results[label] = bands
-        current_averages[label] = round(m_col.iloc[-1], 2)
+        
+        # 獲取最後一個非空值作為當前平均值
+        last_valid_mean = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
+        current_averages[label] = round(last_valid_mean, 2)
 
     return period_results, current_averages
 
@@ -147,8 +164,9 @@ def process_pipeline():
 
         # 計算估值帶
         print(f"🧮 [Step 3/5] Calculating Multi-Period Valuation Bands (1Y, 2Y, 3Y, 5Y)...")
-        pe_results, pe_avgs = calculate_multi_period_bands(full_price_df['Close'], eps_df['eps'], 'eps') if eps_df is not None else ({}, {})
-        fcf_results, fcf_avgs = calculate_multi_period_bands(full_price_df['Close'], fcf_df['fcf_ps'], 'fcf_ps') if fcf_df is not None else ({}, {})
+        # 修改呼叫行
+        pe_results, pe_avgs = calculate_multi_period_bands(ticker, full_price_df['Close'], eps_df['eps'], 'eps')
+        fcf_results, fcf_avgs = calculate_multi_period_bands(ticker, full_price_df['Close'], fcf_df['fcf_ps'], 'fcf_ps')
 
         # 整理歷史紀錄至 JSON 格式
         print(f"📦 [Step 4/5] Packing historical data (Starting from 2021)...")
