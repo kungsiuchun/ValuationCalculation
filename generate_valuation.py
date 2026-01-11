@@ -71,7 +71,7 @@ def get_cash_flow_statement(ticker):
     return df_merge[['fcf_ps']]
 
 # --- 4. 核心算法 (含異常值優化) ---
-def calculate_multi_period_bands(ticker, price_series, metric_series, metric_name):
+def calculate_multi_period_bands(ticker, prices, metrics, name):
     """
     修正 AMZN 圖形異常的關鍵：
     1. 剔除極端倍數 (Outlier Removal)
@@ -82,56 +82,46 @@ def calculate_multi_period_bands(ticker, price_series, metric_series, metric_nam
     3. 計算歷史滾動 PE/FCF 倍數 (Multiple)
     4. 生成 1Y, 2Y, 3Y, 5Y 的 5 條估值通道線
     """
-    # A. 拆分調整 (保持不變)
+    # 調整拆分
     tk = yf.Ticker(ticker)
-    splits = tk.splits
-    adj_metric = metric_series.copy()
-    if not splits.empty:
-        for split_date, ratio in splits.items():
-            split_dt = split_date.tz_localize(None)
-            adj_metric.loc[adj_metric.index < split_dt] /= ratio
+    if not tk.splits.empty:
+        for d, r in tk.splits.items():
+            metrics.loc[metrics.index < d.tz_localize(None)] /= r
 
-    # B. 數據平滑對齊
-    combined = pd.concat([price_series, adj_metric], axis=1).sort_index()
-    # 這裡使用 limit_direction='both' 確保開頭也能被填補
-    combined[f'{metric_name}_smooth'] = combined[metric_name].interpolate(method='time', limit_direction='both').ffill().bfill()
-    df = combined.dropna(subset=['Close']).copy()
+    # 對齊數據 (使用 both 確保前後都填滿)
+    df = pd.concat([prices, metrics], axis=1).sort_index()
+    df[f'{name}_val'] = df[name].interpolate(method='time', limit_direction='both').ffill().bfill()
+    df = df.dropna(subset=['Close']).copy()
     
-    # C. 計算 Multiple 並剔除異常值
-    df['raw_multiple'] = df['Close'] / df[f'{metric_name}_smooth']
-    df['clean_multiple'] = df['raw_multiple'].copy()
+    # 計算倍數
+    df['mult'] = df['Close'] / df[f'{name}_val']
     
-    # 根據不同指標設定合理的過濾閾值 (AMZN PE 歷史較高，設為 10-300, FCF 設為 10-250)
-    upper_bound = 300 if metric_name == 'eps' else 250
-    df.loc[(df['raw_multiple'] <= 5) | (df['raw_multiple'] > upper_bound), 'clean_multiple'] = np.nan
+    # 【解決難看圖形的關鍵】使用百分位數截斷，而不是硬性數字
+    # 這會把 AMZN 的 1000x PE 強制變成它歷史上的高位水平（如 120x）
+    low_bound = df['mult'].quantile(0.10)
+    high_bound = df['mult'].quantile(0.90)
+    df['mult_clean'] = df['mult'].clip(lower=low_bound, upper=high_bound)
 
-    period_results = {}
-    current_averages = {}
+    results = {}
+    avgs = {}
 
-    for label, window_size in WINDOWS.items():
-        # 計算滾動均值，min_periods 降到 1，確保只要有數據就能產出數值
-        m_col = df['clean_multiple'].rolling(window=window_size, min_periods=1).mean()
-        s_col = df['clean_multiple'].rolling(window=window_size, min_periods=1).std().fillna(0)
+    for label, window in WINDOWS.items():
+        # 既然已經做了 Clipping，這裡用 Mean 就能兼顧「平滑」與「靈敏」
+        m_col = df['mult_clean'].rolling(window=window, min_periods=1).mean().bfill().ffill()
+        s_col = df['mult_clean'].rolling(window=window, min_periods=1).std().fillna(0).bfill().ffill()
         
-        # --- 關鍵修正：雙向填充 ---
-        # 1. 先用 bfill() 把開頭的 NaN 用第一個算出來的有效平均值填滿 (解決 2021 年初 NaN 問題)
-        # 2. 再用 ffill() 處理中間或結尾的缺失
-        valid_m = m_col.bfill().ffill()
-        valid_s = s_col.bfill().ffill()
+        v = df[f'{name}_val']
+        res = pd.DataFrame(index=df.index)
+        res['mean'] = m_col * v
+        res['up1'] = (m_col + s_col) * v
+        res['up2'] = (m_col + 2 * s_col) * v
+        res['down1'] = (m_col - s_col) * v
+        res['down2'] = (m_col - 2 * s_col) * v
         
-        val_col = df[f'{metric_name}_smooth']
+        results[label] = res
+        avgs[label] = round(m_col.iloc[-1], 2)
 
-        bands = pd.DataFrame(index=df.index)
-        bands['mean'] = valid_m * val_col
-        bands['up1'] = (valid_m + valid_s) * val_col
-        bands['up2'] = (valid_m + 2 * valid_s) * val_col
-        bands['down1'] = (valid_m - valid_s) * val_col
-        bands['down2'] = (valid_m - 2 * valid_s) * val_col
-        
-        period_results[label] = bands
-        current_averages[label] = round(valid_m.iloc[-1], 2) if not valid_m.empty else 0
-
-    return period_results, current_averages
+    return results, avgs
 
 # --- 5. 主程序管線 ---
 
