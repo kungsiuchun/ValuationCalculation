@@ -71,7 +71,6 @@ def get_cash_flow_statement(ticker):
     return df_merge[['fcf_ps']]
 
 # --- 4. 核心算法 (含異常值優化) ---
-
 def calculate_multi_period_bands(ticker, price_series, metric_series, metric_name):
     """
     修正 AMZN 圖形異常的關鍵：
@@ -83,7 +82,7 @@ def calculate_multi_period_bands(ticker, price_series, metric_series, metric_nam
     3. 計算歷史滾動 PE/FCF 倍數 (Multiple)
     4. 生成 1Y, 2Y, 3Y, 5Y 的 5 條估值通道線
     """
-    # A. 拆分調整
+    # A. 拆分調整 (保持不變)
     tk = yf.Ticker(ticker)
     splits = tk.splits
     adj_metric = metric_series.copy()
@@ -94,28 +93,32 @@ def calculate_multi_period_bands(ticker, price_series, metric_series, metric_nam
 
     # B. 數據平滑對齊
     combined = pd.concat([price_series, adj_metric], axis=1).sort_index()
-    combined[f'{metric_name}_smooth'] = combined[metric_name].interpolate(method='time').ffill().bfill()
+    # 這裡使用 limit_direction='both' 確保開頭也能被填補
+    combined[f'{metric_name}_smooth'] = combined[metric_name].interpolate(method='time', limit_direction='both').ffill().bfill()
     df = combined.dropna(subset=['Close']).copy()
     
-    # C. 計算 Multiple 並「剔除異常值」
+    # C. 計算 Multiple 並剔除異常值
     df['raw_multiple'] = df['Close'] / df[f'{metric_name}_smooth']
-    
-    # 這裡加入 Outlier Filter: 只有 0 到 250 之間的 PE/FCF 會被納入平均計算
-    # 這樣 AMZN 那些 900+ 的數據就不會把整條 Mean 線拉高
     df['clean_multiple'] = df['raw_multiple'].copy()
-    df.loc[(df['raw_multiple'] <= 0) | (df['raw_multiple'] > 250), 'clean_multiple'] = np.nan
+    
+    # 根據不同指標設定合理的過濾閾值 (AMZN PE 歷史較高，設為 10-300, FCF 設為 10-250)
+    upper_bound = 300 if metric_name == 'eps' else 250
+    df.loc[(df['raw_multiple'] <= 5) | (df['raw_multiple'] > upper_bound), 'clean_multiple'] = np.nan
 
     period_results = {}
     current_averages = {}
 
     for label, window_size in WINDOWS.items():
-        # 基於 clean_multiple 計算滾動均值與標準差
-        m_col = df['clean_multiple'].rolling(window=window_size, min_periods=int(window_size*0.1)).mean()
-        s_col = df['clean_multiple'].rolling(window=window_size, min_periods=int(window_size*0.1)).std().fillna(0)
+        # 計算滾動均值，min_periods 降到 1，確保只要有數據就能產出數值
+        m_col = df['clean_multiple'].rolling(window=window_size, min_periods=1).mean()
+        s_col = df['clean_multiple'].rolling(window=window_size, min_periods=1).std().fillna(0)
         
-        # 即使當前是負數或異常，我們用最近一個有效的平均值來畫線 (ffill)
-        valid_m = m_col.ffill()
-        valid_s = s_col.ffill()
+        # --- 關鍵修正：雙向填充 ---
+        # 1. 先用 bfill() 把開頭的 NaN 用第一個算出來的有效平均值填滿 (解決 2021 年初 NaN 問題)
+        # 2. 再用 ffill() 處理中間或結尾的缺失
+        valid_m = m_col.bfill().ffill()
+        valid_s = s_col.bfill().ffill()
+        
         val_col = df[f'{metric_name}_smooth']
 
         bands = pd.DataFrame(index=df.index)
