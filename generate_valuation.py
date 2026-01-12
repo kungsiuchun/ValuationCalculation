@@ -78,60 +78,69 @@ def build_quarterly_ttm(ticker):
 
 def calculate_bands(ticker, prices_adj, metrics_df, col_name):
     """
-    1. 統一時區 (Fix TypeError)
-    2. 使用 Raw Price 與財報量級對齊
-    3. 簡單 Rolling Mean 唔搞複雜邏輯
+    優化後的估值軌道計算：
+    1. 使用 Adjusted Price (已調整拆分與分紅的股價) 作為基準
+    2. 自動修正財務指標，使其與現行股價量級對齊
+    3. 移除複雜的 raw_prices 邏輯，確保軌道平滑
     """
-    tk = yf.Ticker(ticker)
-    # 重新抓取未經調整的原始價格
-    hist = tk.history(period="5y", auto_adjust=False)
-    raw_prices = hist['Close'].copy()
-    
-    # --- 時區處理：統一化為 tz-naive ---
-    if raw_prices.index.tz is not None:
-        raw_prices.index = raw_prices.index.tz_localize(None)
-    
-    # 確保財報數據亦係 tz-naive (通常已經係，但做多步保險)
+    # 確保索引為 tz-naive
+    if prices_adj.index.tz is not None:
+        prices_adj.index = prices_adj.index.tz_localize(None)
     if metrics_df.index.tz is not None:
         metrics_df.index = metrics_df.index.tz_localize(None)
 
-    # --- 數據合併 ---
-    df = pd.concat([raw_prices, metrics_df], axis=1).sort_index()
+    # 1. 獲取調整因子 (Cumulative Adjustment Factor)
+    # yfinance 的 adj_ratio = adj_close / close
+    tk = yf.Ticker(ticker)
+    hist_all = tk.history(period="7y", auto_adjust=False) # 獲取原始與調整價格
+    hist_all.index = hist_all.index.tz_localize(None)
     
-    # --- 基本計算 ---
-    # 簡單插值填充季度間空白
-    df['metric_val'] = df[col_name].interpolate(method='time').ffill().bfill()
+    # 計算每一天的調整比例 (這反映了拆分與分紅的累積影響)
+    # 我們將這個比例應用到財務指標上，讓「歷史指標」與「現今股價」對齊
+    adj_factors = hist_all['Close'] / hist_all['Adj Close'] # 注意：這裡反過來算，用於縮小/放大指標
     
-    # 計算倍數 (原始價格 / 原始指標)
-    df['multiple'] = df['Close'] / df['metric_val'].replace(0, np.nan)
+    # 2. 數據合併
+    df = pd.DataFrame(index=prices_adj.index)
+    df['price'] = prices_adj
+    df = df.join(metrics_df, how='left')
     
-    # 處理倍數中的空值
-    df['multiple'] = df['multiple'].ffill().bfill()
+    # 3. 處理指標：先插值，再修正拆分影響
+    # 使用 time linear interpolate 填充季度間的空白
+    df['metric_raw'] = df[col_name].interpolate(method='time').ffill().bfill()
+    
+    # 【關鍵步驟】修正指標量級
+    # 如果 2022 年拆分了 1:20，那之前的 EPS 應該除以 20，才能跟現在的股價匹配
+    # 我們利用價格的 adj_factor 來反推這個比例
+    df = df.join(adj_factors.rename('adj_f'), how='left').ffill()
+    df['metric_adj'] = df['metric_raw'] / df['adj_f']
 
+    # 4. 計算倍數 (P/E 或 P/FCF)
+    # 此時 price 是 adj_close, metric_adj 是經過調整的指標，兩者量級一致
+    df['multiple'] = df['price'] / df['metric_adj'].replace(0, np.nan)
+    
     results = {}
     avgs = {}
-    windows = {'1Y': 252, '2Y': 504, '3Y': 756, '5Y': 1260}
 
-    for label, window in windows.items():
-        # 簡單 Rolling Mean，唔做 Winsorization 或其他濾波
-        m_col = df['multiple'].rolling(window=window, min_periods=1).mean()
-        s_col = df['multiple'].rolling(window=window, min_periods=1).std().fillna(0)
+    for label, window in WINDOWS.items():
+        # 計算滾動平均倍數
+        # 使用 min_periods 確保早期也有數據，不至於出現大量空值
+        m_col = df['multiple'].rolling(window=window, min_periods=60).mean()
+        s_col = df['multiple'].rolling(window=window, min_periods=60).std().fillna(0)
 
-        # 將「原始倍數」套用到「當前價格體系 (Adjusted)」
-        # adj_ratio = 目前股價(已調整) / 原始股價(未調整)
-        # 用個比例將計出嚟嘅軌道縮放返去現價量級
-        adj_ratio = prices_adj / raw_prices
-        adj_metric = df['metric_val'] * adj_ratio
-
+        # 5. 生成軌道 (Valuation Bands)
+        # 軌道 = 滾動倍數 * 當前(調整後)指標
         res = pd.DataFrame(index=df.index)
-        res['mean'] = m_col * adj_metric
-        res['up1'] = (m_col + s_col) * adj_metric
-        res['up2'] = (m_col + 2 * s_col) * adj_metric
-        res['down1'] = (m_col - s_col) * adj_metric
-        res['down2'] = (m_col - 2 * s_col) * adj_metric
+        res['mean'] = m_col * df['metric_adj']
+        res['up1'] = (m_col + s_col) * df['metric_adj']
+        res['up2'] = (m_col + 2 * s_col) * df['metric_adj']
+        res['down1'] = (m_col - s_col) * df['metric_adj']
+        res['down2'] = (m_col - 2 * s_col) * df['metric_adj']
 
         results[label] = res.ffill().bfill().round(2)
-        avgs[label] = round(float(m_col.dropna().iloc[-1]), 2) if not m_col.dropna().empty else 0
+        
+        # 獲取最新的一個有效倍數作為平均值參考
+        current_m = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
+        avgs[label] = round(float(current_m), 2)
 
     return results, avgs
 
