@@ -76,53 +76,50 @@ def build_quarterly_ttm(ticker):
 
     return df_main[['eps_ttm']].dropna(), df_main[['fcf_ps_ttm']].dropna()
 
+# --- 3. 核心估值邏輯 (Senior Analyst Version) ---
 def calculate_bands(ticker, prices_df, metrics_df, col_name):
     """
-    接收 prices_df (包含 Close 和 Adj Close)，不再內部呼叫 yfinance
+    解決方案：
+    1. 物理日期合併解決 NaN (AAPL)
+    2. Adj_Ratio 縮放解決拆分斷層 (AMZN)
+    3. Multiple Clipping 解決 FCF 劇烈波動 (AMZN)
     """
-    # 強制對齊日期格式
+    # 統一索引
     prices_df.index = pd.to_datetime(prices_df.index).tz_localize(None).normalize()
     metrics_df.index = pd.to_datetime(metrics_df.index).tz_localize(None).normalize()
-
-    # 去重
-    prices_df = prices_df[~prices_df.index.duplicated(keep='first')]
-    metrics_df = metrics_df[~metrics_df.index.duplicated(keep='first')]
-
-    # 建立全時間軸容器
+    
+    # 建立全時間軸容器 (解決週六財報與交易日錯位)
     all_dates = prices_df.index.union(metrics_df.index).sort_values()
     df = pd.DataFrame(index=all_dates)
-    
-    # 合併價格與指標
-    df = df.join(prices_df)  # 包含 Close 和 Adj Close
+    df = df.join(prices_df) 
     df['metric_raw'] = metrics_df[col_name]
 
-    # --- 核心邏輯：計算拆分調整因子 ---
-    # 這是為了讓 AMZN 2022 年的 1:20 拆分前後數據對齊
-    # adj_ratio = Adj Close / Close
+    # --- 解決拆分問題 ---
+    # 計算歷史每一天的拆分因子 (Adj Close / Close)
     df['adj_ratio'] = (df['Adj Close'] / df['Close'].replace(0, np.nan)).ffill().bfill()
-    
-    # 修正指標量級：讓歷史 EPS 追隨股價的調整
+    # 修正指標：讓 2022 年拆分前的 EPS/FCF 也跟著股價同步縮小
     df['metric_adj'] = df['metric_raw'] * df['adj_ratio']
-    
-    # 時間插值填補 (解決 AAPL 週六財報問題)
+    # 時間插值填補季度間隙
     df['metric_final'] = df['metric_adj'].interpolate(method='time').ffill().bfill()
 
-    # 計算 PE/PFCF 倍數 (兩邊都已經是 Adjusted 量級，算出來的倍數才是平滑的)
+    # --- 解決 FCF 劇烈波動問題 ---
+    # 計算倍數 (此時兩邊都已 Adjusted，倍數是連續的)
     df['multiple'] = df['Adj Close'] / df['metric_final'].apply(lambda x: x if x > 0 else np.nan)
     
-    # 資深分析師修正：剪枝極端值 (AMZN 案例)
-    upper_limit = 150 if 'eps' in col_name else 100
-    df['multiple'] = df['multiple'].clip(0, upper_limit).ffill().bfill()
+    # Winsorization: 限制倍數上限，防止 AMZN 的 Band 炸開
+    # P/E 上限 150, P/FCF 上限 100 (根據分析師經驗設定)
+    cap = 150 if 'eps' in col_name else 100
+    df['multiple'] = df['multiple'].clip(lower=0, upper=cap).ffill().bfill()
 
-    # 回切到交易日
+    # 切回交易日
     df = df.loc[prices_df.index].copy()
 
     results = {}
     avgs = {}
 
     for label, window in WINDOWS.items():
-        m_col = df['multiple'].rolling(window=window, min_periods=min(window, 60)).mean()
-        s_col = df['multiple'].rolling(window=window, min_periods=min(window, 60)).std().fillna(0)
+        m_col = df['multiple'].rolling(window=window, min_periods=60).mean()
+        s_col = df['multiple'].rolling(window=window, min_periods=60).std().fillna(0)
 
         res = pd.DataFrame(index=df.index)
         res['mean'] = m_col * df['metric_final']
@@ -131,8 +128,8 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
         res['down1'] = (m_col - s_col) * df['metric_final']
         res['down2'] = (m_col - 2 * s_col) * df['metric_final']
 
+        # 估值不為負數
         results[label] = res.clip(lower=0).ffill().bfill().round(2)
-        
         valid_m = m_col.dropna()
         avgs[label] = round(float(valid_m.iloc[-1]), 2) if not valid_m.empty else 0
 
@@ -151,7 +148,7 @@ def main():
         print(f"\n🏗️  Pipeline Starting: {ticker}")
         prices = yf.Ticker(ticker).history(period="8y", auto_adjust=False)
         prices.index = prices.index.tz_localize(None)
-        
+
         prices_df = prices[['Close', 'Adj Close']].copy()
 
         eps_ttm, fcf_ttm = build_quarterly_ttm(ticker)
@@ -174,14 +171,24 @@ def main():
                     } for lb in WINDOWS
                 }
             })
+        # --- 更新 JSON 結構，加入 last_updated ---
+        output_data = {
+            "ticker": ticker.upper(), 
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # 加入這行
+            "averages": {
+                "pe": pe_avgs, 
+                "fcf": fcf_avgs
+            }, 
+            "data": history
+        }
 
         # 最後結果也存入 ticker 資料夾
         final_dir = os.path.join(OUTPUT_DIR, "results", ticker.upper())
         os.makedirs(final_dir, exist_ok=True)
         
         with open(os.path.join(final_dir, "valuation_summary.json"), "w") as f:
-            json.dump({"ticker": ticker, "averages": {"pe": pe_avgs, "fcf": fcf_avgs}, "data": history}, f, indent=4)
-        print(f"✨ [Success] {ticker} pipeline execution completed. Folder: {final_dir}")
+            json.dump(output_data, f, indent=4)
+        print(f"✨ [Success] {ticker} pipeline execution completed. Folder: {final_dir} {len(history)} points generated.")
 
 if __name__ == "__main__":
     main()
