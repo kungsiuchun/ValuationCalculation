@@ -179,7 +179,7 @@ def main():
         # 1. 獲取股價數據
         # 我們使用 auto_adjust=False 以手動處理 Close/Adj Close 來對齊指標量級
         print(f"\n🏗️  Pipeline Starting: {ticker}")
-        prices = yf.Ticker(ticker).history(period="8y", auto_adjust=False)
+        prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)
 
         if prices.empty:
             print(f"  ⚠️ [Skip] No price data for {ticker}")
