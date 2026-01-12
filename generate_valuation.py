@@ -100,7 +100,7 @@ def calculate_bands(ticker, prices_adj, metrics_df, col_name):
     
     # --- 基本計算 ---
     # 簡單插值填充季度間空白
-    df['metric_val'] = df[col_name].ffill().interpolate(method='time').ffill().bfill()
+    df['metric_val'] = df[col_name].interpolate(method='time').ffill().bfill()
     
     # 計算倍數 (原始價格 / 原始指標)
     df['multiple'] = df['Close'] / df['metric_val'].replace(0, np.nan)
@@ -114,8 +114,8 @@ def calculate_bands(ticker, prices_adj, metrics_df, col_name):
 
     for label, window in windows.items():
         # 簡單 Rolling Mean，唔做 Winsorization 或其他濾波
-        m_col = df['multiple'].rolling(window=window, min_periods=20).mean()
-        s_col = df['multiple'].rolling(window=window, min_periods=20).std()
+        m_col = df['multiple'].rolling(window=window, min_periods=1).mean()
+        s_col = df['multiple'].rolling(window=window, min_periods=1).std().fillna(0)
 
         # 將「原始倍數」套用到「當前價格體系 (Adjusted)」
         # adj_ratio = 目前股價(已調整) / 原始股價(未調整)
