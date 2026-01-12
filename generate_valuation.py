@@ -78,38 +78,32 @@ def build_quarterly_ttm(ticker):
 
 def calculate_bands(ticker, prices, metrics_df, col_name):
     """
-    [Data Engineering Logic]:
-    1. 實施動態拆分調整 (Fixed NameError)
-    2. 使用 Rolling Mean 取代 Median 以獲得更好的平滑度
-    3. 實施動態縮尾處理 (Winsorization) 消除離群值
+    [Data Engineering Version 5.0] 
+    徹底修復階梯狀突變 (Stepped lines) 與離群值。
     """
     tk = yf.Ticker(ticker)
     adj_metrics = metrics_df.copy()
     
-    # --- 1. 拆分調整 (修復 splits 未定義問題) ---
-    try:
-        # 正確定義 splits
-        splits = tk.splits
-        if not splits.empty:
-            for split_date, ratio in splits.items():
-                split_date_naive = split_date.tz_localize(None)
-                # 歷史財報數據需與調整後股價對齊
-                adj_metrics.loc[adj_metrics.index < split_date_naive, col_name] /= ratio
-    except Exception as e:
-        print(f"  ⚠️ [Warning] Could not process splits for {ticker}: {e}")
+    # --- 1. 拆分調整 (確保變數定義正確) ---
+    splits = tk.splits
+    if not splits.empty:
+        for split_date, ratio in splits.items():
+            split_date_naive = split_date.tz_localize(None)
+            adj_metrics.loc[adj_metrics.index < split_date_naive, col_name] /= ratio
 
-    # --- 2. 數據對齊與填充 (解決 0.0 與 NaN) ---
+    # --- 2. 核心：日級平滑插值 (防止階梯狀出現) ---
+    # 先將價格與指標合併到每日時間軸
     df = pd.concat([prices, adj_metrics], axis=1).sort_index()
-    # 使用 bfill() 確保時間序列開頭不為空，再進行線性插值
-    df['val_smooth'] = df[col_name].ffill().bfill().interpolate(method='time').ffill().bfill()
+    
+    # 關鍵：使用時間插值填充季度間的空白，令分母每日都在微變，而非每季跳變
+    df['val_smooth'] = df[col_name].interpolate(method='time').ffill().bfill()
 
-    # --- 3. 計算原始倍數 (處理 AMZN 負 FCF 問題) ---
-    # 只有當指標 > 0 時計算倍數，否則設為 NaN 隨後填充，確保倍數恆正
+    # --- 3. 計算倍數與 Winsorization (縮尾) ---
+    # 避免分母接近 0 導致倍數炸裂
     df['raw_mult'] = np.where(df['val_smooth'] > 1e-4, df['Close'] / df['val_smooth'], np.nan)
     df['mult_filled'] = df['raw_mult'].ffill().bfill()
-
-    # --- 4. Winsorization (縮尾處理)：確保 Rolling Mean 不被污染 ---
-    # 動態計算該股票自身的 15% 與 85% 分位數作為邊界
+    
+    # 排除極端 15% 噪聲
     q_low = df['mult_filled'].quantile(0.15)
     q_high = df['mult_filled'].quantile(0.85)
     df['mult_capped'] = df['mult_filled'].clip(lower=q_low, upper=q_high)
@@ -117,27 +111,34 @@ def calculate_bands(ticker, prices, metrics_df, col_name):
     results = {}
     avgs = {}
 
+    
+
     for label, window in WINDOWS.items():
-        # --- 5. Rolling Mean 計算 (應要求取代 Median) ---
-        # min_periods=1 確保從第一天開始就有數據，消滅 NaN
-        m_col = df['mult_capped'].rolling(window=window, min_periods=1).mean().ffill().bfill()
-        s_col = df['mult_capped'].rolling(window=window, min_periods=1).std().fillna(0).ffill().bfill()
+        # --- 4. Rolling Mean + 指數加權平滑 (雙重保險) ---
+        # 首先計 Rolling Mean
+        m_col = df['mult_capped'].rolling(window=window, min_periods=1).mean()
         
-        # 限制估值帶標準差範圍 (Volatility Cap)
+        # 再用 EWM (指數移動平均) 消除微小鋸齒，span=20 代表大約一個月的平滑
+        m_col = m_col.ewm(span=20, adjust=False).mean().ffill().bfill()
+        
+        # 標準差同樣平滑處理
+        s_col = df['mult_capped'].rolling(window=window, min_periods=1).std().fillna(0)
+        s_col = s_col.ewm(span=20, adjust=False).mean().ffill().bfill()
+        
+        # 限制帶寬
         s_col = np.minimum(s_col, m_col * 0.2)
 
-        res = pd.DataFrame(index=df.index)
-        # 確保指標基準為正，防止 mean 變負
+        # --- 5. 生成最終平滑數據 ---
         v_base = df['val_smooth'].clip(lower=0.01)
         
-        # --- 6. 生成最後結果 ---
+        res = pd.DataFrame(index=df.index)
         res['mean'] = m_col * v_base
         res['up1'] = (m_col + s_col) * v_base
         res['up2'] = (m_col + 2 * s_col) * v_base
         res['down1'] = (m_col - s_col) * v_base
         res['down2'] = (m_col - 2 * s_col) * v_base
         
-        # 格式化輸出
+        # 最終清洗 NaN 與 Inf
         final_df = res.clip(lower=0.01).round(2)
         results[label] = final_df.replace([np.inf, -np.inf], 0).fillna(0)
         avgs[label] = round(float(m_col.iloc[-1]), 2)
