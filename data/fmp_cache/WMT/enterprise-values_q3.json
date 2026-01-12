@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "WMT",
+        "date": "2025-10-31",
+        "stockPrice": 101.18,
+        "numberOfShares": 7974000000,
+        "marketCapitalization": 806809320000,
+        "minusCashAndCashEquivalents": 10582000000,
+        "addTotalDebt": 64901000000,
+        "enterpriseValue": 861128320000
+    },
+    {
+        "symbol": "WMT",
+        "date": "2024-10-31",
+        "stockPrice": 81.95,
+        "numberOfShares": 8038000000,
+        "marketCapitalization": 658714100000,
+        "minusCashAndCashEquivalents": 10049000000,
+        "addTotalDebt": 61749000000,
+        "enterpriseValue": 710414100000
+    },
+    {
+        "symbol": "WMT",
+        "date": "2023-10-31",
+        "stockPrice": 54.47,
+        "numberOfShares": 8078999838,
+        "marketCapitalization": 440063121175,
+        "minusCashAndCashEquivalents": 12154000000,
+        "addTotalDebt": 69739000000,
+        "enterpriseValue": 497648121175
+    },
+    {
+        "symbol": "WMT",
+        "date": "2022-10-31",
+        "stockPrice": 47.44,
+        "numberOfShares": 8133000000,
+        "marketCapitalization": 385829520000,
+        "minusCashAndCashEquivalents": 11587000000,
+        "addTotalDebt": 65380000000,
+        "enterpriseValue": 439622520000
+    },
+    {
+        "symbol": "WMT",
+        "date": "2021-10-31",
+        "stockPrice": 49.93,
+        "numberOfShares": 8355000000,
+        "marketCapitalization": 417165150000,
+        "minusCashAndCashEquivalents": 16111000000,
+        "addTotalDebt": 57597000000,
+        "enterpriseValue": 458651150000
+    }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "AAPL",
+        "date": "2025-06-28",
+        "stockPrice": 201.08,
+        "numberOfShares": 14902886000,
+        "marketCapitalization": 2996672316880,
+        "minusCashAndCashEquivalents": 36269000000,
+        "addTotalDebt": 101698000000,
+        "enterpriseValue": 3062101316880
+    },
+    {
+        "symbol": "AAPL",
+        "date": "2024-06-29",
+        "stockPrice": 210.62,
+        "numberOfShares": 15287521000,
+        "marketCapitalization": 3219857673020,
+        "minusCashAndCashEquivalents": 25565000000,
+        "addTotalDebt": 101304000000,
+        "enterpriseValue": 3295596673020
+    },
+    {
+        "symbol": "AAPL",
+        "date": "2023-07-01",
+        "stockPrice": 193.97,
+        "numberOfShares": 15697614000,
+        "marketCapitalization": 3044866187580,
+        "minusCashAndCashEquivalents": 28408000000,
+        "addTotalDebt": 109280000000,
+        "enterpriseValue": 3125738187580
+    },
+    {
+        "symbol": "AAPL",
+        "date": "2022-06-25",
+        "stockPrice": 141.66,
+        "numberOfShares": 16162945000,
+        "marketCapitalization": 2289642788700,
+        "minusCashAndCashEquivalents": 27502000000,
+        "addTotalDebt": 119691000000,
+        "enterpriseValue": 2381831788700
+    },
+    {
+        "symbol": "AAPL",
+        "date": "2021-06-26",
+        "stockPrice": 133.11,
+        "numberOfShares": 16629371000,
+        "marketCapitalization": 2213535573810,
+        "minusCashAndCashEquivalents": 34050000000,
+        "addTotalDebt": 121791000000,
+        "enterpriseValue": 2301276573810
+    }
+]
