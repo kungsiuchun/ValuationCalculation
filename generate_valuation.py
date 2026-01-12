@@ -161,7 +161,7 @@ def main():
             if date not in pe_res["1Y"].index: continue
             history.append({
                 "date": date.strftime("%Y-%m-%d"),
-                "price": round(row['Close'], 2),
+                "price": round(float(row['Adj Close']), 2),
                 "valuation": {
                     lb: {
                         "pe": pe_res[lb].loc[date].round(2).to_dict(),
