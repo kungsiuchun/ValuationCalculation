@@ -138,61 +138,6 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
 
     return results, avgs
 
-def debug_valuation(ticker):
-    print(f"\n🔍 --- Deep Dive Debug: {ticker} ---")
-    
-    # 1. 獲取價格
-    tk = yf.Ticker(ticker)
-    hist = tk.history(period="7y", auto_adjust=False)
-    # yfinance 默認返回的可能是 Adj Close 作為 Close，我們強制拿這兩個
-    df_prices = hist[['Close', 'Adj Close']].copy()
-    df_prices.index = pd.to_datetime(df_prices.index).tz_localize(None).normalize()
-    df_prices = df_prices[~df_prices.index.duplicated(keep='first')]
-
-    # 2. 獲取指標 (從你的 build_quarterly_ttm)
-    eps_ttm, _ = build_quarterly_ttm(ticker)
-    if eps_ttm is None:
-        print("❌ Error: eps_ttm is None")
-        return
-    
-    eps_df = eps_ttm.copy()
-    eps_df.index = pd.to_datetime(eps_df.index).tz_localize(None).normalize()
-
-    # 3. 合併觀察
-    df = df_prices.join(eps_df, how='left')
-    
-    print("\n[Table 1: 原始數據合併情況 (前 5 行)]")
-    # 檢查 eps_ttm 是否成功 join 進來，還是全是 NaN
-    print(df[['Close', 'Adj Close', 'eps_ttm']].head(5))
-
-    # 4. 模擬插值
-    df['eps_filled'] = df['eps_ttm'].interpolate(method='time').ffill()
-    
-    # 5. 計算關鍵比例 (這是為了避開拆分)
-    # AAPL 2020年 1:4 拆分，那時的 Adj Close / Close 應該約等於 0.25
-    df['adj_ratio'] = df['Adj Close'] / df['Close']
-    df['eps_final'] = df['eps_filled'] * df['adj_ratio']
-    
-    print("\n[Table 2: 拆分調整檢查 (2020年8月拆分前後)]")
-    # 找出 2020-08-31 附近的數據，看看 adj_ratio 有沒有起作用
-    split_date = '2020-08-31'
-    if split_date in df.index:
-        loc = df.index.get_loc(split_date)
-        print(df[['Close', 'Adj Close', 'adj_ratio', 'eps_final']].iloc[loc-2:loc+3])
-    else:
-        print(df[['Close', 'Adj Close', 'adj_ratio', 'eps_final']].tail(5))
-
-    # 6. 計算倍數
-    df['pe_ratio'] = df['Adj Close'] / df['eps_final'].replace(0, np.nan)
-    
-    print("\n[Table 3: 最終 PE 計算結果]")
-    print(df[['Adj Close', 'eps_final', 'pe_ratio']].tail(10))
-
-    if df['pe_ratio'].isna().all():
-        print("\n❌ 警報：PE Ratio 全係 NaN！")
-        print(f"原因檢查：\n- eps_final 是否全為 0? { (df['eps_final']==0).all() }")
-        print(f"- eps_ttm 是否根本沒對齊日期? { eps_df.index.isin(df_prices.index).sum() } 個日期對齊")
-
 
 
 # --- 5. 主程序 ---
@@ -205,9 +150,9 @@ def main():
     for ticker in DOW_30:
         print(f"\n🏗️  Pipeline Starting: {ticker}")
         prices = yf.Ticker(ticker).history(period="8y", auto_adjust=False)
-
+        prices.index = prices.index.tz_localize(None)
+        
         prices_df = prices[['Close', 'Adj Close']].copy()
-        ##prices.index = prices.index.tz_localize(None)
 
         eps_ttm, fcf_ttm = build_quarterly_ttm(ticker)
         if eps_ttm is None: continue
@@ -216,6 +161,7 @@ def main():
         fcf_res, fcf_avgs = calculate_bands(ticker, prices_df, fcf_ttm, 'fcf_ps_ttm')
 
         history = []
+
         for date, row in prices[prices.index >= '2021-01-01'].iterrows():
             if date not in pe_res["1Y"].index: continue
             history.append({
