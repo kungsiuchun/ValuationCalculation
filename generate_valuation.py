@@ -126,14 +126,14 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
         res['down1'] = (m_col - s_col) * df['metric_final']
         res['down2'] = (m_col - 2 * s_col) * df['metric_final']
 
-        results[label] = res.loc[prices_df.index].clip(lower=0).ffill().bfill().round(2)
+        results[label] = res.loc[prices_df.index].clip(lower=0).ffill().round(2)
         
         last_val = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
         avgs[label] = round(float(last_val), 2)
 
     for col in ['mean', 'up1', 'up2', 'down1', 'down2']:
         res.loc[df['metric_final'] <= 0, col] = 0
-        
+
     return results, avgs
 
 def test_amzn_valuation_logic():
@@ -202,7 +202,7 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     # 呼叫 Debug
-    test_amzn_valuation_logic()
+    ## test_amzn_valuation_logic()
 
     for ticker in DOW_30:
         print(f"\n🏗️  Pipeline Starting: {ticker}")
