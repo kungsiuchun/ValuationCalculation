@@ -69,12 +69,28 @@ def build_quarterly_ttm(ticker):
     for df in [df_inc, df_cf, df_ev]:
         df.index = pd.to_datetime(df.index).tz_localize(None)
 
-    # 數據合併與計算 TTM
-    df_inc['eps_ttm'] = df_inc['eps'].rolling(window=4).sum()
-    df_main = pd.concat([df_inc[['eps_ttm']], df_cf['freeCashFlow'], df_ev['numberOfShares']], axis=1).ffill()
+# --- 計算 P/S 必備的 Revenue TTM ---
+    # 先計算每季度的 Sales Per Share
+    # 注意：Revenue 在 income-statement，numberOfShares 在 enterprise-values
+    df_main = pd.concat([
+        df_inc[['eps', 'revenue']], 
+        df_cf['freeCashFlow'], 
+        df_ev['numberOfShares']
+    ], axis=1).ffill()
+    
+    # 計算每股營收 (Sales Per Share)
+    df_main['sales_ps'] = df_main['revenue'] / df_main['numberOfShares']
+    
+    # 計算 TTM (滾動四個季度總和)
+    df_main['eps_ttm'] = df_main['eps'].rolling(window=4).sum()
     df_main['fcf_ps_ttm'] = (df_main['freeCashFlow'] / df_main['numberOfShares']).rolling(window=4).sum()
+    df_main['sales_ps_ttm'] = df_main['sales_ps'].rolling(window=4).sum()
 
-    return df_main[['eps_ttm']].dropna(), df_main[['fcf_ps_ttm']].dropna()
+    return (
+        df_main[['eps_ttm']].dropna(), 
+        df_main[['fcf_ps_ttm']].dropna(), 
+        df_main[['sales_ps_ttm']].dropna()
+    )
 
 # --- 3. 核心估值邏輯 (Senior Analyst Hybrid Version) ---
 def calculate_bands(ticker, prices_df, metrics_df, col_name):
@@ -100,9 +116,13 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
     null_ratio = df['multiple'].isna().mean()
     use_median = True if (ticker == "AMZN" or null_ratio > 0.1) else False
     
-    # 倍數剪枝 (Winsorization)
-    upper_limit = 150 if 'eps' in col_name else 120
-    df['multiple'] = df['multiple'].clip(0, upper_limit)
+    # 3. 【核心修正】百分位剪枝 (Percentile Approach)
+    # 我們計算該股票歷史上 90% 分位數的值作為上限
+    # 這樣 AMZN 的 1000x 會被剪掉，但 AAPL 的 35x 會被完整保留
+    if df['multiple'].notna().any():
+        upper_limit = df['multiple'].quantile(0.95)
+        lower_limit = df['multiple'].quantile(0.05)
+        df['multiple'] = df['multiple'].clip(lower=lower_limit, upper=upper_limit)
 
     results = {}
     avgs = {}
@@ -116,8 +136,8 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
             
         s_col = df['multiple'].rolling(window=window, min_periods=60).std().fillna(0)
         
-        # 防止標準差過大導致 Band 炸開 (上限設為均值的 60%)
-        s_col = s_col.clip(upper=m_col * 0.6)
+        # 防止標準差過大導致 Band 炸開 (上限設為均值的 50%)
+        s_col = s_col.clip(upper=m_col * 0.5)
 
         res = pd.DataFrame(index=df.index)
         res['mean'] = m_col * df['metric_final']
@@ -126,13 +146,16 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
         res['down1'] = (m_col - s_col) * df['metric_final']
         res['down2'] = (m_col - 2 * s_col) * df['metric_final']
 
+        # 強制歸零邏輯：指標為負則估值為 0
+        for c in res.columns:
+            res.loc[df['metric_final'] <= 0, c] = 0
+
         results[label] = res.loc[prices_df.index].clip(lower=0).ffill().round(2)
         
         last_val = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
         avgs[label] = round(float(last_val), 2)
 
-    for col in ['mean', 'up1', 'up2', 'down1', 'down2']:
-        res.loc[df['metric_final'] <= 0, col] = 0
+
 
     return results, avgs
 
@@ -153,21 +176,36 @@ def main():
     ## test_amzn_valuation_logic()
 
     for ticker in DOW_30:
+        # 1. 獲取股價數據
+        # 我們使用 auto_adjust=False 以手動處理 Close/Adj Close 來對齊指標量級
         print(f"\n🏗️  Pipeline Starting: {ticker}")
         prices = yf.Ticker(ticker).history(period="8y", auto_adjust=False)
+
+        if prices.empty:
+            print(f"  ⚠️ [Skip] No price data for {ticker}")
+            continue
+
         prices.index = prices.index.tz_localize(None)
 
         prices_df = prices[['Close', 'Adj Close']].copy()
 
-        eps_ttm, fcf_ttm = build_quarterly_ttm(ticker)
+        # 2. 獲取財務指標數據 (TTM)
+        # 現在 build_quarterly_ttm 會回傳三個指標
+        eps_ttm, fcf_ttm, sales_ttm = build_quarterly_ttm(ticker)
         if eps_ttm is None: continue
 
         pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
         fcf_res, fcf_avgs = calculate_bands(ticker, prices_df, fcf_ttm, 'fcf_ps_ttm')
-
+        ps_res, ps_avgs = calculate_bands(ticker, prices_df, sales_ttm, 'sales_ps_ttm')
+        
+        # 4. 封裝歷史數據用於前端繪圖
         history = []
+        # 只取 2021 年以後的數據點以優化前端加載速度
+        plot_df = prices_df[prices_df.index >= '2021-01-01']
+        plot_df.index = plot_df.index.tz_localize(None).normalize()
 
-        for date, row in prices[prices.index >= '2021-01-01'].iterrows():
+        for date, row in plot_df.iterrows():
+            # 確保該日期在所有指標計算結果中都存在
             if date not in pe_res["1Y"].index: continue
             history.append({
                 "date": date.strftime("%Y-%m-%d"),
@@ -175,7 +213,8 @@ def main():
                 "valuation": {
                     lb: {
                         "pe": pe_res[lb].loc[date].round(2).to_dict(),
-                        "fcf": fcf_res[lb].loc[date].round(2).to_dict()
+                        "fcf": fcf_res[lb].loc[date].round(2).to_dict(),
+                        "ps": ps_res[lb].loc[date].to_dict()   # 加入 P/S
                     } for lb in WINDOWS
                 }
             })
