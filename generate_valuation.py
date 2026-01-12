@@ -12,8 +12,7 @@ FMP_API_KEY = "F9dROu64FwpDqETGsu1relweBEoTcpID"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = ["AAPL"]
-## ["AMZN", "AAPL", "GOOGL", "MSFT", "WMT"] 
+DOW_30 = ["AMZN", "AAPL", "GOOGL", "MSFT", "WMT"] 
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
@@ -77,57 +76,62 @@ def build_quarterly_ttm(ticker):
 
     return df_main[['eps_ttm']].dropna(), df_main[['fcf_ps_ttm']].dropna()
 
-def calculate_bands(ticker, prices_adj, metrics_df, col_name):
-    # 1. 統一索引格式（確保是 DatetimeIndex 且無時區）
-    prices_adj.index = pd.to_datetime(prices_adj.index).tz_localize(None).normalize()
+def calculate_bands(ticker, prices_df, metrics_df, col_name):
+    """
+    接收 prices_df (包含 Close 和 Adj Close)，不再內部呼叫 yfinance
+    """
+    # 強制對齊日期格式
+    prices_df.index = pd.to_datetime(prices_df.index).tz_localize(None).normalize()
     metrics_df.index = pd.to_datetime(metrics_df.index).tz_localize(None).normalize()
 
-    # 2. 處理 yfinance 的重複數據 (AAPL 常見問題)
-    prices_adj = prices_adj[~prices_adj.index.duplicated(keep='first')]
+    # 去重
+    prices_df = prices_df[~prices_df.index.duplicated(keep='first')]
     metrics_df = metrics_df[~metrics_df.index.duplicated(keep='first')]
 
-    # 3. 創建一個「全時間軸」（包含所有交易日與財報日）
-    # 這是解決 "0 個日期對齊" 的關鍵
-    all_dates = prices_adj.index.union(metrics_df.index).sort_values()
-    
-    # 建立主表
+    # 建立全時間軸容器
+    all_dates = prices_df.index.union(metrics_df.index).sort_values()
     df = pd.DataFrame(index=all_dates)
     
-    # 4. 放入價格與指標
-    df['price_adj'] = prices_adj  # 只有交易日有值
-    df['metric_raw'] = metrics_df[col_name]  # 只有財報日有值
-    
-    # 5. 【核心步驟】時間插值 (Time-based Interpolation)
-    # 這樣財報日的數據會平滑地分配到交易日上
-    df['metric_filled'] = df['metric_raw'].interpolate(method='time').ffill().bfill()
-    
-    # 6. 回切到「只有價格交易日」的行，確保輸出結果長度一致
-    df = df.loc[prices_adj.index].copy()
+    # 合併價格與指標
+    df = df.join(prices_df)  # 包含 Close 和 Adj Close
+    df['metric_raw'] = metrics_df[col_name]
 
-    # 7. 計算倍數 (此時已完美對齊)
-    # 注意：如果原本腳本中的 metric 是 raw EPS，我們直接算 PE
-    df['multiple'] = df['price_adj'] / df['metric_filled'].replace(0, np.nan)
+    # --- 核心邏輯：計算拆分調整因子 ---
+    # 這是為了讓 AMZN 2022 年的 1:20 拆分前後數據對齊
+    # adj_ratio = Adj Close / Close
+    df['adj_ratio'] = (df['Adj Close'] / df['Close'].replace(0, np.nan)).ffill().bfill()
     
-    # 清理極端值
-    df['multiple'] = df['multiple'].replace([np.inf, -np.inf], np.nan).ffill().bfill()
+    # 修正指標量級：讓歷史 EPS 追隨股價的調整
+    df['metric_adj'] = df['metric_raw'] * df['adj_ratio']
+    
+    # 時間插值填補 (解決 AAPL 週六財報問題)
+    df['metric_final'] = df['metric_adj'].interpolate(method='time').ffill().bfill()
+
+    # 計算 PE/PFCF 倍數 (兩邊都已經是 Adjusted 量級，算出來的倍數才是平滑的)
+    df['multiple'] = df['Adj Close'] / df['metric_final'].apply(lambda x: x if x > 0 else np.nan)
+    
+    # 資深分析師修正：剪枝極端值 (AMZN 案例)
+    upper_limit = 150 if 'eps' in col_name else 100
+    df['multiple'] = df['multiple'].clip(0, upper_limit).ffill().bfill()
+
+    # 回切到交易日
+    df = df.loc[prices_df.index].copy()
 
     results = {}
     avgs = {}
 
     for label, window in WINDOWS.items():
-        # 計算滾動平均
-        m_col = df['multiple'].rolling(window=window, min_periods=20).mean()
-        s_col = df['multiple'].rolling(window=window, min_periods=20).std().fillna(0)
+        m_col = df['multiple'].rolling(window=window, min_periods=min(window, 60)).mean()
+        s_col = df['multiple'].rolling(window=window, min_periods=min(window, 60)).std().fillna(0)
 
-        # 生成軌道
         res = pd.DataFrame(index=df.index)
-        res['mean'] = m_col * df['metric_filled']
-        res['up1'] = (m_col + s_col) * df['metric_filled']
-        res['up2'] = (m_col + 2 * s_col) * df['metric_filled']
-        res['down1'] = (m_col - s_col) * df['metric_filled']
-        res['down2'] = (m_col - 2 * s_col) * df['metric_filled']
+        res['mean'] = m_col * df['metric_final']
+        res['up1'] = (m_col + s_col) * df['metric_final']
+        res['up2'] = (m_col + 2 * s_col) * df['metric_final']
+        res['down1'] = (m_col - s_col) * df['metric_final']
+        res['down2'] = (m_col - 2 * s_col) * df['metric_final']
 
-        results[label] = res.ffill().bfill().round(2)
+        results[label] = res.clip(lower=0).ffill().bfill().round(2)
         
         valid_m = m_col.dropna()
         avgs[label] = round(float(valid_m.iloc[-1]), 2) if not valid_m.empty else 0
@@ -200,14 +204,16 @@ def main():
 
     for ticker in DOW_30:
         print(f"\n🏗️  Pipeline Starting: {ticker}")
-        prices = yf.Ticker(ticker).history(period="8y")[['Close']]
-        prices.index = prices.index.tz_localize(None)
+        prices = yf.Ticker(ticker).history(period="8y", auto_adjust=False)
+
+        prices_df = prices[['Close', 'Adj Close']].copy()
+        ##prices.index = prices.index.tz_localize(None)
 
         eps_ttm, fcf_ttm = build_quarterly_ttm(ticker)
         if eps_ttm is None: continue
 
-        pe_res, pe_avgs = calculate_bands(ticker, prices['Close'], eps_ttm, 'eps_ttm')
-        fcf_res, fcf_avgs = calculate_bands(ticker, prices['Close'], fcf_ttm, 'fcf_ps_ttm')
+        pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
+        fcf_res, fcf_avgs = calculate_bands(ticker, prices_df, fcf_ttm, 'fcf_ps_ttm')
 
         history = []
         for date, row in prices[prices.index >= '2021-01-01'].iterrows():
