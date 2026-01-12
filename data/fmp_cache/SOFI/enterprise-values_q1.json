@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "SOFI",
+        "date": "2025-03-31",
+        "stockPrice": 11.63,
+        "numberOfShares": 1097994000,
+        "marketCapitalization": 12769670220,
+        "minusCashAndCashEquivalents": 2085697000,
+        "addTotalDebt": 3139859000,
+        "enterpriseValue": 13823832220
+    },
+    {
+        "symbol": "SOFI",
+        "date": "2024-03-31",
+        "stockPrice": 7.22,
+        "numberOfShares": 982617000,
+        "marketCapitalization": 7094494740,
+        "minusCashAndCashEquivalents": 3693390000,
+        "addTotalDebt": 3001002000,
+        "enterpriseValue": 6402106740
+    },
+    {
+        "symbol": "SOFI",
+        "date": "2023-03-31",
+        "stockPrice": 6.07,
+        "numberOfShares": 929270723,
+        "marketCapitalization": 5640673288,
+        "minusCashAndCashEquivalents": 2487778000,
+        "addTotalDebt": 6255968000,
+        "enterpriseValue": 9408863288
+    },
+    {
+        "symbol": "SOFI",
+        "date": "2022-03-31",
+        "stockPrice": 9.45,
+        "numberOfShares": 852853596,
+        "marketCapitalization": 8059466482,
+        "minusCashAndCashEquivalents": 1325135000,
+        "addTotalDebt": 5122662000,
+        "enterpriseValue": 11856993482
+    },
+    {
+        "symbol": "SOFI",
+        "date": "2021-03-31",
+        "stockPrice": 17.15,
+        "numberOfShares": 116152593,
+        "marketCapitalization": 1992016969,
+        "minusCashAndCashEquivalents": 39940,
+        "addTotalDebt": 1415000,
+        "enterpriseValue": 1993392029
+    }
+]

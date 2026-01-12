@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "PYPL",
+        "date": "2025-09-30",
+        "stockPrice": 67.06,
+        "numberOfShares": 968000000,
+        "marketCapitalization": 64914080000,
+        "minusCashAndCashEquivalents": 8995000000,
+        "addTotalDebt": 11276000000,
+        "enterpriseValue": 67195080000
+    },
+    {
+        "symbol": "PYPL",
+        "date": "2024-09-30",
+        "stockPrice": 78.03,
+        "numberOfShares": 1015000000,
+        "marketCapitalization": 79200450000,
+        "minusCashAndCashEquivalents": 7272000000,
+        "addTotalDebt": 9976000000,
+        "enterpriseValue": 81904450000
+    },
+    {
+        "symbol": "PYPL",
+        "date": "2023-09-30",
+        "stockPrice": 58.46,
+        "numberOfShares": 1094000000,
+        "marketCapitalization": 63955240000,
+        "minusCashAndCashEquivalents": 6816000000,
+        "addTotalDebt": 10640000000,
+        "enterpriseValue": 67779240000
+    },
+    {
+        "symbol": "PYPL",
+        "date": "2022-09-30",
+        "stockPrice": 86.07,
+        "numberOfShares": 1154000000,
+        "marketCapitalization": 99324779999,
+        "minusCashAndCashEquivalents": 6659000000,
+        "addTotalDebt": 10659000000,
+        "enterpriseValue": 103324779999
+    },
+    {
+        "symbol": "PYPL",
+        "date": "2021-09-30",
+        "stockPrice": 260.21,
+        "numberOfShares": 1174000000,
+        "marketCapitalization": 305486540000,
+        "minusCashAndCashEquivalents": 7782000000,
+        "addTotalDebt": 8947000000,
+        "enterpriseValue": 306651540000
+    }
+]

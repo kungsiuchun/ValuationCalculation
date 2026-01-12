@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "PLTR",
+        "date": "2025-03-31",
+        "stockPrice": 84.4,
+        "numberOfShares": 2348679000,
+        "marketCapitalization": 198228507600,
+        "minusCashAndCashEquivalents": 993464000,
+        "addTotalDebt": 244596000,
+        "enterpriseValue": 197479639600
+    },
+    {
+        "symbol": "PLTR",
+        "date": "2024-03-31",
+        "stockPrice": 22.86,
+        "numberOfShares": 2213545000,
+        "marketCapitalization": 50601638700,
+        "minusCashAndCashEquivalents": 520388000,
+        "addTotalDebt": 217069000,
+        "enterpriseValue": 50298319700
+    },
+    {
+        "symbol": "PLTR",
+        "date": "2023-03-31",
+        "stockPrice": 8.45,
+        "numberOfShares": 2107780000,
+        "marketCapitalization": 17810741000,
+        "minusCashAndCashEquivalents": 1264738000,
+        "addTotalDebt": 259488000,
+        "enterpriseValue": 16805491000
+    },
+    {
+        "symbol": "PLTR",
+        "date": "2022-03-31",
+        "stockPrice": 13.73,
+        "numberOfShares": 2036307000,
+        "marketCapitalization": 27958495110,
+        "minusCashAndCashEquivalents": 2269411000,
+        "addTotalDebt": 267662000,
+        "enterpriseValue": 25956746110
+    },
+    {
+        "symbol": "PLTR",
+        "date": "2021-03-31",
+        "stockPrice": 23.29,
+        "numberOfShares": 1821158000,
+        "marketCapitalization": 42414769820,
+        "minusCashAndCashEquivalents": 2339437000,
+        "addTotalDebt": 452724000,
+        "enterpriseValue": 40528056820
+    }
+]

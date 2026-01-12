@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "CVX",
+        "date": "2024-12-31",
+        "stockPrice": 144.84,
+        "numberOfShares": 1770310000,
+        "marketCapitalization": 256411700400,
+        "minusCashAndCashEquivalents": 6781000000,
+        "addTotalDebt": 24541000000,
+        "enterpriseValue": 274171700400
+    },
+    {
+        "symbol": "CVX",
+        "date": "2023-12-31",
+        "stockPrice": 149.16,
+        "numberOfShares": 1861474000,
+        "marketCapitalization": 277657461840,
+        "minusCashAndCashEquivalents": 8178000000,
+        "addTotalDebt": 20836000000,
+        "enterpriseValue": 290315461840
+    },
+    {
+        "symbol": "CVX",
+        "date": "2022-12-31",
+        "stockPrice": 179.49,
+        "numberOfShares": 1910602000,
+        "marketCapitalization": 342933952980,
+        "minusCashAndCashEquivalents": 17678000000,
+        "addTotalDebt": 23339000000,
+        "enterpriseValue": 348594952980
+    },
+    {
+        "symbol": "CVX",
+        "date": "2021-12-31",
+        "stockPrice": 117.35,
+        "numberOfShares": 1915440000,
+        "marketCapitalization": 224776884000,
+        "minusCashAndCashEquivalents": 5640000000,
+        "addTotalDebt": 31369000000,
+        "enterpriseValue": 250505884000
+    },
+    {
+        "symbol": "CVX",
+        "date": "2020-12-31",
+        "stockPrice": 84.45,
+        "numberOfShares": 1910724000,
+        "marketCapitalization": 161360641800,
+        "minusCashAndCashEquivalents": 5596000000,
+        "addTotalDebt": 44315000000,
+        "enterpriseValue": 200079641800
+    }
+]

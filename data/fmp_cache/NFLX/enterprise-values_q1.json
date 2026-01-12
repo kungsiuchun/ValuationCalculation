@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "NFLX",
+        "date": "2025-03-31",
+        "stockPrice": 93.25,
+        "numberOfShares": 4272700000,
+        "marketCapitalization": 398429275000,
+        "minusCashAndCashEquivalents": 7199848000,
+        "addTotalDebt": 17423487000,
+        "enterpriseValue": 408652914000
+    },
+    {
+        "symbol": "NFLX",
+        "date": "2024-03-31",
+        "stockPrice": 61.43,
+        "numberOfShares": 4320900000,
+        "marketCapitalization": 265432887000,
+        "minusCashAndCashEquivalents": 7024766000,
+        "addTotalDebt": 16511606000,
+        "enterpriseValue": 274919727000
+    },
+    {
+        "symbol": "NFLX",
+        "date": "2023-03-31",
+        "stockPrice": 34.55,
+        "numberOfShares": 4452440000,
+        "marketCapitalization": 153831802000,
+        "minusCashAndCashEquivalents": 6714594000,
+        "addTotalDebt": 16955847000,
+        "enterpriseValue": 164073055000
+    },
+    {
+        "symbol": "NFLX",
+        "date": "2022-03-31",
+        "stockPrice": 37.46,
+        "numberOfShares": 4441460000,
+        "marketCapitalization": 166377091600,
+        "minusCashAndCashEquivalents": 6008946000,
+        "addTotalDebt": 17299575000,
+        "enterpriseValue": 177667720600
+    },
+    {
+        "symbol": "NFLX",
+        "date": "2021-03-31",
+        "stockPrice": 52.17,
+        "numberOfShares": 4432240000,
+        "marketCapitalization": 231229960800,
+        "minusCashAndCashEquivalents": 8403705000,
+        "addTotalDebt": 17739319000,
+        "enterpriseValue": 240565574800
+    }
+]

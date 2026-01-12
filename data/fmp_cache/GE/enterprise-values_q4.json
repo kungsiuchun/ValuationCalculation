@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "GE",
+        "date": "2024-12-31",
+        "stockPrice": 166.79,
+        "numberOfShares": 1078977273,
+        "marketCapitalization": 179962619363,
+        "minusCashAndCashEquivalents": 13619000000,
+        "addTotalDebt": 20378000000,
+        "enterpriseValue": 186721619363
+    },
+    {
+        "symbol": "GE",
+        "date": "2023-12-31",
+        "stockPrice": 101.79,
+        "numberOfShares": 1088000000,
+        "marketCapitalization": 110747520000,
+        "minusCashAndCashEquivalents": 15204000000,
+        "addTotalDebt": 21764000000,
+        "enterpriseValue": 117307520000
+    },
+    {
+        "symbol": "GE",
+        "date": "2022-12-31",
+        "stockPrice": 52.15,
+        "numberOfShares": 1091000000,
+        "marketCapitalization": 56895650000,
+        "minusCashAndCashEquivalents": 15810000000,
+        "addTotalDebt": 26148000000,
+        "enterpriseValue": 67233650000
+    },
+    {
+        "symbol": "GE",
+        "date": "2021-12-31",
+        "stockPrice": 58.79,
+        "numberOfShares": 1099000000,
+        "marketCapitalization": 64610210000,
+        "minusCashAndCashEquivalents": 15770000000,
+        "addTotalDebt": 38033000000,
+        "enterpriseValue": 86873210000
+    },
+    {
+        "symbol": "GE",
+        "date": "2020-12-31",
+        "stockPrice": 53.77,
+        "numberOfShares": 1094125000,
+        "marketCapitalization": 58831101250,
+        "minusCashAndCashEquivalents": 36530000000,
+        "addTotalDebt": 78097000000,
+        "enterpriseValue": 100398101250
+    }
+]

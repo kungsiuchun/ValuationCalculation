@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "CSCO",
+        "date": "2025-10-25",
+        "stockPrice": 70.63,
+        "numberOfShares": 3956000000,
+        "marketCapitalization": 279412280000,
+        "minusCashAndCashEquivalents": 8400000000,
+        "addTotalDebt": 28089000000,
+        "enterpriseValue": 299101280000
+    },
+    {
+        "symbol": "CSCO",
+        "date": "2024-10-26",
+        "stockPrice": 55.74,
+        "numberOfShares": 3990000000,
+        "marketCapitalization": 222402600000,
+        "minusCashAndCashEquivalents": 9065000000,
+        "addTotalDebt": 33290000000,
+        "enterpriseValue": 246627600000
+    },
+    {
+        "symbol": "CSCO",
+        "date": "2023-10-28",
+        "stockPrice": 51.56,
+        "numberOfShares": 4057000000,
+        "marketCapitalization": 209178920000,
+        "minusCashAndCashEquivalents": 9602000000,
+        "addTotalDebt": 7650000000,
+        "enterpriseValue": 207226920000
+    },
+    {
+        "symbol": "CSCO",
+        "date": "2022-10-29",
+        "stockPrice": 45.64,
+        "numberOfShares": 4108000000,
+        "marketCapitalization": 187489120000,
+        "minusCashAndCashEquivalents": 7292000000,
+        "addTotalDebt": 8878000000,
+        "enterpriseValue": 189075120000
+    },
+    {
+        "symbol": "CSCO",
+        "date": "2021-10-30",
+        "stockPrice": 55.97,
+        "numberOfShares": 4218000000,
+        "marketCapitalization": 236081460000,
+        "minusCashAndCashEquivalents": 7619000000,
+        "addTotalDebt": 9502000000,
+        "enterpriseValue": 237964460000
+    }
+]

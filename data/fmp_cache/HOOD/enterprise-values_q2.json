@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "HOOD",
+        "date": "2025-06-30",
+        "stockPrice": 93.63,
+        "numberOfShares": 882149402,
+        "marketCapitalization": 82595648509,
+        "minusCashAndCashEquivalents": 4162000000,
+        "addTotalDebt": 12640000000,
+        "enterpriseValue": 91073648509
+    },
+    {
+        "symbol": "HOOD",
+        "date": "2024-06-30",
+        "stockPrice": 22.79,
+        "numberOfShares": 881076624,
+        "marketCapitalization": 20079736260,
+        "minusCashAndCashEquivalents": 4524000000,
+        "addTotalDebt": 5091000000,
+        "enterpriseValue": 20646736260
+    },
+    {
+        "symbol": "HOOD",
+        "date": "2023-06-30",
+        "stockPrice": 9.98,
+        "numberOfShares": 904984863,
+        "marketCapitalization": 9031748932,
+        "minusCashAndCashEquivalents": 5829000000,
+        "addTotalDebt": 2982000000,
+        "enterpriseValue": 6184748932
+    },
+    {
+        "symbol": "HOOD",
+        "date": "2022-06-30",
+        "stockPrice": 8.22,
+        "numberOfShares": 874873301,
+        "marketCapitalization": 7191458534,
+        "minusCashAndCashEquivalents": 5962000000,
+        "addTotalDebt": 1521000000,
+        "enterpriseValue": 2750458534
+    },
+    {
+        "symbol": "HOOD",
+        "date": "2021-06-30",
+        "stockPrice": 34.82,
+        "numberOfShares": 850178840,
+        "marketCapitalization": 29603227208,
+        "minusCashAndCashEquivalents": 5077752000,
+        "addTotalDebt": 7832683000,
+        "enterpriseValue": 32358158208
+    }
+]

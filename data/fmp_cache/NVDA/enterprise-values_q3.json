@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "NVDA",
+        "date": "2025-10-26",
+        "stockPrice": 191.49,
+        "numberOfShares": 24327000000,
+        "marketCapitalization": 4658377230000,
+        "minusCashAndCashEquivalents": 11486000000,
+        "addTotalDebt": 10481000000,
+        "enterpriseValue": 4657372230000
+    },
+    {
+        "symbol": "NVDA",
+        "date": "2024-10-27",
+        "stockPrice": 140.52,
+        "numberOfShares": 24533000000,
+        "marketCapitalization": 3447377160000,
+        "minusCashAndCashEquivalents": 9107000000,
+        "addTotalDebt": 10225000000,
+        "enterpriseValue": 3448495160000
+    },
+    {
+        "symbol": "NVDA",
+        "date": "2023-10-29",
+        "stockPrice": 41.16,
+        "numberOfShares": 24680000000,
+        "marketCapitalization": 1015828799999,
+        "minusCashAndCashEquivalents": 5519000000,
+        "addTotalDebt": 11027000000,
+        "enterpriseValue": 1021336799999
+    },
+    {
+        "symbol": "NVDA",
+        "date": "2022-10-30",
+        "stockPrice": 13.5,
+        "numberOfShares": 24830000000,
+        "marketCapitalization": 335205000000,
+        "minusCashAndCashEquivalents": 2800000000,
+        "addTotalDebt": 11748000000,
+        "enterpriseValue": 344153000000
+    },
+    {
+        "symbol": "NVDA",
+        "date": "2021-10-31",
+        "stockPrice": 25.83,
+        "numberOfShares": 24990000000,
+        "marketCapitalization": 645491700000,
+        "minusCashAndCashEquivalents": 1288000000,
+        "addTotalDebt": 11827000000,
+        "enterpriseValue": 656030700000
+    }
+]

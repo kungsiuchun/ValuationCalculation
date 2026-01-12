@@ -12,7 +12,13 @@ FMP_API_KEY = "F9dROu64FwpDqETGsu1relweBEoTcpID"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = ["AMZN", "AAPL", "GOOGL", "MSFT", "WMT"] 
+DOW_30 = [
+    # "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
+    # "PYPL", "SOFI", "HOOD"
+    # ,"DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
+    "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR"
+    # "SHOP", "SBUX",  "TSM", "ADBE", "UNH"
+]
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
