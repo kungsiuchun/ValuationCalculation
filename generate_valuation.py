@@ -12,7 +12,8 @@ FMP_API_KEY = "F9dROu64FwpDqETGsu1relweBEoTcpID"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = ["AMZN", "AAPL", "GOOGL", "MSFT", "WMT"] 
+DOW_30 = ["AAPL"]
+## ["AMZN", "AAPL", "GOOGL", "MSFT", "WMT"] 
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
@@ -77,79 +78,129 @@ def build_quarterly_ttm(ticker):
     return df_main[['eps_ttm']].dropna(), df_main[['fcf_ps_ttm']].dropna()
 
 def calculate_bands(ticker, prices_adj, metrics_df, col_name):
-    """
-    優化後的估值軌道計算：
-    1. 使用 Adjusted Price (已調整拆分與分紅的股價) 作為基準
-    2. 自動修正財務指標，使其與現行股價量級對齊
-    3. 移除複雜的 raw_prices 邏輯，確保軌道平滑
-    """
-    # 確保索引為 tz-naive
-    if prices_adj.index.tz is not None:
-        prices_adj.index = prices_adj.index.tz_localize(None)
-    if metrics_df.index.tz is not None:
-        metrics_df.index = metrics_df.index.tz_localize(None)
+    # 1. 統一索引格式（確保是 DatetimeIndex 且無時區）
+    prices_adj.index = pd.to_datetime(prices_adj.index).tz_localize(None).normalize()
+    metrics_df.index = pd.to_datetime(metrics_df.index).tz_localize(None).normalize()
 
-    # 1. 獲取調整因子 (Cumulative Adjustment Factor)
-    # yfinance 的 adj_ratio = adj_close / close
-    tk = yf.Ticker(ticker)
-    hist_all = tk.history(period="7y", auto_adjust=False) # 獲取原始與調整價格
-    hist_all.index = hist_all.index.tz_localize(None)
-    
-    # 計算每一天的調整比例 (這反映了拆分與分紅的累積影響)
-    # 我們將這個比例應用到財務指標上，讓「歷史指標」與「現今股價」對齊
-    adj_factors = hist_all['Close'] / hist_all['Adj Close'] # 注意：這裡反過來算，用於縮小/放大指標
-    
-    # 2. 數據合併
-    df = pd.DataFrame(index=prices_adj.index)
-    df['price'] = prices_adj
-    df = df.join(metrics_df, how='left')
-    
-    # 3. 處理指標：先插值，再修正拆分影響
-    # 使用 time linear interpolate 填充季度間的空白
-    df['metric_raw'] = df[col_name].interpolate(method='time').ffill().bfill()
-    
-    # 【關鍵步驟】修正指標量級
-    # 如果 2022 年拆分了 1:20，那之前的 EPS 應該除以 20，才能跟現在的股價匹配
-    # 我們利用價格的 adj_factor 來反推這個比例
-    df = df.join(adj_factors.rename('adj_f'), how='left').ffill()
-    df['metric_adj'] = df['metric_raw'] / df['adj_f']
+    # 2. 處理 yfinance 的重複數據 (AAPL 常見問題)
+    prices_adj = prices_adj[~prices_adj.index.duplicated(keep='first')]
+    metrics_df = metrics_df[~metrics_df.index.duplicated(keep='first')]
 
-    # 4. 計算倍數 (P/E 或 P/FCF)
-    # 此時 price 是 adj_close, metric_adj 是經過調整的指標，兩者量級一致
-    df['multiple'] = df['price'] / df['metric_adj'].replace(0, np.nan)
+    # 3. 創建一個「全時間軸」（包含所有交易日與財報日）
+    # 這是解決 "0 個日期對齊" 的關鍵
+    all_dates = prices_adj.index.union(metrics_df.index).sort_values()
     
+    # 建立主表
+    df = pd.DataFrame(index=all_dates)
+    
+    # 4. 放入價格與指標
+    df['price_adj'] = prices_adj  # 只有交易日有值
+    df['metric_raw'] = metrics_df[col_name]  # 只有財報日有值
+    
+    # 5. 【核心步驟】時間插值 (Time-based Interpolation)
+    # 這樣財報日的數據會平滑地分配到交易日上
+    df['metric_filled'] = df['metric_raw'].interpolate(method='time').ffill().bfill()
+    
+    # 6. 回切到「只有價格交易日」的行，確保輸出結果長度一致
+    df = df.loc[prices_adj.index].copy()
+
+    # 7. 計算倍數 (此時已完美對齊)
+    # 注意：如果原本腳本中的 metric 是 raw EPS，我們直接算 PE
+    df['multiple'] = df['price_adj'] / df['metric_filled'].replace(0, np.nan)
+    
+    # 清理極端值
+    df['multiple'] = df['multiple'].replace([np.inf, -np.inf], np.nan).ffill().bfill()
+
     results = {}
     avgs = {}
 
     for label, window in WINDOWS.items():
-        # 計算滾動平均倍數
-        # 使用 min_periods 確保早期也有數據，不至於出現大量空值
-        m_col = df['multiple'].rolling(window=window, min_periods=60).mean()
-        s_col = df['multiple'].rolling(window=window, min_periods=60).std().fillna(0)
+        # 計算滾動平均
+        m_col = df['multiple'].rolling(window=window, min_periods=20).mean()
+        s_col = df['multiple'].rolling(window=window, min_periods=20).std().fillna(0)
 
-        # 5. 生成軌道 (Valuation Bands)
-        # 軌道 = 滾動倍數 * 當前(調整後)指標
+        # 生成軌道
         res = pd.DataFrame(index=df.index)
-        res['mean'] = m_col * df['metric_adj']
-        res['up1'] = (m_col + s_col) * df['metric_adj']
-        res['up2'] = (m_col + 2 * s_col) * df['metric_adj']
-        res['down1'] = (m_col - s_col) * df['metric_adj']
-        res['down2'] = (m_col - 2 * s_col) * df['metric_adj']
+        res['mean'] = m_col * df['metric_filled']
+        res['up1'] = (m_col + s_col) * df['metric_filled']
+        res['up2'] = (m_col + 2 * s_col) * df['metric_filled']
+        res['down1'] = (m_col - s_col) * df['metric_filled']
+        res['down2'] = (m_col - 2 * s_col) * df['metric_filled']
 
         results[label] = res.ffill().bfill().round(2)
         
-        # 獲取最新的一個有效倍數作為平均值參考
-        current_m = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
-        avgs[label] = round(float(current_m), 2)
+        valid_m = m_col.dropna()
+        avgs[label] = round(float(valid_m.iloc[-1]), 2) if not valid_m.empty else 0
 
     return results, avgs
+
+def debug_valuation(ticker):
+    print(f"\n🔍 --- Deep Dive Debug: {ticker} ---")
+    
+    # 1. 獲取價格
+    tk = yf.Ticker(ticker)
+    hist = tk.history(period="7y", auto_adjust=False)
+    # yfinance 默認返回的可能是 Adj Close 作為 Close，我們強制拿這兩個
+    df_prices = hist[['Close', 'Adj Close']].copy()
+    df_prices.index = pd.to_datetime(df_prices.index).tz_localize(None).normalize()
+    df_prices = df_prices[~df_prices.index.duplicated(keep='first')]
+
+    # 2. 獲取指標 (從你的 build_quarterly_ttm)
+    eps_ttm, _ = build_quarterly_ttm(ticker)
+    if eps_ttm is None:
+        print("❌ Error: eps_ttm is None")
+        return
+    
+    eps_df = eps_ttm.copy()
+    eps_df.index = pd.to_datetime(eps_df.index).tz_localize(None).normalize()
+
+    # 3. 合併觀察
+    df = df_prices.join(eps_df, how='left')
+    
+    print("\n[Table 1: 原始數據合併情況 (前 5 行)]")
+    # 檢查 eps_ttm 是否成功 join 進來，還是全是 NaN
+    print(df[['Close', 'Adj Close', 'eps_ttm']].head(5))
+
+    # 4. 模擬插值
+    df['eps_filled'] = df['eps_ttm'].interpolate(method='time').ffill()
+    
+    # 5. 計算關鍵比例 (這是為了避開拆分)
+    # AAPL 2020年 1:4 拆分，那時的 Adj Close / Close 應該約等於 0.25
+    df['adj_ratio'] = df['Adj Close'] / df['Close']
+    df['eps_final'] = df['eps_filled'] * df['adj_ratio']
+    
+    print("\n[Table 2: 拆分調整檢查 (2020年8月拆分前後)]")
+    # 找出 2020-08-31 附近的數據，看看 adj_ratio 有沒有起作用
+    split_date = '2020-08-31'
+    if split_date in df.index:
+        loc = df.index.get_loc(split_date)
+        print(df[['Close', 'Adj Close', 'adj_ratio', 'eps_final']].iloc[loc-2:loc+3])
+    else:
+        print(df[['Close', 'Adj Close', 'adj_ratio', 'eps_final']].tail(5))
+
+    # 6. 計算倍數
+    df['pe_ratio'] = df['Adj Close'] / df['eps_final'].replace(0, np.nan)
+    
+    print("\n[Table 3: 最終 PE 計算結果]")
+    print(df[['Adj Close', 'eps_final', 'pe_ratio']].tail(10))
+
+    if df['pe_ratio'].isna().all():
+        print("\n❌ 警報：PE Ratio 全係 NaN！")
+        print(f"原因檢查：\n- eps_final 是否全為 0? { (df['eps_final']==0).all() }")
+        print(f"- eps_ttm 是否根本沒對齊日期? { eps_df.index.isin(df_prices.index).sum() } 個日期對齊")
+
+
 
 # --- 5. 主程序 ---
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    # 呼叫 Debug
+    ## debug_valuation("AAPL")
+
     for ticker in DOW_30:
         print(f"\n🏗️  Pipeline Starting: {ticker}")
-        prices = yf.Ticker(ticker).history(period="7y")[['Close']]
+        prices = yf.Ticker(ticker).history(period="8y")[['Close']]
         prices.index = prices.index.tz_localize(None)
 
         eps_ttm, fcf_ttm = build_quarterly_ttm(ticker)
