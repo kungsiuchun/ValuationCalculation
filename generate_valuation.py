@@ -131,16 +131,78 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
         last_val = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
         avgs[label] = round(float(last_val), 2)
 
+    for col in ['mean', 'up1', 'up2', 'down1', 'down2']:
+        res.loc[df['metric_final'] <= 0, col] = 0
+        
     return results, avgs
 
+def test_amzn_valuation_logic():
+    ticker = "AMZN"
+    print(f"🧪 Starting Diagnostic Test for {ticker}...")
 
+    # 1. 獲取數據
+    hist = yf.Ticker(ticker).history(period="7y", auto_adjust=False)
+    prices_df = hist[['Close', 'Adj Close']].copy()
+    
+    eps_ttm, fcf_ttm = build_quarterly_ttm(ticker)
+    
+    if fcf_ttm is None:
+        print("❌ Test Failed: Could not fetch FCF data.")
+        return
+
+    # 2. 執行計算 (這裡我們會截取 calculate_bands 的中間狀態)
+    # 我們特別關注 P/FCF，因為那是 AMZN 產生「鼓包」的地方
+    pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
+    fcf_res, fcf_avgs = calculate_bands(ticker, prices_df, fcf_ttm, 'fcf_ps_ttm')
+
+    # ---------------------------------------------------------
+    # 預期檢查 1: 負值 FCF 處理
+    # ---------------------------------------------------------
+    # 找到 2022 年 FCF 為負的時期
+    negative_fcf_period = fcf_ttm[fcf_ttm['fcf_ps_ttm'] < 0]
+    if not negative_fcf_period.empty:
+        test_date = negative_fcf_period.index[0]
+        # 檢查該日期的估值線是否為 0 (因為 clip(lower=0))
+        val_at_neg = fcf_res["2Y"].loc[test_date]
+        if val_at_neg['mean'] == 0:
+            print(f"✅ Pass: Negative FCF at {test_date.date()} resulted in 0 valuation band.")
+        else:
+            print(f"❌ Fail: Valuation band not grounded during negative FCF.")
+    else:
+        print("⚠️ Info: No negative FCF found in current cache for testing.")
+
+    # ---------------------------------------------------------
+    # 預期檢查 2: 策略自動切換 (AMZN 應使用 Median)
+    # ---------------------------------------------------------
+    # 驗證平均倍數是否在合理範圍 (AMZN 歷史 FCF 中位數約在 30-70 之間)
+    avg_fcf_5y = fcf_avgs["5Y"]
+    if 20 < avg_fcf_5y < 120:
+        print(f"✅ Pass: 5Y Average P/FCF ({avg_fcf_5y}) is within realistic analyst bounds (20-120).")
+    else:
+        print(f"❌ Fail: 5Y Average P/FCF ({avg_fcf_5y}) is unrealistic. Clipping or Median logic might have failed.")
+
+    # ---------------------------------------------------------
+    # 預期檢查 3: Band 的穩定性 (檢查標準差)
+    # ---------------------------------------------------------
+    # 檢查 2023 年（FCF 恢復期）的 Band 寬度是否合理
+    # 如果 Band 炸開，up2 會遠高於 mean
+    sample_date = pd.to_datetime("2023-12-01")
+    if sample_date in fcf_res["2Y"].index:
+        row = fcf_res["2Y"].loc[sample_date]
+        ratio = row['up2'] / row['mean'] if row['mean'] > 0 else 0
+        if ratio < 2.5: # 經驗法則：up2 不應超過 mean 的 2.5 倍
+            print(f"✅ Pass: Valuation bands are stable at {sample_date.date()}. (Spread ratio: {ratio:.2f})")
+        else:
+            print(f"❌ Fail: Valuation bands are too wide at {sample_date.date()}. (Spread ratio: {ratio:.2f})")
+
+    print("\n✨ Diagnostic Completed.")
 
 # --- 5. 主程序 ---
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     # 呼叫 Debug
-    ## debug_valuation("AAPL")
+    test_amzn_valuation_logic()
 
     for ticker in DOW_30:
         print(f"\n🏗️  Pipeline Starting: {ticker}")
