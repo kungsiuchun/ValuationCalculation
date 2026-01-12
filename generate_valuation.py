@@ -100,7 +100,7 @@ def calculate_bands(ticker, prices_adj, metrics_df, col_name):
     
     # --- 基本計算 ---
     # 簡單插值填充季度間空白
-    df['metric_val'] = df[col_name].ffill().interpolate()
+    df['metric_val'] = df[col_name].ffill().interpolate(method='time').ffill().bfill()
     
     # 計算倍數 (原始價格 / 原始指標)
     df['multiple'] = df['Close'] / df['metric_val'].replace(0, np.nan)
