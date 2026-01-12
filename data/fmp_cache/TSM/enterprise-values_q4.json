@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "TSM",
+        "date": "2024-12-31",
+        "stockPrice": 6486.4,
+        "numberOfShares": 5185511200,
+        "marketCapitalization": 33635305333950,
+        "minusCashAndCashEquivalents": 2127627000000,
+        "addTotalDebt": 1047042100000,
+        "enterpriseValue": 32554720433950
+    },
+    {
+        "symbol": "TSM",
+        "date": "2023-12-31",
+        "stockPrice": 3190.62,
+        "numberOfShares": 5186414200,
+        "marketCapitalization": 16547856129147,
+        "minusCashAndCashEquivalents": 1465427800000,
+        "addTotalDebt": 956257900000,
+        "enterpriseValue": 16038686229147
+    },
+    {
+        "symbol": "TSM",
+        "date": "2022-12-31",
+        "stockPrice": 2280.96,
+        "numberOfShares": 5186076000,
+        "marketCapitalization": 11829223044770,
+        "minusCashAndCashEquivalents": 1342814100000,
+        "addTotalDebt": 888174400000,
+        "enterpriseValue": 11374583344770
+    },
+    {
+        "symbol": "TSM",
+        "date": "2021-12-31",
+        "stockPrice": 3324.47,
+        "numberOfShares": 5186076000,
+        "marketCapitalization": 17240933724371,
+        "minusCashAndCashEquivalents": 1064990200000,
+        "addTotalDebt": 753631900000,
+        "enterpriseValue": 16929575424371
+    },
+    {
+        "symbol": "TSM",
+        "date": "2020-12-31",
+        "stockPrice": 3047.78,
+        "numberOfShares": 5186076000,
+        "marketCapitalization": 15806003360495,
+        "minusCashAndCashEquivalents": 660170600000,
+        "addTotalDebt": 367792300000,
+        "enterpriseValue": 15513625060495
+    }
+]

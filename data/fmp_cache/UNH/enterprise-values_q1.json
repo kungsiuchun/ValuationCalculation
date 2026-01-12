@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "UNH",
+        "date": "2025-03-31",
+        "stockPrice": 523.75,
+        "numberOfShares": 918000000,
+        "marketCapitalization": 480802500000,
+        "minusCashAndCashEquivalents": 30717000000,
+        "addTotalDebt": 81271000000,
+        "enterpriseValue": 531356500000
+    },
+    {
+        "symbol": "UNH",
+        "date": "2024-03-31",
+        "stockPrice": 489.7,
+        "numberOfShares": 920000000,
+        "marketCapitalization": 450524000000,
+        "minusCashAndCashEquivalents": 28414000000,
+        "addTotalDebt": 73637000000,
+        "enterpriseValue": 495747000000
+    },
+    {
+        "symbol": "UNH",
+        "date": "2023-03-31",
+        "stockPrice": 472.59,
+        "numberOfShares": 932000000,
+        "marketCapitalization": 440453880000,
+        "minusCashAndCashEquivalents": 41913000000,
+        "addTotalDebt": 70588000000,
+        "enterpriseValue": 469128880000
+    },
+    {
+        "symbol": "UNH",
+        "date": "2022-03-31",
+        "stockPrice": 509.97,
+        "numberOfShares": 939000000,
+        "marketCapitalization": 478861830000,
+        "minusCashAndCashEquivalents": 25482000000,
+        "addTotalDebt": 47493000000,
+        "enterpriseValue": 500872830000
+    },
+    {
+        "symbol": "UNH",
+        "date": "2021-03-31",
+        "stockPrice": 372.07,
+        "numberOfShares": 944000000,
+        "marketCapitalization": 351234080000,
+        "minusCashAndCashEquivalents": 19955000000,
+        "addTotalDebt": 46258000000,
+        "enterpriseValue": 377537080000
+    }
+]
