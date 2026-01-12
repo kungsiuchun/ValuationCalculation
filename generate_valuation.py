@@ -224,7 +224,8 @@ def main():
             "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # 加入這行
             "averages": {
                 "pe": pe_avgs, 
-                "fcf": fcf_avgs
+                "fcf": fcf_avgs,
+                "ps": ps_avgs
             }, 
             "data": history
         }
