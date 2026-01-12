@@ -76,72 +76,62 @@ def build_quarterly_ttm(ticker):
 
     return df_main[['eps_ttm']].dropna(), df_main[['fcf_ps_ttm']].dropna()
 
-def calculate_bands(ticker, prices, metrics_df, col_name):
+def calculate_bands(ticker, prices_adj, metrics_df, col_name):
     """
-    [Data Engineering Version 5.0] 
-    徹底修復階梯狀突變 (Stepped lines) 與離群值。
+    1. 統一時區 (Fix TypeError)
+    2. 使用 Raw Price 與財報量級對齊
+    3. 簡單 Rolling Mean 唔搞複雜邏輯
     """
     tk = yf.Ticker(ticker)
-    adj_metrics = metrics_df.copy()
+    # 重新抓取未經調整的原始價格
+    hist = tk.history(period="5y", auto_adjust=False)
+    raw_prices = hist['Close'].copy()
     
-    # --- 1. 拆分調整 (確保變數定義正確) ---
-    splits = tk.splits
-    if not splits.empty:
-        for split_date, ratio in splits.items():
-            split_date_naive = split_date.tz_localize(None)
-            adj_metrics.loc[adj_metrics.index < split_date_naive, col_name] /= ratio
+    # --- 時區處理：統一化為 tz-naive ---
+    if raw_prices.index.tz is not None:
+        raw_prices.index = raw_prices.index.tz_localize(None)
+    
+    # 確保財報數據亦係 tz-naive (通常已經係，但做多步保險)
+    if metrics_df.index.tz is not None:
+        metrics_df.index = metrics_df.index.tz_localize(None)
 
-    # --- 2. 核心：日級平滑插值 (防止階梯狀出現) ---
-    # 先將價格與指標合併到每日時間軸
-    df = pd.concat([prices, adj_metrics], axis=1).sort_index()
+    # --- 數據合併 ---
+    df = pd.concat([raw_prices, metrics_df], axis=1).sort_index()
     
-    # 關鍵：使用時間插值填充季度間的空白，令分母每日都在微變，而非每季跳變
-    df['val_smooth'] = df[col_name].interpolate(method='time').ffill().bfill()
-
-    # --- 3. 計算倍數與 Winsorization (縮尾) ---
-    # 避免分母接近 0 導致倍數炸裂
-    df['raw_mult'] = np.where(df['val_smooth'] > 1e-4, df['Close'] / df['val_smooth'], np.nan)
-    df['mult_filled'] = df['raw_mult'].ffill().bfill()
+    # --- 基本計算 ---
+    # 簡單插值填充季度間空白
+    df['metric_val'] = df[col_name].ffill().interpolate()
     
-    # 排除極端 15% 噪聲
-    q_low = df['mult_filled'].quantile(0.15)
-    q_high = df['mult_filled'].quantile(0.85)
-    df['mult_capped'] = df['mult_filled'].clip(lower=q_low, upper=q_high)
+    # 計算倍數 (原始價格 / 原始指標)
+    df['multiple'] = df['Close'] / df['metric_val'].replace(0, np.nan)
+    
+    # 處理倍數中的空值
+    df['multiple'] = df['multiple'].ffill().bfill()
 
     results = {}
     avgs = {}
+    windows = {'1Y': 252, '2Y': 504, '3Y': 756, '5Y': 1260}
 
-    
+    for label, window in windows.items():
+        # 簡單 Rolling Mean，唔做 Winsorization 或其他濾波
+        m_col = df['multiple'].rolling(window=window, min_periods=20).mean()
+        s_col = df['multiple'].rolling(window=window, min_periods=20).std()
 
-    for label, window in WINDOWS.items():
-        # --- 4. Rolling Mean + 指數加權平滑 (雙重保險) ---
-        # 首先計 Rolling Mean
-        m_col = df['mult_capped'].rolling(window=window, min_periods=1).mean()
-        
-        # 再用 EWM (指數移動平均) 消除微小鋸齒，span=20 代表大約一個月的平滑
-        m_col = m_col.ewm(span=20, adjust=False).mean().ffill().bfill()
-        
-        # 標準差同樣平滑處理
-        s_col = df['mult_capped'].rolling(window=window, min_periods=1).std().fillna(0)
-        s_col = s_col.ewm(span=20, adjust=False).mean().ffill().bfill()
-        
-        # 限制帶寬
-        s_col = np.minimum(s_col, m_col * 0.2)
+        # 將「原始倍數」套用到「當前價格體系 (Adjusted)」
+        # adj_ratio = 目前股價(已調整) / 原始股價(未調整)
+        # 用個比例將計出嚟嘅軌道縮放返去現價量級
+        adj_ratio = prices_adj / raw_prices
+        adj_metric = df['metric_val'] * adj_ratio
 
-        # --- 5. 生成最終平滑數據 ---
-        v_base = df['val_smooth'].clip(lower=0.01)
-        
         res = pd.DataFrame(index=df.index)
-        res['mean'] = m_col * v_base
-        res['up1'] = (m_col + s_col) * v_base
-        res['up2'] = (m_col + 2 * s_col) * v_base
-        res['down1'] = (m_col - s_col) * v_base
-        res['down2'] = (m_col - 2 * s_col) * v_base
-        
-        # 最終清洗 NaN 與 Inf
-        final_df = res.clip(lower=0.01).round(2)
-        results[label] = final_df.replace([np.inf, -np.inf], 0).fillna(0)
-        avgs[label] = round(float(m_col.iloc[-1]), 2)
+        res['mean'] = m_col * adj_metric
+        res['up1'] = (m_col + s_col) * adj_metric
+        res['up2'] = (m_col + 2 * s_col) * adj_metric
+        res['down1'] = (m_col - s_col) * adj_metric
+        res['down2'] = (m_col - 2 * s_col) * adj_metric
+
+        results[label] = res.ffill().bfill().round(2)
+        avgs[label] = round(float(m_col.dropna().iloc[-1]), 2) if not m_col.dropna().empty else 0
 
     return results, avgs
 
