@@ -88,49 +88,37 @@ def calculate_multi_period_bands(ticker, prices, metrics, name):
         for d, r in tk.splits.items():
             metrics.loc[metrics.index < d.tz_localize(None)] /= r
 
+    # 對齊與插值 (bfill/ffill 確保數據連續)
     df = pd.concat([prices, metrics], axis=1).sort_index()
     df[f'{name}_val'] = df[name].interpolate(method='time', limit_direction='both').ffill().bfill()
     df = df.dropna(subset=['Close']).copy()
     
-    # [B] 核心優化 1：過濾「過小」或「負數」的指標
-    # 如果財務指標（EPS/FCF）太小，會導致倍數無限大。我們將這類噪點設為 NaN。
-    # 這裡設定：指標必須大於其歷史中位數的 5%
-    min_threshold = df[f'{name}_val'].median() * 0.05
-    valid_mask = df[f'{name}_val'] > min_threshold
+    # 關鍵優化：過濾掉接近 0 的盈餘，防止倍數噴發
+    floor = df[f'{name}_val'].replace(0, np.nan).abs().median() * 0.1
+    valid_mask = df[f'{name}_val'] > floor
     
     df['mult'] = np.nan
     df.loc[valid_mask, 'mult'] = df['Close'] / df[f'{name}_val']
     
-    # [C] 核心優化 2：使用更嚴格的百分位截斷
-    # 只取 20% - 80% 的區間，排除掉所有極端波動
-    q_low = df['mult'].quantile(0.20)
-    q_high = df['mult'].quantile(0.80)
-    df['mult_clean'] = df['mult'].clip(lower=q_low, upper=q_high)
+    # 嚴格百分位截斷 (只取歷史 20%~80%)
+    df['mult_clean'] = df['mult'].clip(lower=df['mult'].quantile(0.2), upper=df['mult'].quantile(0.8))
 
     results = {}
     avgs = {}
 
     for label, window in WINDOWS.items():
-        # [D] 核心優化 3：全面改用 Median (中位數) 確保平滑
-        # 中位數是對付 AMZN 這種圖表最有效的武器
-        m_col = df['mult_clean'].rolling(window=window, min_periods=max(1, int(window*0.1))).median().bfill().ffill()
-        s_col = df['mult_clean'].rolling(window=window, min_periods=max(1, int(window*0.1))).std().fillna(0).bfill().ffill()
-        
-        # 限制標準差不要噴得太誇張
-        s_col = s_col.clip(upper=m_col * 0.3) 
+        # 全面改用 Rolling Median (滾動中位數) 確保平滑
+        m_col = df['mult_clean'].rolling(window=window, min_periods=1).median().bfill().ffill()
+        s_col = df['mult_clean'].rolling(window=window, min_periods=1).std().fillna(0).bfill().ffill()
+        s_col = s_col.clip(upper=m_col * 0.3) # 限制寬度
 
         v = df[f'{name}_val']
         res = pd.DataFrame(index=df.index)
-        # 生成估值線
-        res['mean'] = m_col * v
-        res['up1'] = (m_col + s_col) * v
-        res['up2'] = (m_col + 2 * s_col) * v
-        res['down1'] = (m_col - s_col) * v
-        res['down2'] = (m_col - 2 * s_col) * v
-        
-        # [E] 最終保護：確保估值帶不會變成負數（圖三的問題）
-        for col in ['mean', 'up1', 'up2', 'down1', 'down2']:
-            res[col] = res[col].clip(lower=0)
+        res['mean'] = (m_col * v).clip(lower=0)
+        res['up1'] = ((m_col + s_col) * v).clip(lower=0)
+        res['up2'] = ((m_col + 2 * s_col) * v).clip(lower=0)
+        res['down1'] = ((m_col - s_col) * v).clip(lower=0)
+        res['down2'] = ((m_col - 2 * s_col) * v).clip(lower=0)
         
         results[label] = res
         avgs[label] = round(m_col.iloc[-1], 2)
