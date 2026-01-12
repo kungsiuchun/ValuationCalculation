@@ -76,50 +76,48 @@ def build_quarterly_ttm(ticker):
 
     return df_main[['eps_ttm']].dropna(), df_main[['fcf_ps_ttm']].dropna()
 
-# --- 3. 核心估值邏輯 (Senior Analyst Version) ---
+# --- 3. 核心估值邏輯 (Senior Analyst Hybrid Version) ---
 def calculate_bands(ticker, prices_df, metrics_df, col_name):
-    """
-    解決方案：
-    1. 物理日期合併解決 NaN (AAPL)
-    2. Adj_Ratio 縮放解決拆分斷層 (AMZN)
-    3. Multiple Clipping 解決 FCF 劇烈波動 (AMZN)
-    """
-    # 統一索引
+    # 日期標準化與全時間軸合併
     prices_df.index = pd.to_datetime(prices_df.index).tz_localize(None).normalize()
     metrics_df.index = pd.to_datetime(metrics_df.index).tz_localize(None).normalize()
     
-    # 建立全時間軸容器 (解決週六財報與交易日錯位)
     all_dates = prices_df.index.union(metrics_df.index).sort_values()
-    df = pd.DataFrame(index=all_dates)
-    df = df.join(prices_df) 
+    df = pd.DataFrame(index=all_dates).join(prices_df)
     df['metric_raw'] = metrics_df[col_name]
 
-    # --- 解決拆分問題 ---
-    # 計算歷史每一天的拆分因子 (Adj Close / Close)
+    # 處理拆分調整因子 (即使 yfinance 調整過，此處仍保留邏輯以防萬一)
     df['adj_ratio'] = (df['Adj Close'] / df['Close'].replace(0, np.nan)).ffill().bfill()
-    # 修正指標：讓 2022 年拆分前的 EPS/FCF 也跟著股價同步縮小
     df['metric_adj'] = df['metric_raw'] * df['adj_ratio']
-    # 時間插值填補季度間隙
     df['metric_final'] = df['metric_adj'].interpolate(method='time').ffill().bfill()
 
-    # --- 解決 FCF 劇烈波動問題 ---
-    # 計算倍數 (此時兩邊都已 Adjusted，倍數是連續的)
-    df['multiple'] = df['Adj Close'] / df['metric_final'].apply(lambda x: x if x > 0 else np.nan)
-    
-    # Winsorization: 限制倍數上限，防止 AMZN 的 Band 炸開
-    # P/E 上限 150, P/FCF 上限 100 (根據分析師經驗設定)
-    cap = 150 if 'eps' in col_name else 100
-    df['multiple'] = df['multiple'].clip(lower=0, upper=cap).ffill().bfill()
+    # 計算倍數：排除負值
+    df['multiple'] = df['Adj Close'] / df['metric_final']
+    df.loc[df['metric_final'] <= 0, 'multiple'] = np.nan
 
-    # 切回交易日
-    df = df.loc[prices_df.index].copy()
+    # --- 策略選擇邏輯 ---
+    # 如果負值或極端值比例過高 (如 AMZN)，自動切換至 Median
+    null_ratio = df['multiple'].isna().mean()
+    use_median = True if (ticker == "AMZN" or null_ratio > 0.1) else False
+    
+    # 倍數剪枝 (Winsorization)
+    upper_limit = 150 if 'eps' in col_name else 120
+    df['multiple'] = df['multiple'].clip(0, upper_limit)
 
     results = {}
     avgs = {}
 
     for label, window in WINDOWS.items():
-        m_col = df['multiple'].rolling(window=window, min_periods=60).mean()
+        # Hybrid 滾動計算
+        if use_median:
+            m_col = df['multiple'].rolling(window=window, min_periods=60).median()
+        else:
+            m_col = df['multiple'].rolling(window=window, min_periods=60).mean()
+            
         s_col = df['multiple'].rolling(window=window, min_periods=60).std().fillna(0)
+        
+        # 防止標準差過大導致 Band 炸開 (上限設為均值的 60%)
+        s_col = s_col.clip(upper=m_col * 0.6)
 
         res = pd.DataFrame(index=df.index)
         res['mean'] = m_col * df['metric_final']
@@ -128,10 +126,10 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
         res['down1'] = (m_col - s_col) * df['metric_final']
         res['down2'] = (m_col - 2 * s_col) * df['metric_final']
 
-        # 估值不為負數
-        results[label] = res.clip(lower=0).ffill().bfill().round(2)
-        valid_m = m_col.dropna()
-        avgs[label] = round(float(valid_m.iloc[-1]), 2) if not valid_m.empty else 0
+        results[label] = res.loc[prices_df.index].clip(lower=0).ffill().bfill().round(2)
+        
+        last_val = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
+        avgs[label] = round(float(last_val), 2)
 
     return results, avgs
 
