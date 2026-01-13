@@ -1,5 +1,7 @@
 # 股票估值帶生成系統 (Stock Valuation Bands Generator)
 
+![Update Stocks Status](https://github.com/kungsiuchun/ValuationCalculation/actions/workflows/update.valuation.yaml/badge.svg)`
+
 這是一個基於 Python 的自動化數據管線，專門用於抓取美股財務報表與股價數據，並利用 **混合估值模型 (Hybrid Valuation)** 計算歷史估值區間（PE, P/FCF, P/S）。本系統特別針對 Amazon (AMZN) 等指標波動巨大的公司進行了 **中位數策略** 與 **百分位剪枝** 優化。
 
 ## 🚀 腳本核心流程 (Pipeline Decomposition)
