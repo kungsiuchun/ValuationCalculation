@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "TGT",
+        "date": "2025-01-31",
+        "stockPrice": 137.91,
+        "numberOfShares": 456800000,
+        "marketCapitalization": 62997288000,
+        "minusCashAndCashEquivalents": 4762000000,
+        "addTotalDebt": 19875000000,
+        "enterpriseValue": 78110288000
+    },
+    {
+        "symbol": "TGT",
+        "date": "2024-01-31",
+        "stockPrice": 139.08,
+        "numberOfShares": 461700000,
+        "marketCapitalization": 64213236000,
+        "minusCashAndCashEquivalents": 3805000000,
+        "addTotalDebt": 19646000000,
+        "enterpriseValue": 80054236000
+    },
+    {
+        "symbol": "TGT",
+        "date": "2023-01-31",
+        "stockPrice": 172.14,
+        "numberOfShares": 460300000,
+        "marketCapitalization": 79236042000,
+        "minusCashAndCashEquivalents": 2229000000,
+        "addTotalDebt": 19073000000,
+        "enterpriseValue": 96080042000
+    },
+    {
+        "symbol": "TGT",
+        "date": "2022-01-31",
+        "stockPrice": 220.43,
+        "numberOfShares": 476100000,
+        "marketCapitalization": 104946723000,
+        "minusCashAndCashEquivalents": 5911000000,
+        "addTotalDebt": 16467000000,
+        "enterpriseValue": 115502723000
+    },
+    {
+        "symbol": "TGT",
+        "date": "2021-01-31",
+        "stockPrice": 183.57,
+        "numberOfShares": 500800000,
+        "marketCapitalization": 91931856000,
+        "minusCashAndCashEquivalents": 8511000000,
+        "addTotalDebt": 15109000000,
+        "enterpriseValue": 98529856000
+    }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "DIS",
+        "date": "2025-09-27",
+        "stockPrice": 113.47,
+        "numberOfShares": 1804000000,
+        "marketCapitalization": 204699880000,
+        "minusCashAndCashEquivalents": 5695000000,
+        "addTotalDebt": 42026000000,
+        "enterpriseValue": 241030880000
+    },
+    {
+        "symbol": "DIS",
+        "date": "2024-09-28",
+        "stockPrice": 96.01,
+        "numberOfShares": 1814000000,
+        "marketCapitalization": 174162140000,
+        "minusCashAndCashEquivalents": 6002000000,
+        "addTotalDebt": 49517000000,
+        "enterpriseValue": 217677140000
+    },
+    {
+        "symbol": "DIS",
+        "date": "2023-09-30",
+        "stockPrice": 81.05,
+        "numberOfShares": 1831000000,
+        "marketCapitalization": 148402550000,
+        "minusCashAndCashEquivalents": 14182000000,
+        "addTotalDebt": 50672000000,
+        "enterpriseValue": 184892550000
+    },
+    {
+        "symbol": "DIS",
+        "date": "2022-09-30",
+        "stockPrice": 94.33,
+        "numberOfShares": 1824000000,
+        "marketCapitalization": 172057920000,
+        "minusCashAndCashEquivalents": 11615000000,
+        "addTotalDebt": 52259000000,
+        "enterpriseValue": 212701920000
+    },
+    {
+        "symbol": "DIS",
+        "date": "2021-09-30",
+        "stockPrice": 169.17,
+        "numberOfShares": 1816000000,
+        "marketCapitalization": 307212720000,
+        "minusCashAndCashEquivalents": 15959000000,
+        "addTotalDebt": 58313000000,
+        "enterpriseValue": 349566720000
+    }
+]

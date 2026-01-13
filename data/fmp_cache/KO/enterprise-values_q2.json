@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "KO",
+        "date": "2025-06-27",
+        "stockPrice": 70.33,
+        "numberOfShares": 4303000000,
+        "marketCapitalization": 302629990000,
+        "minusCashAndCashEquivalents": 9590000000,
+        "addTotalDebt": 49446000000,
+        "enterpriseValue": 342485990000
+    },
+    {
+        "symbol": "KO",
+        "date": "2024-06-28",
+        "stockPrice": 63.65,
+        "numberOfShares": 4309000000,
+        "marketCapitalization": 274267850000,
+        "minusCashAndCashEquivalents": 13708000000,
+        "addTotalDebt": 43817000000,
+        "enterpriseValue": 304376850000
+    },
+    {
+        "symbol": "KO",
+        "date": "2023-06-30",
+        "stockPrice": 60.22,
+        "numberOfShares": 4325000000,
+        "marketCapitalization": 260451500000,
+        "minusCashAndCashEquivalents": 12564000000,
+        "addTotalDebt": 41625000000,
+        "enterpriseValue": 289512500000
+    },
+    {
+        "symbol": "KO",
+        "date": "2022-07-01",
+        "stockPrice": 64.38,
+        "numberOfShares": 4331000000,
+        "marketCapitalization": 278829780000,
+        "minusCashAndCashEquivalents": 8976000000,
+        "addTotalDebt": 41901000000,
+        "enterpriseValue": 311754780000
+    },
+    {
+        "symbol": "KO",
+        "date": "2021-07-02",
+        "stockPrice": 54.18,
+        "numberOfShares": 4313000000,
+        "marketCapitalization": 233678340000,
+        "minusCashAndCashEquivalents": 9188000000,
+        "addTotalDebt": 42008000000,
+        "enterpriseValue": 266498340000
+    }
+]

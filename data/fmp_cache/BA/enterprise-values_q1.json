@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "BA",
+        "date": "2025-03-31",
+        "stockPrice": 170.55,
+        "numberOfShares": 753400000,
+        "marketCapitalization": 128492370000,
+        "minusCashAndCashEquivalents": 10142000000,
+        "addTotalDebt": 53618000000,
+        "enterpriseValue": 171968370000
+    },
+    {
+        "symbol": "BA",
+        "date": "2024-03-31",
+        "stockPrice": 189.5,
+        "numberOfShares": 612900000,
+        "marketCapitalization": 116144550000,
+        "minusCashAndCashEquivalents": 6914000000,
+        "addTotalDebt": 47940000000,
+        "enterpriseValue": 157170550000
+    },
+    {
+        "symbol": "BA",
+        "date": "2023-03-31",
+        "stockPrice": 212.43,
+        "numberOfShares": 600000000,
+        "marketCapitalization": 127458000000,
+        "minusCashAndCashEquivalents": 10812000000,
+        "addTotalDebt": 55391000000,
+        "enterpriseValue": 172037000000
+    },
+    {
+        "symbol": "BA",
+        "date": "2022-03-31",
+        "stockPrice": 191.5,
+        "numberOfShares": 591400000,
+        "marketCapitalization": 113253100000,
+        "minusCashAndCashEquivalents": 7409000000,
+        "addTotalDebt": 57741000000,
+        "enterpriseValue": 163585100000
+    },
+    {
+        "symbol": "BA",
+        "date": "2021-03-31",
+        "stockPrice": 254.72,
+        "numberOfShares": 585000000,
+        "marketCapitalization": 149011200000,
+        "minusCashAndCashEquivalents": 7059000000,
+        "addTotalDebt": 63575000000,
+        "enterpriseValue": 205527200000
+    }
+]

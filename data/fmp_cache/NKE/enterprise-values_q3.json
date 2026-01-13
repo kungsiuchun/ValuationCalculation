@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "NKE",
+        "date": "2025-02-28",
+        "stockPrice": 79.43,
+        "numberOfShares": 1487600000,
+        "marketCapitalization": 118160068000,
+        "minusCashAndCashEquivalents": 8601000000,
+        "addTotalDebt": 11911000000,
+        "enterpriseValue": 121470068000
+    },
+    {
+        "symbol": "NKE",
+        "date": "2024-02-29",
+        "stockPrice": 103.93,
+        "numberOfShares": 1522078000,
+        "marketCapitalization": 158189566540,
+        "minusCashAndCashEquivalents": 8960000000,
+        "addTotalDebt": 12101000000,
+        "enterpriseValue": 161330566540
+    },
+    {
+        "symbol": "NKE",
+        "date": "2023-02-28",
+        "stockPrice": 118.79,
+        "numberOfShares": 1543800000,
+        "marketCapitalization": 183388002000,
+        "minusCashAndCashEquivalents": 6955000000,
+        "addTotalDebt": 12566000000,
+        "enterpriseValue": 188999002000
+    },
+    {
+        "symbol": "NKE",
+        "date": "2022-02-28",
+        "stockPrice": 136.55,
+        "numberOfShares": 1579000000,
+        "marketCapitalization": 215612450000,
+        "minusCashAndCashEquivalents": 8704000000,
+        "addTotalDebt": 12657000000,
+        "enterpriseValue": 219565450000
+    },
+    {
+        "symbol": "NKE",
+        "date": "2021-02-28",
+        "stockPrice": 137.65,
+        "numberOfShares": 1578000000,
+        "marketCapitalization": 217211700000,
+        "minusCashAndCashEquivalents": 8516000000,
+        "addTotalDebt": 12850000000,
+        "enterpriseValue": 221545700000
+    }
+]

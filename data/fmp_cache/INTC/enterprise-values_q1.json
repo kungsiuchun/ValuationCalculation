@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "INTC",
+        "date": "2025-03-29",
+        "stockPrice": 22.71,
+        "numberOfShares": 4343000000,
+        "marketCapitalization": 98629530000,
+        "minusCashAndCashEquivalents": 8947000000,
+        "addTotalDebt": 50151000000,
+        "enterpriseValue": 139833530000
+    },
+    {
+        "symbol": "INTC",
+        "date": "2024-03-31",
+        "stockPrice": 44.52,
+        "numberOfShares": 4242000000,
+        "marketCapitalization": 188853840000,
+        "minusCashAndCashEquivalents": 6923000000,
+        "addTotalDebt": 52450000000,
+        "enterpriseValue": 234380840000
+    },
+    {
+        "symbol": "INTC",
+        "date": "2023-04-01",
+        "stockPrice": 32.67,
+        "numberOfShares": 4154000000,
+        "marketCapitalization": 135711180000,
+        "minusCashAndCashEquivalents": 8232000000,
+        "addTotalDebt": 50273000000,
+        "enterpriseValue": 177752180000
+    },
+    {
+        "symbol": "INTC",
+        "date": "2022-04-02",
+        "stockPrice": 48.11,
+        "numberOfShares": 4079000000,
+        "marketCapitalization": 196240690000,
+        "minusCashAndCashEquivalents": 6215000000,
+        "addTotalDebt": 37247000000,
+        "enterpriseValue": 227272690000
+    },
+    {
+        "symbol": "INTC",
+        "date": "2021-03-27",
+        "stockPrice": 64.87,
+        "numberOfShares": 4056000000,
+        "marketCapitalization": 263112720000,
+        "minusCashAndCashEquivalents": 5192000000,
+        "addTotalDebt": 35884000000,
+        "enterpriseValue": 293804720000
+    }
+]

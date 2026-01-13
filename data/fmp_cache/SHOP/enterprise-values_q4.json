@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "SHOP",
+        "date": "2024-12-31",
+        "stockPrice": 106.33,
+        "numberOfShares": 1294580000,
+        "marketCapitalization": 137652691400,
+        "minusCashAndCashEquivalents": 1498000000,
+        "addTotalDebt": 1126000000,
+        "enterpriseValue": 137280691400
+    },
+    {
+        "symbol": "SHOP",
+        "date": "2023-12-31",
+        "stockPrice": 77.9,
+        "numberOfShares": 1285499000,
+        "marketCapitalization": 100140372100,
+        "minusCashAndCashEquivalents": 1413000000,
+        "addTotalDebt": 1150000000,
+        "enterpriseValue": 99877372100
+    },
+    {
+        "symbol": "SHOP",
+        "date": "2022-12-31",
+        "stockPrice": 34.71,
+        "numberOfShares": 1273339000,
+        "marketCapitalization": 44197596690,
+        "minusCashAndCashEquivalents": 1649000000,
+        "addTotalDebt": 1396000000,
+        "enterpriseValue": 43944596690
+    },
+    {
+        "symbol": "SHOP",
+        "date": "2021-12-31",
+        "stockPrice": 137.74,
+        "numberOfShares": 1257348000,
+        "marketCapitalization": 173185856172,
+        "minusCashAndCashEquivalents": 2502992000,
+        "addTotalDebt": 1173487000,
+        "enterpriseValue": 171856351172
+    },
+    {
+        "symbol": "SHOP",
+        "date": "2020-12-31",
+        "stockPrice": 113.2,
+        "numberOfShares": 1254549000,
+        "marketCapitalization": 142008674055,
+        "minusCashAndCashEquivalents": 2703597000,
+        "addTotalDebt": 912895000,
+        "enterpriseValue": 140217972055
+    }
+]

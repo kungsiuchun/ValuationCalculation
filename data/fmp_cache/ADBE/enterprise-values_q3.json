@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "ADBE",
+        "date": "2025-08-29",
+        "stockPrice": 356.7,
+        "numberOfShares": 429000000,
+        "marketCapitalization": 153024300000,
+        "minusCashAndCashEquivalents": 4982000000,
+        "addTotalDebt": 6636000000,
+        "enterpriseValue": 154678300000
+    },
+    {
+        "symbol": "ADBE",
+        "date": "2024-08-30",
+        "stockPrice": 574.41,
+        "numberOfShares": 445000000,
+        "marketCapitalization": 255612450000,
+        "minusCashAndCashEquivalents": 7193000000,
+        "addTotalDebt": 6078000000,
+        "enterpriseValue": 254497450000
+    },
+    {
+        "symbol": "ADBE",
+        "date": "2023-09-01",
+        "stockPrice": 563.21,
+        "numberOfShares": 456000000,
+        "marketCapitalization": 256823760000,
+        "minusCashAndCashEquivalents": 6601000000,
+        "addTotalDebt": 4096000000,
+        "enterpriseValue": 254318760000
+    },
+    {
+        "symbol": "ADBE",
+        "date": "2022-09-02",
+        "stockPrice": 368.14,
+        "numberOfShares": 469000000,
+        "marketCapitalization": 172657660000,
+        "minusCashAndCashEquivalents": 3870000000,
+        "addTotalDebt": 4641000000,
+        "enterpriseValue": 173428660000
+    },
+    {
+        "symbol": "ADBE",
+        "date": "2021-09-03",
+        "stockPrice": 666.59,
+        "numberOfShares": 477000000,
+        "marketCapitalization": 317963430000,
+        "minusCashAndCashEquivalents": 4623000000,
+        "addTotalDebt": 4685000000,
+        "enterpriseValue": 318025430000
+    }
+]

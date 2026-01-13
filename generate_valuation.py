@@ -15,9 +15,9 @@ CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
 DOW_30 = [
     # "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
     # "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR"
-    "UNH",  "TSM"
-    # ,"DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
-    # "SHOP", "SBUX", "ADBE", 
+    # "UNH",  "TSM"
+    "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
+    "SHOP", "SBUX", "ADBE"
 ]
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
