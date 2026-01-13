@@ -13,10 +13,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
 DOW_30 = [
-    # "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
-    # "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR"
-    # "UNH",  "TSM"
-    "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
+    "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
+    "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR"
+    "UNH",  "TSM", "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
     "SHOP", "SBUX", "ADBE"
 ]
 
@@ -27,38 +26,70 @@ QUARTERS = ['q1', 'q2', 'q3', 'q4']
 def get_fmp_fragmented(endpoint, ticker):
     """
     [Data Engineering Logic]: 
-    自動建立對應 ticker 的子資料夾 (例如 fmp_cache/AMZN/)。
+    自動建立對應 ticker 的子資料夾，並實施『增量合併策略』。
+    防止新 API 數據覆蓋掉舊的歷史財報數據 (尤其是解決 FMP 5年限制)。
     """
-    combined = []
+    combined_all_quarters = []
     
     # 建立 ticker 專屬路徑：data/fmp_cache/{ticker}
     ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker.upper())
-    os.makedirs(ticker_cache_dir, exist_ok=True) # 自動建立多層目錄
+    os.makedirs(ticker_cache_dir, exist_ok=True) 
 
     for q in QUARTERS:
-        # 文件命名保持 endpoint 區分
         cache_path = os.path.join(ticker_cache_dir, f"{endpoint}_{q}.json")
         
-        # 緩存檢查 (7天有效期)
-        if os.path.exists(cache_path) and (time.time() - os.path.getmtime(cache_path)) < (7 * 86400):
-            with open(cache_path, 'r') as f:
-                combined.extend(json.load(f))
-            continue
+        # 1. 讀取現有的緩存數據 (如果存在)
+        existing_data = []
+        if os.path.exists(cache_path):
+            try:
+                with open(cache_path, 'r') as f:
+                    existing_data = json.load(f)
+            except Exception as e:
+                print(f"  ⚠️ [Warning] Failed to load cache {cache_path}: {e}")
+                existing_data = []
 
-        url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={FMP_API_KEY}"
-        
-        try:
-            print(f"  🚀 [API Call] Fetching {ticker} {endpoint} {q}...")
-            res = requests.get(url).json()
-            if isinstance(res, list):
-                with open(cache_path, 'w') as f:
-                    json.dump(res, f, indent=4) # 增加 indent 方便 DE 進行 Debug
-                combined.extend(res)
-            time.sleep(0.2)
-        except Exception as e:
-            print(f"  ❌ [Error] Failed to fetch {endpoint} {q}: {e}")
+        # 2. 檢查是否需要 call API (7天有效期)
+        # 如果文件不存在，或者已過期，則發起請求
+        is_expired = not os.path.exists(cache_path) or (time.time() - os.path.getmtime(cache_path)) > (7 * 86400)
+
+        if is_expired:
+            url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={FMP_API_KEY}"
+            try:
+                print(f"  🚀 [API Call] Fetching {ticker} {endpoint} {q} for incremental update...")
+                res = requests.get(url).json()
+                
+                if isinstance(res, list) and len(res) > 0:
+                    # --- 核心增量合併邏輯 ---
+                    # A. 建立一個以日期為 key 的 dictionary，優先放入「舊數據」
+                    data_map = {item['date']: item for item in existing_data}
+                    
+                    # B. 用「新數據」去更新/覆蓋相同的日期點 (確保最新數據最準確)
+                    # 如果是舊日期 API 沒回傳，則原本 data_map 裡的舊數據會被保留
+                    for item in res:
+                        data_map[item['date']] = item
+                    
+                    # C. 轉回列表並按日期排序 (由新到舊)
+                    merged_res = sorted(data_map.values(), key=lambda x: x['date'], reverse=True)
+                    
+                    # D. 寫回檔案 (這現在包含了 5 年前的歷史 + 剛抓到的新數據)
+                    with open(cache_path, 'w') as f:
+                        json.dump(merged_res, f, indent=4)
+                    
+                    # 將合併後的結果加入最終回傳清單
+                    combined_all_quarters.extend(merged_res)
+                else:
+                    # 如果 API 沒回傳新數據，至少保留舊數據
+                    combined_all_quarters.extend(existing_data)
+                    
+                time.sleep(0.2)
+            except Exception as e:
+                print(f"  ❌ [Error] Failed to fetch {endpoint} {q}: {e}")
+                combined_all_quarters.extend(existing_data)
+        else:
+            # 3. 緩存未過期，直接使用現有的完整緩存
+            combined_all_quarters.extend(existing_data)
             
-    return combined
+    return combined_all_quarters
 
 # --- 3. 轉換層 (Transform Layer) ---
 def build_quarterly_ttm(ticker):
