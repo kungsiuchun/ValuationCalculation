@@ -27,7 +27,7 @@ jobs:
     - name: Run Pipeline Script
       env:
         FMP_API_KEY: ${{ secrets.FMP_API_KEY }} # 建議存放在 GitHub Secrets
-      run: python valuation_pipeline.py
+      run: python generate_valuation.py
 
     - name: Commit and Push changes
       run: |

@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 
 # --- 1. 配置 ---
-FMP_API_KEY = "F9dROu64FwpDqETGsu1relweBEoTcpID"
+FMP_API_KEY = os.getenv('FMP_API_KEY')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
