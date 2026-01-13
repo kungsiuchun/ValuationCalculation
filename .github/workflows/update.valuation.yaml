@@ -56,5 +56,5 @@ jobs:
           echo "No changes detected, skipping commit."
         else
           git commit -m "🤖 Auto-update valuation data [$(date +'%Y-%m-%d')]"
-          git push origin main
+          git push origin master
         fi
