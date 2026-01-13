@@ -2,9 +2,9 @@ name: Update Valuation Data
 
 on:
   schedule:
-    # 每天美股收盤後運行 (例如 UTC 22:00，約台灣時間早上 6 點)
+    # 每天美股收盤後運行 (UTC 22:00，大約美東下午 5 點)
     - cron: '0 22 * * *'
-  workflow_dispatch: # 允許你手動按按鈕執行
+  workflow_dispatch: # 允許手動點擊按鈕執行
 
 jobs:
   build:
@@ -13,26 +13,48 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+      with:
+        # 確保有權限推回代碼
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.11' # 解決 Python 3.9 的類型標註錯誤
+
+    - name: Cache Pip Dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
 
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
+        # 如果你有 requirements.txt，可以用 pip install -r requirements.txt
         pip install requests pandas numpy yfinance
 
     - name: Run Pipeline Script
       env:
-        FMP_API_KEY: ${{ secrets.FMP_API_KEY }} # 建議存放在 GitHub Secrets
+        FMP_API_KEY: ${{ secrets.FMP_API_KEY }} 
       run: python generate_valuation.py
 
     - name: Commit and Push changes
       run: |
+        # 設置 Git 使用者資訊
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add data/*.json
-        git commit -m "🤖 Auto-update valuation data [$(date +'%Y-%m-%d')]" || exit 0
-        git push
+        
+        # 確保添加所有包含子資料夾的 JSON 數據
+        # 這樣增量更新後的 fmp_cache 才會被存入你的 Git 倉庫
+        git add data/fmp_cache/ data/results/
+        
+        # 檢查是否有實際變動，防止 commit 失敗導致 Workflow 報錯
+        if git diff --quiet && git diff --staged --quiet; then
+          echo "No changes detected, skipping commit."
+        else
+          git commit -m "🤖 Auto-update valuation data [$(date +'%Y-%m-%d')]"
+          git push origin main
+        fi

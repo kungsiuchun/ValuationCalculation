@@ -38,6 +38,8 @@
 ├── generate_valuation_final.py  # 核心腳本
 └── data/
     ├── fmp_cache/               # 原始財報緩存 (JSON 格式)
+    |    └── {TICKER}/
+    |       └──{endpoint}_{q}.json
     └── results/                 # 最終估值結果
         └── {TICKER}/
             └── valuation_summary.json  # 前端渲染調用的最終文件
