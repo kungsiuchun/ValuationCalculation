@@ -12,13 +12,13 @@ FMP_API_KEY = os.getenv('FMP_API_KEY')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = ["TSM"]
-# [
-#     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
-#     "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR",
-#     "UNH",  "TSM", "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
-#     "SHOP", "SBUX", "ADBE"
-# ]
+DOW_30 = 
+[
+    "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
+    "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR",
+    "UNH",  "TSM", "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
+    "SHOP", "SBUX", "ADBE"
+]
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
@@ -112,9 +112,6 @@ def build_quarterly_ttm(ticker):
     fx_rate = 32.5 if currency == "TWD" else 1.0  # 台積電數據通常是 TWD
     adr_ratio = 5.0 if ticker.upper() == "TSM" else 1.0 # 1 TSM = 5 股普通股
 
-    print(f"adr_ratio = {adr_ratio}")
-    print(f"fx_rate = {fx_rate}")
-
     # --- 計算 P/S 必備的 Revenue TTM ---
     # 先計算每季度的 Sales Per Share
     # 注意：Revenue 在 income-statement，numberOfShares 在 enterprise-values
@@ -131,7 +128,7 @@ def build_quarterly_ttm(ticker):
     df_main['sales_ps_adj'] = (df_main['revenue'] / df_main['numberOfShares'] ) / fx_rate
     df_main['eps_adj'] = (df_main['netIncome'] / df_main['numberOfShares'] ) / fx_rate
     df_main['fcf_ps_adj'] = (df_main['freeCashFlow'] / df_main['numberOfShares'] ) / fx_rate
-    
+
     # Set to None to display all columns
     # pd.set_option('display.max_columns', None)
 
