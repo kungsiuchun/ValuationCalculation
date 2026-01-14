@@ -12,12 +12,13 @@ FMP_API_KEY = os.getenv('FMP_API_KEY')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = [
-    "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
-    "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR",
-    "UNH",  "TSM", "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
-    "SHOP", "SBUX", "ADBE"
-]
+DOW_30 = ["TSM"]
+# [
+#     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
+#     "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR",
+#     "UNH",  "TSM", "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
+#     "SHOP", "SBUX", "ADBE"
+# ]
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
@@ -96,7 +97,7 @@ def build_quarterly_ttm(ticker):
     inc_list = get_fmp_fragmented("income-statement", ticker)
     cf_list = get_fmp_fragmented("cash-flow-statement", ticker)
     ev_list = get_fmp_fragmented("enterprise-values", ticker)
-    
+
     if not all([inc_list, cf_list, ev_list]): return None, None
 
     df_inc = pd.DataFrame(inc_list).drop_duplicates('date').set_index('date').sort_index()
@@ -106,22 +107,42 @@ def build_quarterly_ttm(ticker):
     for df in [df_inc, df_cf, df_ev]:
         df.index = pd.to_datetime(df.index).tz_localize(None)
 
-# --- 計算 P/S 必備的 Revenue TTM ---
+    # --- 關鍵修正：自動偵測匯率與 ADR 比例 ---
+    currency = df_inc['reportedCurrency'].iloc[-1] if 'reportedCurrency' in df_inc.columns else "USD"
+    fx_rate = 32.5 if currency == "TWD" else 1.0  # 台積電數據通常是 TWD
+    adr_ratio = 5.0 if ticker.upper() == "TSM" else 1.0 # 1 TSM = 5 股普通股
+
+    print(f"adr_ratio = {adr_ratio}")
+    print(f"fx_rate = {fx_rate}")
+
+    # --- 計算 P/S 必備的 Revenue TTM ---
     # 先計算每季度的 Sales Per Share
     # 注意：Revenue 在 income-statement，numberOfShares 在 enterprise-values
     df_main = pd.concat([
-        df_inc[['eps', 'revenue']], 
+        df_inc[['eps', 'revenue','netIncome']], 
         df_cf['freeCashFlow'], 
         df_ev['numberOfShares']
     ], axis=1).ffill()
     
+    # 統一使用總額除以 (總股數/ADR比例) 再除以匯率
+    # 這樣算出來才是「每一單位美金 ADR」對應的價值
     # 計算每股營收 (Sales Per Share)
-    df_main['sales_ps'] = df_main['revenue'] / df_main['numberOfShares']
+    
+    df_main['sales_ps_adj'] = (df_main['revenue'] / df_main['numberOfShares'] ) / fx_rate
+    df_main['eps_adj'] = (df_main['netIncome'] / df_main['numberOfShares'] ) / fx_rate
+    df_main['fcf_ps_adj'] = (df_main['freeCashFlow'] / df_main['numberOfShares'] ) / fx_rate
+    
+    # Set to None to display all columns
+    # pd.set_option('display.max_columns', None)
+
+    # # Prevents the dataframe from wrapping to a new line
+    # pd.set_option('display.expand_frame_repr', False)
     
     # 計算 TTM (滾動四個季度總和)
-    df_main['eps_ttm'] = df_main['eps'].rolling(window=4).sum()
-    df_main['fcf_ps_ttm'] = (df_main['freeCashFlow'] / df_main['numberOfShares']).rolling(window=4).sum()
-    df_main['sales_ps_ttm'] = df_main['sales_ps'].rolling(window=4).sum()
+    df_main['eps_ttm'] = df_main['eps_adj'].rolling(window=4).sum()
+    df_main['fcf_ps_ttm'] = df_main['fcf_ps_adj'].rolling(window=4).sum()
+    df_main['sales_ps_ttm'] = df_main['sales_ps_adj'].rolling(window=4).sum()
+
 
     return (
         df_main[['eps_ttm']].dropna(), 
