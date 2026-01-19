@@ -15,7 +15,8 @@ def load_and_normalize_data(ticker_path):
     data_store = {
         'income-statement': [],
         'cash-flow-statement': [],
-        'enterprise-values': [] # Added support for this file type
+        'enterprise-values': [], # Added support for this file type
+        'balance-sheet-statement': []
     }
     
     print(f"--- Scanning files for {ticker_path.name} ---")
@@ -30,6 +31,8 @@ def load_and_normalize_data(ticker_path):
             st_type = 'cash-flow-statement'
         elif 'enterprise-values' in filename:
             st_type = 'enterprise-values'
+        elif 'balance-sheet-statement' in filename:
+            st_type = 'balance-sheet-statement'
         else:
             print(f"⚠️  Skipping unknown file type: {filename}")
             continue

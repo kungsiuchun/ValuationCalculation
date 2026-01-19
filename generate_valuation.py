@@ -5,10 +5,19 @@ import yfinance as yf
 import json
 import os
 import time
+import logging
 from datetime import datetime
 
+# 設定日誌格式
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger(__name__)
+
 # --- 1. 配置 ---
-FMP_API_KEY = os.getenv('FMP_API_KEY')
+FMP_API_KEY = os.getenv('FMP_API_KEY', 'F9dROu64FwpDqETGsu1relweBEoTcpID')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
@@ -21,6 +30,36 @@ DOW_30 = [
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
+CACHE_EXPIRY_DAYS = 7
+
+# --- Helper Functions --- Get latest processed quarter --- 
+def get_latest_processed_quarter(ticker):
+    processed_dir = f"data/processed/{ticker}_combined.json"
+    if os.path.exists(processed_dir):
+        try:
+            with open(processed_dir, 'r') as f:
+                processed_data = json.load(f)
+                if processed_data and isinstance(processed_data, list):
+                    latest_item = max(processed_data, key=lambda item: datetime.strptime(item['date'], '%Y-%m-%d') if 'date' in item else datetime.min)
+                    # Find the item with the maximum date
+                    if latest_item and 'date' in latest_item and 'fiscalYear' in latest_item and 'period' in latest_item:
+                        quarter = latest_item['period']
+                        return f"{quarter}"
+        except Exception as e:
+            print(f"  ⚠️ [Warning] Failed to read processed data from {processed_dir}: {e}")
+    return None
+
+def get_next_quarter(current_q_str):
+    """
+    Input: 'Q3' -> Output: 'Q4'
+    Input: 'Q4' -> Output: 'Q1'
+    """
+    q_num = int(current_q_str[-1])
+    
+    if q_num < 4:
+        return f"q{q_num + 1}"
+    else:
+        return "q1"
 
 # --- 2. 抽取層 (Extract Layer) ---
 def get_fmp_fragmented(endpoint, ticker):
@@ -29,75 +68,95 @@ def get_fmp_fragmented(endpoint, ticker):
     自動建立對應 ticker 的子資料夾，並實施『增量合併策略』。
     防止新 API 數據覆蓋掉舊的歷史財報數據 (尤其是解決 FMP 5年限制)。
     """
+    ticker = ticker.upper()
     combined_all_quarters = []
-    
-    # 建立 ticker 專屬路徑：data/fmp_cache/{ticker}
-    ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker.upper())
-    os.makedirs(ticker_cache_dir, exist_ok=True) 
+    ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker)
+    os.makedirs(ticker_cache_dir, exist_ok=True)
 
+    # 1. 獲取最新已處理的季度，決定增量抓取的目標
+    latest_q = get_latest_processed_quarter(ticker)
+    next_q = get_next_quarter(latest_q) if latest_q else None
+    
+    logger.info(f"<{ticker}> Start fragmented fetch. Latest processed: {latest_q}")
+
+    # 2. 遍歷四季進行處理
     for q in QUARTERS:
+        print("--- Processing", q, "for", ticker, "---")
         cache_path = os.path.join(ticker_cache_dir, f"{endpoint}_{q}.json")
+        is_target_increment = (q == next_q)
         
-        # 1. 讀取現有的緩存數據 (如果存在)
+        # 檢查緩存狀態
+        cache_exists = os.path.exists(cache_path)
+        is_expired = False
+        if cache_exists:
+            mtime = os.path.getmtime(cache_path)
+            is_expired = (time.time() - mtime) > (CACHE_EXPIRY_DAYS * 86400)
+
+        # 決定是否需要調用 API
+        # 條件：緩存不存在 OR 該季度是我們追蹤的「下一個增量點」且已過期
+        needs_api_call = not cache_exists or (is_target_increment and is_expired)
+        print(f"needs_api_call for {ticker} {q}: {needs_api_call}")
+
         existing_data = []
-        if os.path.exists(cache_path):
+        if cache_exists:
             try:
                 with open(cache_path, 'r') as f:
+                    logger.info(f"<{ticker}> Loading existing cache for {q}...")
                     existing_data = json.load(f)
             except Exception as e:
-                print(f"  ⚠️ [Warning] Failed to load cache {cache_path}: {e}")
-                existing_data = []
+                logger.error(f"<{ticker}> Failed to load cache {q}: {e}")
 
-        # 2. 檢查是否需要 call API (7天有效期)
-        # 如果文件不存在，或者已過期，則發起請求
-        is_expired = not os.path.exists(cache_path) or (time.time() - os.path.getmtime(cache_path)) > (7 * 86400)
-
-        if is_expired:
+        if needs_api_call:
+            action = "Incremental Update" if cache_exists else "Initial Fetch"
+            logger.info(f"<{ticker}> {action} for {q}...")
+            
             url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={FMP_API_KEY}"
             try:
-                print(f"  🚀 [API Call] Fetching {ticker} {endpoint} {q} for incremental update...")
-                res = requests.get(url).json()
-                
-                if isinstance(res, list) and len(res) > 0:
-                    # --- 核心增量合併邏輯 ---
-                    # A. 建立一個以日期為 key 的 dictionary，優先放入「舊數據」
-                    data_map = {item['date']: item for item in existing_data}
-                    
-                    # B. 用「新數據」去更新/覆蓋相同的日期點 (確保最新數據最準確)
-                    # 如果是舊日期 API 沒回傳，則原本 data_map 裡的舊數據會被保留
-                    for item in res:
-                        data_map[item['date']] = item
-                    
-                    # C. 轉回列表並按日期排序 (由新到舊)
-                    merged_res = sorted(data_map.values(), key=lambda x: x['date'], reverse=True)
-                    
-                    # D. 寫回檔案 (這現在包含了 5 年前的歷史 + 剛抓到的新數據)
-                    with open(cache_path, 'w') as f:
-                        json.dump(merged_res, f, indent=4)
-                    
-                    # 將合併後的結果加入最終回傳清單
-                    combined_all_quarters.extend(merged_res)
+                response = requests.get(url)
+                response.raise_for_status() # 檢查 HTTP 狀態碼
+                res_json = response.json()
+
+                if isinstance(res_json, list):
+                    if len(res_json) > 0:
+                        # 執行增量合併邏輯
+                        data_map = {item['date']: item for item in existing_data}
+                        for item in res_json:
+                            data_map[item['date']] = item
+                        
+                        merged_res = sorted(data_map.values(), key=lambda x: x['date'], reverse=True)
+                        
+                        with open(cache_path, 'w') as f:
+                            json.dump(merged_res, f, indent=4)
+                        
+                        existing_data = merged_res
+                        logger.info(f"<{ticker}> {q} Cache updated. Records: {len(merged_res)}")
+                    else:
+                        logger.warning(f"<{ticker}> API returned empty list for {q}.")
                 else:
-                    # 如果 API 沒回傳新數據，至少保留舊數據
-                    combined_all_quarters.extend(existing_data)
-                    
-                time.sleep(0.2)
+                    # 處理 API 回傳錯誤訊息的情況 (例如：Invalid API Key)
+                    error_msg = res_json.get("Error Message", "Unknown API error")
+                    logger.error(f"<{ticker}> API Error for {q}: {error_msg}")
+                
+                time.sleep(0.1) # 稍微降低頻率，避免 Rate Limit
             except Exception as e:
-                print(f"  ❌ [Error] Failed to fetch {endpoint} {q}: {e}")
-                combined_all_quarters.extend(existing_data)
-        else:
-            # 3. 緩存未過期，直接使用現有的完整緩存
-            combined_all_quarters.extend(existing_data)
-            
-    return combined_all_quarters
+                logger.error(f"<{ticker}> Critical error fetching {q}: {e}")
+
+        # 將數據匯總到最終結果
+        combined_all_quarters.extend(existing_data)
+
+    logger.info(f"<{ticker}> Completed. Total records across all quarters: {len(combined_all_quarters)}")
+    return combined_all_quarters  
+    
 
 # --- 3. 轉換層 (Transform Layer) ---
 def build_quarterly_ttm(ticker):
     inc_list = get_fmp_fragmented("income-statement", ticker)
     cf_list = get_fmp_fragmented("cash-flow-statement", ticker)
     ev_list = get_fmp_fragmented("enterprise-values", ticker)
+    bs_list = get_fmp_fragmented("balance-sheet-statement", ticker)
 
-    if not all([inc_list, cf_list, ev_list]): return None, None
+
+    if not all([inc_list, cf_list, ev_list, bs_list]): return None, None
 
     df_inc = pd.DataFrame(inc_list).drop_duplicates('date').set_index('date').sort_index()
     df_cf = pd.DataFrame(cf_list).drop_duplicates('date').set_index('date').sort_index()
@@ -109,7 +168,6 @@ def build_quarterly_ttm(ticker):
     # --- 關鍵修正：自動偵測匯率與 ADR 比例 ---
     currency = df_inc['reportedCurrency'].iloc[-1] if 'reportedCurrency' in df_inc.columns else "USD"
     fx_rate = 32.5 if currency == "TWD" else 1.0  # 台積電數據通常是 TWD
-    adr_ratio = 5.0 if ticker.upper() == "TSM" else 1.0 # 1 TSM = 5 股普通股
 
     # --- 計算 P/S 必備的 Revenue TTM ---
     # 先計算每季度的 Sales Per Share
