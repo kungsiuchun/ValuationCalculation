@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "AAL",
+        "date": "2024-12-31",
+        "stockPrice": 17.43,
+        "numberOfShares": 656996000,
+        "marketCapitalization": 11451440280,
+        "minusCashAndCashEquivalents": 804000000,
+        "addTotalDebt": 37544000000,
+        "enterpriseValue": 48191440280
+    },
+    {
+        "symbol": "AAL",
+        "date": "2023-12-31",
+        "stockPrice": 13.74,
+        "numberOfShares": 654725000,
+        "marketCapitalization": 8995921500,
+        "minusCashAndCashEquivalents": 578000000,
+        "addTotalDebt": 40663000000,
+        "enterpriseValue": 49080921500
+    },
+    {
+        "symbol": "AAL",
+        "date": "2022-12-31",
+        "stockPrice": 12.72,
+        "numberOfShares": 650944000,
+        "marketCapitalization": 8280007680,
+        "minusCashAndCashEquivalents": 440000000,
+        "addTotalDebt": 43687000000,
+        "enterpriseValue": 51527007680
+    },
+    {
+        "symbol": "AAL",
+        "date": "2021-12-31",
+        "stockPrice": 17.96,
+        "numberOfShares": 648766000,
+        "marketCapitalization": 11651837360,
+        "minusCashAndCashEquivalents": 273000000,
+        "addTotalDebt": 46177000000,
+        "enterpriseValue": 57555837360
+    },
+    {
+        "symbol": "AAL",
+        "date": "2020-12-31",
+        "stockPrice": 15.77,
+        "numberOfShares": 571984000,
+        "marketCapitalization": 9020187680,
+        "minusCashAndCashEquivalents": 245000000,
+        "addTotalDebt": 41021000000,
+        "enterpriseValue": 49796187680
+    }
+]

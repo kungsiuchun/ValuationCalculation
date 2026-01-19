@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "LMT",
+        "date": "2025-03-30",
+        "stockPrice": 446.71,
+        "numberOfShares": 234400000,
+        "marketCapitalization": 104708824000,
+        "minusCashAndCashEquivalents": 1803000000,
+        "addTotalDebt": 20304000000,
+        "enterpriseValue": 123209824000
+    },
+    {
+        "symbol": "LMT",
+        "date": "2024-03-31",
+        "stockPrice": 452.79,
+        "numberOfShares": 240700000,
+        "marketCapitalization": 108986553000,
+        "minusCashAndCashEquivalents": 2790000000,
+        "addTotalDebt": 19418000000,
+        "enterpriseValue": 125614553000
+    },
+    {
+        "symbol": "LMT",
+        "date": "2023-03-26",
+        "stockPrice": 473.39,
+        "numberOfShares": 254700000,
+        "marketCapitalization": 120572433000,
+        "minusCashAndCashEquivalents": 2440000000,
+        "addTotalDebt": 15600000000,
+        "enterpriseValue": 133732433000
+    },
+    {
+        "symbol": "LMT",
+        "date": "2022-03-27",
+        "stockPrice": 444.98,
+        "numberOfShares": 268300000,
+        "marketCapitalization": 119388134000,
+        "minusCashAndCashEquivalents": 1883000000,
+        "addTotalDebt": 11645000000,
+        "enterpriseValue": 129150134000
+    },
+    {
+        "symbol": "LMT",
+        "date": "2021-03-28",
+        "stockPrice": 372.79,
+        "numberOfShares": 279000000,
+        "marketCapitalization": 104008410000,
+        "minusCashAndCashEquivalents": 2933000000,
+        "addTotalDebt": 12163000000,
+        "enterpriseValue": 113238410000
+    }
+]

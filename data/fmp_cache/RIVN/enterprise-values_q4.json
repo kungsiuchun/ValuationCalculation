@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "RIVN",
+        "date": "2024-12-31",
+        "stockPrice": 13.3,
+        "numberOfShares": 1058000000,
+        "marketCapitalization": 14071400000,
+        "minusCashAndCashEquivalents": 5294000000,
+        "addTotalDebt": 5737000000,
+        "enterpriseValue": 14514400000
+    },
+    {
+        "symbol": "RIVN",
+        "date": "2023-12-31",
+        "stockPrice": 23.46,
+        "numberOfShares": 963000000,
+        "marketCapitalization": 22591980000,
+        "minusCashAndCashEquivalents": 7857000000,
+        "addTotalDebt": 5116000000,
+        "enterpriseValue": 19850980000
+    },
+    {
+        "symbol": "RIVN",
+        "date": "2022-12-31",
+        "stockPrice": 18.43,
+        "numberOfShares": 915010638,
+        "marketCapitalization": 16863646058,
+        "minusCashAndCashEquivalents": 11568000000,
+        "addTotalDebt": 1812000000,
+        "enterpriseValue": 7107646058
+    },
+    {
+        "symbol": "RIVN",
+        "date": "2021-12-31",
+        "stockPrice": 103.69,
+        "numberOfShares": 510000020,
+        "marketCapitalization": 52881902073,
+        "minusCashAndCashEquivalents": 18133000000,
+        "addTotalDebt": 1607000000,
+        "enterpriseValue": 36355902073
+    },
+    {
+        "symbol": "RIVN",
+        "date": "2020-12-31",
+        "stockPrice": 100.73,
+        "numberOfShares": 103679871,
+        "marketCapitalization": 10443673405,
+        "minusCashAndCashEquivalents": 2979000000,
+        "addTotalDebt": 180000000,
+        "enterpriseValue": 7644673405
+    }
+]

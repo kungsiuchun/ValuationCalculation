@@ -17,18 +17,23 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- 1. 配置 ---
-FMP_API_KEY = os.getenv('FMP_API_KEY', 'F9dROu64FwpDqETGsu1relweBEoTcpID')
+#LReWykkSPUhYHIg7xV5HWu6AtW290VJf, F9dROu64FwpDqETGsu1relweBEoTcpID
+FMP_API_KEY = os.getenv('FMP_API_KEY', 'LReWykkSPUhYHIg7xV5HWu6AtW290VJf')
+FMP_API_KEY_2 = os.getenv('FMP_API_KEY_2', 'F9dROu64FwpDqETGsu1relweBEoTcpID')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = [
-    "AAPL", "ABBV", "ADBE", "AMD", "AMZN", "BA", "BABA", "BAC",
-    "COST", "CSCO", "CVX", "DIS", "ETSY", "FDX", "GE", "GOOGL",
-    "HOOD", "INTC", "JNJ", "JPM", "KO", "META", "MSFT", "NFLX",
-    "NKE", "NVDA", "PFE", "PLTR", "PYPL", "RBLX", "SBUX", "SHOP",
-    "SNAP", "SOFI", "T", "TGT", "TSLA", "TSM", "UBER",
-    "UNH", "V", "VZ", "WMT", "XOM"
-]
+DOW_30 = ["TSM"]
+#["MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL", "AAL", "TSM", "SONY", "ET", "MRO", "COIN", "RIVN", "RIOT", "CPRX", "NOK", "ROKU", "VIAC", "ATVI", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM", "NIO", "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "HCA", "TWTR", "BILI", "SIRI", "FUBO", "RKT" ]
+
+# DOW_30 = [
+#     "AAPL", "ABBV", "ADBE", "AMD", "AMZN", "BA", "BABA", "BAC",
+#     "COST", "CSCO", "CVX", "DIS", "ETSY", "FDX", "GE", "GOOGL",
+#     "HOOD", "INTC", "JNJ", "JPM", "KO", "META", "MSFT", "NFLX",
+#     "NKE", "NVDA", "PFE", "PLTR", "PYPL", "RBLX", "SBUX", "SHOP",
+#     "SNAP", "SOFI", "T", "TGT", "TSLA", "TSM", "UBER",
+#     "UNH", "V", "VZ", "WMT", "XOM"
+# ]
 #[
 #     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
 #     "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR",
@@ -39,24 +44,50 @@ DOW_30 = [
 # ["MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL", "AAL", "TSM", "SONY", "ET", "MRO", "COIN", "RIVN", "RIOT", "CPRX", "NOK", "ROKU", "VIAC", "ATVI", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM", "NIO", "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "HCA", "TWTR", "BILI", "SIRI", "FUBO", "RKT" ]
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
-CACHE_EXPIRY_DAYS = 7
+CACHE_EXPIRY_DAYS = 3
 
 # --- Helper Functions --- Get latest processed quarter --- 
 def get_latest_processed_quarter(ticker):
-    processed_dir = f"data/processed/{ticker}_combined.json"
-    if os.path.exists(processed_dir):
-        try:
-            with open(processed_dir, 'r') as f:
-                processed_data = json.load(f)
-                if processed_data and isinstance(processed_data, list):
-                    latest_item = max(processed_data, key=lambda item: datetime.strptime(item['date'], '%Y-%m-%d') if 'date' in item else datetime.min)
-                    # Find the item with the maximum date
-                    if latest_item and 'date' in latest_item and 'fiscalYear' in latest_item and 'period' in latest_item:
-                        quarter = latest_item['period']
-                        return f"{quarter}"
-        except Exception as e:
-            print(f"  ⚠️ [Warning] Failed to read processed data from {processed_dir}: {e}")
-    return None
+    # Path to the ticker's cache directory
+    ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker.upper())
+    if not os.path.exists(ticker_cache_dir):
+        return None
+
+    # Use pandas to read all JSON files in the directory
+    try:
+        dfs = []
+        for f_name in os.listdir(ticker_cache_dir):
+            if f_name.endswith('.json'):
+                file_path = os.path.join(ticker_cache_dir, f_name)
+                df = pd.read_json(file_path)
+                # Extract the statement type from the filename (e.g., "income-statement_q1.json" -> "income-statement")
+                df['statement_type'] = f_name.split('_')[0]
+                dfs.append(df)
+    except Exception as e:
+        logger.warning(f"Error reading JSON files from {ticker_cache_dir}: {e}")
+        return None
+
+    if not dfs:
+        return None
+
+    combined_df = pd.concat(dfs).set_index('date')
+    combined_df = combined_df.groupby('date').agg(statement_count=('statement_type', 'count'), period=('period', 'first')).reset_index().set_index('date').sort_index()
+
+    # Filter for dates where all statement types are present (or at least 4, assuming 4 statement types)
+    combined_df = combined_df[combined_df['statement_count'] > 3]
+
+    # Find the maximum date from the combined DataFrame's index
+    
+    if combined_df.empty:
+        return None
+    else:
+        latest_date_str = combined_df.index.max().strftime('%Y-%m-%d')
+        latest_period = combined_df.loc[latest_date_str, 'period']
+        quarter = latest_period.lower()  # e.g., 'Q1', 'Q2', etc.
+        return quarter  
+    
+
+
 
 def get_next_quarter(current_q_str):
     """
@@ -86,7 +117,7 @@ def get_fmp_fragmented(endpoint, ticker):
     latest_q = get_latest_processed_quarter(ticker)
     next_q = get_next_quarter(latest_q) if latest_q else None
     
-    logger.info(f"<{ticker}> Start fragmented fetch. Latest processed: {latest_q}")
+    logger.info(f"<{ticker}> Start fragmented fetch. Latest processed: {latest_q} and next target is: {next_q}")
 
     # 2. 遍歷四季進行處理
     for q in QUARTERS:
@@ -119,36 +150,51 @@ def get_fmp_fragmented(endpoint, ticker):
             action = "Incremental Update" if cache_exists else "Initial Fetch"
             logger.info(f"<{ticker}> {action} for {q} {endpoint}...")
             
-            url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={FMP_API_KEY}"
-            try:
-                response = requests.get(url)
-                response.raise_for_status() # 檢查 HTTP 狀態碼
-                res_json = response.json()
+            api_keys_to_try = [FMP_API_KEY, FMP_API_KEY_2]
+            
+            for api_key in api_keys_to_try:
+                url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={api_key}"
+                try:
+                    response = requests.get(url)
+                    response.raise_for_status() # 檢查 HTTP 狀態碼
+                    res_json = response.json()
 
-                if isinstance(res_json, list):
-                    if len(res_json) > 0:
-                        # 執行增量合併邏輯
-                        data_map = {item['date']: item for item in existing_data}
-                        for item in res_json:
-                            data_map[item['date']] = item
-                        
-                        merged_res = sorted(data_map.values(), key=lambda x: x['date'], reverse=True)
-                        
-                        with open(cache_path, 'w') as f:
-                            json.dump(merged_res, f, indent=4)
-                        
-                        existing_data = merged_res
-                        logger.info(f"<{ticker}> {q} Cache updated. Records: {len(merged_res)}")
+                    if isinstance(res_json, list):
+                        if len(res_json) > 0:
+                            # 執行增量合併邏輯
+                            data_map = {item['date']: item for item in existing_data}
+                            for item in res_json:
+                                data_map[item['date']] = item
+                            
+                            merged_res = sorted(data_map.values(), key=lambda x: x['date'], reverse=True)
+                            
+                            with open(cache_path, 'w') as f:
+                                json.dump(merged_res, f, indent=4)
+                            
+                            existing_data = merged_res
+                            logger.info(f"<{ticker}> {q} Cache updated. Records: {len(merged_res)} using key: {api_key}")
+                            break # Successfully fetched, break from API key loop
+                        else:
+                            logger.warning(f"<{ticker}> API returned empty list for {q} using key: {api_key}.")
+                            # If empty list, try next key if available, or continue if it's the last key
                     else:
-                        logger.warning(f"<{ticker}> API returned empty list for {q}.")
-                else:
-                    # 處理 API 回傳錯誤訊息的情況 (例如：Invalid API Key)
-                    error_msg = res_json.get("Error Message", "Unknown API error")
-                    logger.error(f"<{ticker}> API Error for {q}: {error_msg}")
-                
-                time.sleep(0.1) # 稍微降低頻率，避免 Rate Limit
-            except Exception as e:
-                logger.error(f"<{ticker}> Critical error fetching {q}: {e}")
+                        # 處理 API 回傳錯誤訊息的情況 (例如：Invalid API Key)
+                        error_msg = res_json.get("Error Message", "Unknown API error")
+                        logger.error(f"<{ticker}> API Error for {q} using key: {api_key}: {error_msg}")
+                        # If error, try next key if available
+                    
+                    time.sleep(0.1) # 稍微降低頻率，避免 Rate Limit
+                except requests.exceptions.HTTPError as http_err:
+                    if http_err.response.status_code == 429:
+                        logger.warning(f"<{ticker}> Rate limit hit (429) for {q} {endpoint} using key: {api_key}. Trying next key if available.")
+                        time.sleep(1) # Wait a bit longer before trying the next key
+                        continue # Try the next API key
+                    else:
+                        logger.error(f"<{ticker}> HTTP error fetching {q} {endpoint} using key: {api_key}: {http_err}")
+                        break # Other HTTP errors are critical, stop trying
+                except Exception as e:
+                    logger.error(f"<{ticker}> Critical error fetching {q} {endpoint} using key: {api_key}: {e}")
+                    break # Other errors are critical, stop trying
 
         # 將數據匯總到最終結果
         combined_all_quarters.extend(existing_data)

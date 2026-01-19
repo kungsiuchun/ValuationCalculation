@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "LCID",
+        "date": "2025-06-30",
+        "stockPrice": 21.1,
+        "numberOfShares": 305640483,
+        "marketCapitalization": 6449014191,
+        "minusCashAndCashEquivalents": 1795719000,
+        "addTotalDebt": 2740927000,
+        "enterpriseValue": 7394222191
+    },
+    {
+        "symbol": "LCID",
+        "date": "2024-06-30",
+        "stockPrice": 26.4,
+        "numberOfShares": 231036053,
+        "marketCapitalization": 6099351799,
+        "minusCashAndCashEquivalents": 1353581000,
+        "addTotalDebt": 2416003000,
+        "enterpriseValue": 7161773799
+    },
+    {
+        "symbol": "LCID",
+        "date": "2023-06-30",
+        "stockPrice": 68.9,
+        "numberOfShares": 191245983,
+        "marketCapitalization": 13176848228,
+        "minusCashAndCashEquivalents": 2775339000,
+        "addTotalDebt": 2366713000,
+        "enterpriseValue": 12768222228
+    },
+    {
+        "symbol": "LCID",
+        "date": "2022-06-30",
+        "stockPrice": 171.6,
+        "numberOfShares": 166930381,
+        "marketCapitalization": 28645253379,
+        "minusCashAndCashEquivalents": 3157449000,
+        "addTotalDebt": 2235882000,
+        "enterpriseValue": 27723686379
+    },
+    {
+        "symbol": "LCID",
+        "date": "2021-06-30",
+        "stockPrice": 288.2,
+        "numberOfShares": 161862153,
+        "marketCapitalization": 46648672494,
+        "minusCashAndCashEquivalents": 1000159,
+        "addTotalDebt": 1200000,
+        "enterpriseValue": 46648872335
+    }
+]

@@ -1,4 +1,4 @@
-from generate_valuation import get_fmp_fragmented
+from generate_valuation import get_latest_processed_quarter
 
 
 def main():
@@ -7,6 +7,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    inc_list = get_fmp_fragmented("income-statement", "AAPL")
+    latest_processed_quarter = get_latest_processed_quarter("TSM")
 
-    print(len(inc_list))
+    print(latest_processed_quarter)

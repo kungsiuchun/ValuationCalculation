@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "GM",
+        "date": "2025-03-31",
+        "stockPrice": 47.03,
+        "numberOfShares": 988000000,
+        "marketCapitalization": 46465640000,
+        "minusCashAndCashEquivalents": 20570000000,
+        "addTotalDebt": 132678000000,
+        "enterpriseValue": 158573640000
+    },
+    {
+        "symbol": "GM",
+        "date": "2024-03-31",
+        "stockPrice": 45.4,
+        "numberOfShares": 1155000000,
+        "marketCapitalization": 52437000000,
+        "minusCashAndCashEquivalents": 17635000000,
+        "addTotalDebt": 122237000000,
+        "enterpriseValue": 157039000000
+    },
+    {
+        "symbol": "GM",
+        "date": "2023-03-31",
+        "stockPrice": 36.68,
+        "numberOfShares": 1396000000,
+        "marketCapitalization": 51205280000,
+        "minusCashAndCashEquivalents": 18227000000,
+        "addTotalDebt": 114421000000,
+        "enterpriseValue": 147399280000
+    },
+    {
+        "symbol": "GM",
+        "date": "2022-03-31",
+        "stockPrice": 43.74,
+        "numberOfShares": 1458000000,
+        "marketCapitalization": 63772920000,
+        "minusCashAndCashEquivalents": 16349000000,
+        "addTotalDebt": 109805000000,
+        "enterpriseValue": 157228920000
+    },
+    {
+        "symbol": "GM",
+        "date": "2021-03-31",
+        "stockPrice": 57.46,
+        "numberOfShares": 1447000000,
+        "marketCapitalization": 83144620000,
+        "minusCashAndCashEquivalents": 21609000000,
+        "addTotalDebt": 112192000000,
+        "enterpriseValue": 173727620000
+    }
+]

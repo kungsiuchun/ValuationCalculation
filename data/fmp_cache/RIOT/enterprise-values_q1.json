@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "RIOT",
+        "date": "2025-03-31",
+        "stockPrice": 7.12,
+        "numberOfShares": 329508000,
+        "marketCapitalization": 2346096960,
+        "minusCashAndCashEquivalents": 163719000,
+        "addTotalDebt": 618611000,
+        "enterpriseValue": 2800988960
+    },
+    {
+        "symbol": "RIOT",
+        "date": "2024-03-31",
+        "stockPrice": 11.47,
+        "numberOfShares": 259506242,
+        "marketCapitalization": 2976536595,
+        "minusCashAndCashEquivalents": 688497000,
+        "addTotalDebt": 24346000,
+        "enterpriseValue": 2312385595
+    },
+    {
+        "symbol": "RIOT",
+        "date": "2023-03-31",
+        "stockPrice": 9.99,
+        "numberOfShares": 168300000,
+        "marketCapitalization": 1681317000,
+        "minusCashAndCashEquivalents": 158272000,
+        "addTotalDebt": 22320000,
+        "enterpriseValue": 1545365000
+    },
+    {
+        "symbol": "RIOT",
+        "date": "2022-03-31",
+        "stockPrice": 21.17,
+        "numberOfShares": 117042347,
+        "marketCapitalization": 2477786485,
+        "minusCashAndCashEquivalents": 113581000,
+        "addTotalDebt": 21853000,
+        "enterpriseValue": 2386058485
+    },
+    {
+        "symbol": "RIOT",
+        "date": "2021-03-31",
+        "stockPrice": 53.27,
+        "numberOfShares": 83163400,
+        "marketCapitalization": 4430114318,
+        "minusCashAndCashEquivalents": 241012000,
+        "addTotalDebt": 0,
+        "enterpriseValue": 4189102318
+    }
+]

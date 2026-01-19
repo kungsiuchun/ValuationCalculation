@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "COIN",
+        "date": "2024-12-31",
+        "stockPrice": 248.3,
+        "numberOfShares": 251506000,
+        "marketCapitalization": 62448939800,
+        "minusCashAndCashEquivalents": 8543903000,
+        "addTotalDebt": 4629577000,
+        "enterpriseValue": 58534613800
+    },
+    {
+        "symbol": "COIN",
+        "date": "2023-12-31",
+        "stockPrice": 173.92,
+        "numberOfShares": 239294500,
+        "marketCapitalization": 41618099440,
+        "minusCashAndCashEquivalents": 5139351000,
+        "addTotalDebt": 3046758000,
+        "enterpriseValue": 39525506440
+    },
+    {
+        "symbol": "COIN",
+        "date": "2022-12-31",
+        "stockPrice": 35.39,
+        "numberOfShares": 223115000,
+        "marketCapitalization": 7896039850,
+        "minusCashAndCashEquivalents": 4425021000,
+        "addTotalDebt": 3489745000,
+        "enterpriseValue": 6960763850
+    },
+    {
+        "symbol": "COIN",
+        "date": "2021-12-31",
+        "stockPrice": 252.37,
+        "numberOfShares": 193461500,
+        "marketCapitalization": 48823878755,
+        "minusCashAndCashEquivalents": 7123478000,
+        "addTotalDebt": 3511299000,
+        "enterpriseValue": 45211699755
+    },
+    {
+        "symbol": "COIN",
+        "date": "2020-12-31",
+        "stockPrice": 328.28,
+        "numberOfShares": 192593056,
+        "marketCapitalization": 63224448423,
+        "minusCashAndCashEquivalents": 1061850000,
+        "addTotalDebt": 379081000,
+        "enterpriseValue": 62541679423
+    }
+]

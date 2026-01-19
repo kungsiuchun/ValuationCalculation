@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "UAL",
+        "date": "2025-03-31",
+        "stockPrice": 69.05,
+        "numberOfShares": 333000000,
+        "marketCapitalization": 22993650000,
+        "minusCashAndCashEquivalents": 9370000000,
+        "addTotalDebt": 32925000000,
+        "enterpriseValue": 46548650000
+    },
+    {
+        "symbol": "UAL",
+        "date": "2024-03-31",
+        "stockPrice": 47.35,
+        "numberOfShares": 328300000,
+        "marketCapitalization": 15545005000,
+        "minusCashAndCashEquivalents": 8441000000,
+        "addTotalDebt": 34844000000,
+        "enterpriseValue": 41948005000
+    },
+    {
+        "symbol": "UAL",
+        "date": "2023-03-31",
+        "stockPrice": 44.25,
+        "numberOfShares": 327400000,
+        "marketCapitalization": 14487450000,
+        "minusCashAndCashEquivalents": 7634000000,
+        "addTotalDebt": 36025000000,
+        "enterpriseValue": 42878450000
+    },
+    {
+        "symbol": "UAL",
+        "date": "2022-03-31",
+        "stockPrice": 46.36,
+        "numberOfShares": 325000000,
+        "marketCapitalization": 15067000000,
+        "minusCashAndCashEquivalents": 18468000000,
+        "addTotalDebt": 38614000000,
+        "enterpriseValue": 35213000000
+    },
+    {
+        "symbol": "UAL",
+        "date": "2021-03-31",
+        "stockPrice": 57.54,
+        "numberOfShares": 323577438,
+        "marketCapitalization": 18618645782,
+        "minusCashAndCashEquivalents": 12666000000,
+        "addTotalDebt": 33659000000,
+        "enterpriseValue": 39611645782
+    }
+]

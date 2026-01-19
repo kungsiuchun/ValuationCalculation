@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "MRNA",
+        "date": "2024-12-31",
+        "stockPrice": 41.58,
+        "numberOfShares": 385000000,
+        "marketCapitalization": 16008300000,
+        "minusCashAndCashEquivalents": 1927000000,
+        "addTotalDebt": 747000000,
+        "enterpriseValue": 14828300000
+    },
+    {
+        "symbol": "MRNA",
+        "date": "2023-12-31",
+        "stockPrice": 99.45,
+        "numberOfShares": 381000000,
+        "marketCapitalization": 37890450000,
+        "minusCashAndCashEquivalents": 2907000000,
+        "addTotalDebt": 1243000000,
+        "enterpriseValue": 36226450000
+    },
+    {
+        "symbol": "MRNA",
+        "date": "2022-12-31",
+        "stockPrice": 179.62,
+        "numberOfShares": 385000000,
+        "marketCapitalization": 69153700000,
+        "minusCashAndCashEquivalents": 3205000000,
+        "addTotalDebt": 1200000000,
+        "enterpriseValue": 67148700000
+    },
+    {
+        "symbol": "MRNA",
+        "date": "2021-12-31",
+        "stockPrice": 253.98,
+        "numberOfShares": 405000000,
+        "marketCapitalization": 102861900000,
+        "minusCashAndCashEquivalents": 6848000000,
+        "addTotalDebt": 916000000,
+        "enterpriseValue": 96929900000
+    },
+    {
+        "symbol": "MRNA",
+        "date": "2020-12-31",
+        "stockPrice": 104.47,
+        "numberOfShares": 396000000,
+        "marketCapitalization": 41370120000,
+        "minusCashAndCashEquivalents": 2624000000,
+        "addTotalDebt": 237000000,
+        "enterpriseValue": 38983120000
+    }
+]

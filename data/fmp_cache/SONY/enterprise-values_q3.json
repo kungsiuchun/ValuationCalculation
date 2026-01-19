@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "SONY",
+        "date": "2024-12-31",
+        "stockPrice": 3328.72,
+        "numberOfShares": 6021151000,
+        "marketCapitalization": 20042737317329,
+        "minusCashAndCashEquivalents": 2491949000000,
+        "addTotalDebt": 4378093000000,
+        "enterpriseValue": 21928881317329
+    },
+    {
+        "symbol": "SONY",
+        "date": "2023-12-31",
+        "stockPrice": 2669.63,
+        "numberOfShares": 6154025000,
+        "marketCapitalization": 16428975176292,
+        "minusCashAndCashEquivalents": 2019112000000,
+        "addTotalDebt": 4405596000000,
+        "enterpriseValue": 18815459176292
+    },
+    {
+        "symbol": "SONY",
+        "date": "2022-12-31",
+        "stockPrice": 2000.6,
+        "numberOfShares": 6198545000,
+        "marketCapitalization": 12400816937166,
+        "minusCashAndCashEquivalents": 1287980000000,
+        "addTotalDebt": 4005972000000,
+        "enterpriseValue": 15118808937166
+    },
+    {
+        "symbol": "SONY",
+        "date": "2021-12-31",
+        "stockPrice": 2909.48,
+        "numberOfShares": 6175810000,
+        "marketCapitalization": 17968366034912,
+        "minusCashAndCashEquivalents": 1822578000000,
+        "addTotalDebt": 3083469000000,
+        "enterpriseValue": 19229257034912
+    },
+    {
+        "symbol": "SONY",
+        "date": "2020-12-31",
+        "stockPrice": 2087.76,
+        "numberOfShares": 6136775000,
+        "marketCapitalization": 12812085390306,
+        "minusCashAndCashEquivalents": 1878047000000,
+        "addTotalDebt": 2536483000000,
+        "enterpriseValue": 13470521390306
+    }
+]
