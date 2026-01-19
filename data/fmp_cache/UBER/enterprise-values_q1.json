@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "UBER",
+        "date": "2025-03-31",
+        "stockPrice": 72.86,
+        "numberOfShares": 2092464000,
+        "marketCapitalization": 152456927040,
+        "minusCashAndCashEquivalents": 6385000000,
+        "addTotalDebt": 11124000000,
+        "enterpriseValue": 157195927040
+    },
+    {
+        "symbol": "UBER",
+        "date": "2024-03-31",
+        "stockPrice": 76.4,
+        "numberOfShares": 2078467000,
+        "marketCapitalization": 158794878800,
+        "minusCashAndCashEquivalents": 5827000000,
+        "addTotalDebt": 11314000000,
+        "enterpriseValue": 164281878800
+    },
+    {
+        "symbol": "UBER",
+        "date": "2023-03-31",
+        "stockPrice": 31.7,
+        "numberOfShares": 2009557000,
+        "marketCapitalization": 63702956900,
+        "minusCashAndCashEquivalents": 4942000000,
+        "addTotalDebt": 11256000000,
+        "enterpriseValue": 70016956900
+    },
+    {
+        "symbol": "UBER",
+        "date": "2022-03-31",
+        "stockPrice": 35.68,
+        "numberOfShares": 1953989000,
+        "marketCapitalization": 69718327520,
+        "minusCashAndCashEquivalents": 4727000000,
+        "addTotalDebt": 11424000000,
+        "enterpriseValue": 76415327520
+    },
+    {
+        "symbol": "UBER",
+        "date": "2021-03-31",
+        "stockPrice": 54.51,
+        "numberOfShares": 1800000000,
+        "marketCapitalization": 98118000000,
+        "minusCashAndCashEquivalents": 5083000000,
+        "addTotalDebt": 9764000000,
+        "enterpriseValue": 102799000000
+    }
+]

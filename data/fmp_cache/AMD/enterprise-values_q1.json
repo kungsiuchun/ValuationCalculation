@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "AMD",
+        "date": "2025-03-29",
+        "stockPrice": 103.22,
+        "numberOfShares": 1620000000,
+        "marketCapitalization": 167216400000,
+        "minusCashAndCashEquivalents": 6049000000,
+        "addTotalDebt": 4731000000,
+        "enterpriseValue": 165898400000
+    },
+    {
+        "symbol": "AMD",
+        "date": "2024-03-30",
+        "stockPrice": 180.49,
+        "numberOfShares": 1617000000,
+        "marketCapitalization": 291852330000,
+        "minusCashAndCashEquivalents": 4190000000,
+        "addTotalDebt": 2998000000,
+        "enterpriseValue": 290660330000
+    },
+    {
+        "symbol": "AMD",
+        "date": "2023-04-01",
+        "stockPrice": 98.01,
+        "numberOfShares": 1611000000,
+        "marketCapitalization": 157894110000,
+        "minusCashAndCashEquivalents": 3825000000,
+        "addTotalDebt": 2848000000,
+        "enterpriseValue": 156917110000
+    },
+    {
+        "symbol": "AMD",
+        "date": "2022-03-26",
+        "stockPrice": 119.67,
+        "numberOfShares": 1393000000,
+        "marketCapitalization": 166700310000,
+        "minusCashAndCashEquivalents": 4740000000,
+        "addTotalDebt": 2157000000,
+        "enterpriseValue": 164117310000
+    },
+    {
+        "symbol": "AMD",
+        "date": "2021-03-27",
+        "stockPrice": 77.41,
+        "numberOfShares": 1213000000,
+        "marketCapitalization": 93898330000,
+        "minusCashAndCashEquivalents": 1763000000,
+        "addTotalDebt": 551000000,
+        "enterpriseValue": 92686330000
+    }
+]

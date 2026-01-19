@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "XOM",
+        "date": "2025-06-30",
+        "stockPrice": 107.8,
+        "numberOfShares": 4331000000,
+        "marketCapitalization": 466881800000,
+        "minusCashAndCashEquivalents": 14352000000,
+        "addTotalDebt": 38989000000,
+        "enterpriseValue": 491518800000
+    },
+    {
+        "symbol": "XOM",
+        "date": "2024-06-30",
+        "stockPrice": 114.96,
+        "numberOfShares": 4317000000,
+        "marketCapitalization": 496282320000,
+        "minusCashAndCashEquivalents": 26460000000,
+        "addTotalDebt": 43186000000,
+        "enterpriseValue": 513008320000
+    },
+    {
+        "symbol": "XOM",
+        "date": "2023-06-30",
+        "stockPrice": 107.25,
+        "numberOfShares": 4066000000,
+        "marketCapitalization": 436078500000,
+        "minusCashAndCashEquivalents": 29528000000,
+        "addTotalDebt": 41496000000,
+        "enterpriseValue": 448046500000
+    },
+    {
+        "symbol": "XOM",
+        "date": "2022-06-30",
+        "stockPrice": 85.64,
+        "numberOfShares": 4233000000,
+        "marketCapitalization": 362514120000,
+        "minusCashAndCashEquivalents": 18861000000,
+        "addTotalDebt": 46883000000,
+        "enterpriseValue": 390536120000
+    },
+    {
+        "symbol": "XOM",
+        "date": "2021-06-30",
+        "stockPrice": 63.08,
+        "numberOfShares": 4263636364,
+        "marketCapitalization": 268950181841,
+        "minusCashAndCashEquivalents": 3465000000,
+        "addTotalDebt": 60612000000,
+        "enterpriseValue": 326097181841
+    }
+]

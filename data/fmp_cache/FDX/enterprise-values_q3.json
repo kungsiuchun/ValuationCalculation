@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "FDX",
+        "date": "2025-02-28",
+        "stockPrice": 262.9,
+        "numberOfShares": 240000000,
+        "marketCapitalization": 63095999999,
+        "minusCashAndCashEquivalents": 5135000000,
+        "addTotalDebt": 37031000000,
+        "enterpriseValue": 94991999999
+    },
+    {
+        "symbol": "FDX",
+        "date": "2024-02-29",
+        "stockPrice": 248.97,
+        "numberOfShares": 247000000,
+        "marketCapitalization": 61495590000,
+        "minusCashAndCashEquivalents": 5644000000,
+        "addTotalDebt": 37514000000,
+        "enterpriseValue": 93365590000
+    },
+    {
+        "symbol": "FDX",
+        "date": "2023-02-28",
+        "stockPrice": 203.22,
+        "numberOfShares": 251000000,
+        "marketCapitalization": 51008220000,
+        "minusCashAndCashEquivalents": 5373000000,
+        "addTotalDebt": 38088000000,
+        "enterpriseValue": 83723220000
+    },
+    {
+        "symbol": "FDX",
+        "date": "2022-02-28",
+        "stockPrice": 222.27,
+        "numberOfShares": 261000000,
+        "marketCapitalization": 58012470000,
+        "minusCashAndCashEquivalents": 6065000000,
+        "addTotalDebt": 37354000000,
+        "enterpriseValue": 89301470000
+    },
+    {
+        "symbol": "FDX",
+        "date": "2021-02-28",
+        "stockPrice": 262.09,
+        "numberOfShares": 265000000,
+        "marketCapitalization": 69453850000,
+        "minusCashAndCashEquivalents": 8856000000,
+        "addTotalDebt": 38566000000,
+        "enterpriseValue": 99163850000
+    }
+]

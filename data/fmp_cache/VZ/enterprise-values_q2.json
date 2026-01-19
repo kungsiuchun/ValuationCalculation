@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "VZ",
+        "date": "2025-06-30",
+        "stockPrice": 43.27,
+        "numberOfShares": 4224000000,
+        "marketCapitalization": 182772480000,
+        "minusCashAndCashEquivalents": 3435000000,
+        "addTotalDebt": 169891000000,
+        "enterpriseValue": 349228480000
+    },
+    {
+        "symbol": "VZ",
+        "date": "2024-06-30",
+        "stockPrice": 41.74,
+        "numberOfShares": 4215000000,
+        "marketCapitalization": 175934100000,
+        "minusCashAndCashEquivalents": 2432000000,
+        "addTotalDebt": 172980000000,
+        "enterpriseValue": 346482100000
+    },
+    {
+        "symbol": "VZ",
+        "date": "2023-06-30",
+        "stockPrice": 37.19,
+        "numberOfShares": 4208000000,
+        "marketCapitalization": 156495520000,
+        "minusCashAndCashEquivalents": 4803000000,
+        "addTotalDebt": 177654000000,
+        "enterpriseValue": 329346520000
+    },
+    {
+        "symbol": "VZ",
+        "date": "2022-06-30",
+        "stockPrice": 50.75,
+        "numberOfShares": 4201000000,
+        "marketCapitalization": 213200750000,
+        "minusCashAndCashEquivalents": 1857000000,
+        "addTotalDebt": 175566000000,
+        "enterpriseValue": 386909750000
+    },
+    {
+        "symbol": "VZ",
+        "date": "2021-06-30",
+        "stockPrice": 56.03,
+        "numberOfShares": 4141000000,
+        "marketCapitalization": 232020230000,
+        "minusCashAndCashEquivalents": 4657000000,
+        "addTotalDebt": 179158000000,
+        "enterpriseValue": 406521230000
+    }
+]

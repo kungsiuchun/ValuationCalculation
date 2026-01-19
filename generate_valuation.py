@@ -27,7 +27,8 @@ DOW_30 = [
     "UNH",  "TSM", "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
     "SHOP", "SBUX", "ADBE"
 ]
-
+# [ "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V", "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE", "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR", "SQ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX", "ABBV", "ETSY", 
+#           "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL", "AAL", "TSM", "SONY", "ET", "MRO", "COIN", "RIVN", "RIOT", "CPRX", "NOK", "ROKU", "VIAC", "ATVI", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM", "NIO", "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "HCA", "TWTR", "BILI", "SIRI", "FUBO", "RKT" ]
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
 CACHE_EXPIRY_DAYS = 7
@@ -81,7 +82,7 @@ def get_fmp_fragmented(endpoint, ticker):
 
     # 2. 遍歷四季進行處理
     for q in QUARTERS:
-        print("--- Processing", q, "for", ticker, "---")
+        print("--- Processing", q, "for", ticker," ", endpoint, "---")
         cache_path = os.path.join(ticker_cache_dir, f"{endpoint}_{q}.json")
         is_target_increment = (q == next_q)
         
@@ -95,20 +96,20 @@ def get_fmp_fragmented(endpoint, ticker):
         # 決定是否需要調用 API
         # 條件：緩存不存在 OR 該季度是我們追蹤的「下一個增量點」且已過期
         needs_api_call = not cache_exists or (is_target_increment and is_expired)
-        print(f"needs_api_call for {ticker} {q}: {needs_api_call}")
+        print(f"needs_api_call for {ticker} {q} {endpoint}: {needs_api_call}")
 
         existing_data = []
         if cache_exists:
             try:
                 with open(cache_path, 'r') as f:
-                    logger.info(f"<{ticker}> Loading existing cache for {q}...")
+                    logger.info(f"<{ticker}> Loading existing cache for {q} {endpoint}...")
                     existing_data = json.load(f)
             except Exception as e:
-                logger.error(f"<{ticker}> Failed to load cache {q}: {e}")
+                logger.error(f"<{ticker}> Failed to load cache {q} {endpoint}: {e}")
 
         if needs_api_call:
             action = "Incremental Update" if cache_exists else "Initial Fetch"
-            logger.info(f"<{ticker}> {action} for {q}...")
+            logger.info(f"<{ticker}> {action} for {q} {endpoint}...")
             
             url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={FMP_API_KEY}"
             try:

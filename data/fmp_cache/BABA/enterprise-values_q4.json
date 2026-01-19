@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "BABA",
+        "date": "2025-03-31",
+        "stockPrice": 959.49,
+        "numberOfShares": 2310875000,
+        "marketCapitalization": 2217255274470,
+        "minusCashAndCashEquivalents": 181726740000,
+        "addTotalDebt": 248489776000,
+        "enterpriseValue": 2284018310470
+    },
+    {
+        "symbol": "BABA",
+        "date": "2024-03-31",
+        "stockPrice": 530.47,
+        "numberOfShares": 2470375000,
+        "marketCapitalization": 1310447721412,
+        "minusCashAndCashEquivalents": 279147454000,
+        "addTotalDebt": 205686545000,
+        "enterpriseValue": 1236986812412
+    },
+    {
+        "symbol": "BABA",
+        "date": "2023-03-31",
+        "stockPrice": 701.68,
+        "numberOfShares": 2581375000,
+        "marketCapitalization": 1811299927622,
+        "minusCashAndCashEquivalents": 226123110000,
+        "addTotalDebt": 195633982000,
+        "enterpriseValue": 1780810799622
+    },
+    {
+        "symbol": "BABA",
+        "date": "2022-03-31",
+        "stockPrice": 690.01,
+        "numberOfShares": 2675125000,
+        "marketCapitalization": 1845861931200,
+        "minusCashAndCashEquivalents": 225491988000,
+        "addTotalDebt": 176852671000,
+        "enterpriseValue": 1797222614200
+    },
+    {
+        "symbol": "BABA",
+        "date": "2021-03-31",
+        "stockPrice": 1485.67,
+        "numberOfShares": 2706500000,
+        "marketCapitalization": 4020968556086,
+        "minusCashAndCashEquivalents": 355163262000,
+        "addTotalDebt": 181682118000,
+        "enterpriseValue": 3847487412086
+    }
+]

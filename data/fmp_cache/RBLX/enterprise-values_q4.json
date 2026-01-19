@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "RBLX",
+        "date": "2024-12-31",
+        "stockPrice": 57.86,
+        "numberOfShares": 660900000,
+        "marketCapitalization": 38239674000,
+        "minusCashAndCashEquivalents": 711683000,
+        "addTotalDebt": 1805279000,
+        "enterpriseValue": 39333270000
+    },
+    {
+        "symbol": "RBLX",
+        "date": "2023-12-31",
+        "stockPrice": 45.72,
+        "numberOfShares": 626817000,
+        "marketCapitalization": 28658073240,
+        "minusCashAndCashEquivalents": 678466000,
+        "addTotalDebt": 1762799000,
+        "enterpriseValue": 29742406240
+    },
+    {
+        "symbol": "RBLX",
+        "date": "2022-12-31",
+        "stockPrice": 28.46,
+        "numberOfShares": 601859000,
+        "marketCapitalization": 17128907140,
+        "minusCashAndCashEquivalents": 2977474000,
+        "addTotalDebt": 1556809000,
+        "enterpriseValue": 15708242140
+    },
+    {
+        "symbol": "RBLX",
+        "date": "2021-12-31",
+        "stockPrice": 103.16,
+        "numberOfShares": 581535000,
+        "marketCapitalization": 59991150600,
+        "minusCashAndCashEquivalents": 3004300000,
+        "addTotalDebt": 1233642000,
+        "enterpriseValue": 58220492600
+    },
+    {
+        "symbol": "RBLX",
+        "date": "2020-12-31",
+        "stockPrice": 69.5,
+        "numberOfShares": 553059980,
+        "marketCapitalization": 38437668610,
+        "minusCashAndCashEquivalents": 893943000,
+        "addTotalDebt": 0,
+        "enterpriseValue": 37543725610
+    }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "ABBV",
+        "date": "2025-03-31",
+        "stockPrice": 209.52,
+        "numberOfShares": 1768000000,
+        "marketCapitalization": 370431360000,
+        "minusCashAndCashEquivalents": 5175000000,
+        "addTotalDebt": 69889000000,
+        "enterpriseValue": 435145360000
+    },
+    {
+        "symbol": "ABBV",
+        "date": "2024-03-31",
+        "stockPrice": 180.76,
+        "numberOfShares": 1769000000,
+        "marketCapitalization": 319764440000,
+        "minusCashAndCashEquivalents": 18067000000,
+        "addTotalDebt": 74001000000,
+        "enterpriseValue": 375698440000
+    },
+    {
+        "symbol": "ABBV",
+        "date": "2023-03-31",
+        "stockPrice": 159.37,
+        "numberOfShares": 1770000000,
+        "marketCapitalization": 282084900000,
+        "minusCashAndCashEquivalents": 6711000000,
+        "addTotalDebt": 62093000000,
+        "enterpriseValue": 337466900000
+    },
+    {
+        "symbol": "ABBV",
+        "date": "2022-03-31",
+        "stockPrice": 162.11,
+        "numberOfShares": 1771000000,
+        "marketCapitalization": 287096810000,
+        "minusCashAndCashEquivalents": 6098000000,
+        "addTotalDebt": 73474000000,
+        "enterpriseValue": 354472810000
+    },
+    {
+        "symbol": "ABBV",
+        "date": "2021-03-31",
+        "stockPrice": 108.22,
+        "numberOfShares": 1769000000,
+        "marketCapitalization": 191441180000,
+        "minusCashAndCashEquivalents": 9755000000,
+        "addTotalDebt": 85530000000,
+        "enterpriseValue": 267216180000
+    }
+]

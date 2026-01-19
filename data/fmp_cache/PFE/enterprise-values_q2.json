@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "PFE",
+        "date": "2025-06-29",
+        "stockPrice": 24.24,
+        "numberOfShares": 5685000000,
+        "marketCapitalization": 137804400000,
+        "minusCashAndCashEquivalents": 1638000000,
+        "addTotalDebt": 61797000000,
+        "enterpriseValue": 197963400000
+    },
+    {
+        "symbol": "PFE",
+        "date": "2024-06-30",
+        "stockPrice": 28.22,
+        "numberOfShares": 5666000000,
+        "marketCapitalization": 159894520000,
+        "minusCashAndCashEquivalents": 1052000000,
+        "addTotalDebt": 68677000000,
+        "enterpriseValue": 227519520000
+    },
+    {
+        "symbol": "PFE",
+        "date": "2023-07-02",
+        "stockPrice": 36.65,
+        "numberOfShares": 5646000000,
+        "marketCapitalization": 206925900000,
+        "minusCashAndCashEquivalents": 2632000000,
+        "addTotalDebt": 65341000000,
+        "enterpriseValue": 269634900000
+    },
+    {
+        "symbol": "PFE",
+        "date": "2022-07-03",
+        "stockPrice": 52.31,
+        "numberOfShares": 5593000000,
+        "marketCapitalization": 292569830000,
+        "minusCashAndCashEquivalents": 1780000000,
+        "addTotalDebt": 39134000000,
+        "enterpriseValue": 329923830000
+    },
+    {
+        "symbol": "PFE",
+        "date": "2021-07-04",
+        "stockPrice": 39.73,
+        "numberOfShares": 5598000000,
+        "marketCapitalization": 222408539999,
+        "minusCashAndCashEquivalents": 2372000000,
+        "addTotalDebt": 37735000000,
+        "enterpriseValue": 257771539999
+    }
+]
