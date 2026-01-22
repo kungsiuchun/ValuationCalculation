@@ -6,11 +6,11 @@ import json
 import os
 import time
 import logging
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 from datetime import datetime
 
-load_dotenv()
+# load_dotenv()
 
 # 設定日誌格式
 logging.basicConfig(
