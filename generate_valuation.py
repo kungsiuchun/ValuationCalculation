@@ -113,7 +113,6 @@ def get_fmp_fragmented(endpoint, ticker):
     自動建立對應 ticker 的子資料夾，並實施『增量合併策略』。
     防止新 API 數據覆蓋掉舊的歷史財報數據 (尤其是解決 FMP 5年限制)。
     """
-    print(FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3)
     ticker = ticker.upper()
     combined_all_quarters = []
     ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker)
@@ -349,6 +348,22 @@ def main():
     ## test_amzn_valuation_logic()
 
     for ticker in DOW_30:
+        final_dir = os.path.join(OUTPUT_DIR, "results", ticker.upper())
+        output_file = os.path.join(final_dir, "valuation_summary.json")
+
+        if os.path.exists(output_file):
+            with open(output_file, 'r') as f:
+                try:
+                    data = json.load(f)
+                    last_updated_str = data.get("last_updated")
+                    if last_updated_str:
+                        last_updated = datetime.strptime(last_updated_str, "%Y-%m-%d %H:%M:%S")
+                        if (datetime.now() - last_updated).days < 1:
+                            print(f"Skipping {ticker}: Valuation data is less than 1 day old.")
+                            continue
+                except json.JSONDecodeError:
+                    print(f"Error decoding JSON for {ticker}, reprocessing.")
+
         # 1. 獲取股價數據
         # 我們使用 auto_adjust=False 以手動處理 Close/Adj Close 來對齊指標量級
         print(f"\n🏗️  Pipeline Starting: {ticker}")
@@ -367,6 +382,7 @@ def main():
         eps_ttm, fcf_ttm, sales_ttm = build_quarterly_ttm(ticker)
         if eps_ttm is None: continue
 
+        # 3. 計算估值帶
         pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
         fcf_res, fcf_avgs = calculate_bands(ticker, prices_df, fcf_ttm, 'fcf_ps_ttm')
         ps_res, ps_avgs = calculate_bands(ticker, prices_df, sales_ttm, 'sales_ps_ttm')
