@@ -17,9 +17,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- 1. 配置 ---
-#LReWykkSPUhYHIg7xV5HWu6AtW290VJf, F9dROu64FwpDqETGsu1relweBEoTcpID
-FMP_API_KEY = os.getenv('FMP_API_KEY', 'LReWykkSPUhYHIg7xV5HWu6AtW290VJf')
-FMP_API_KEY_2 = os.getenv('FMP_API_KEY_2', 'F9dROu64FwpDqETGsu1relweBEoTcpID')
+FMP_API_KEY = os.getenv('FMP_API_KEY')
+FMP_API_KEY_2 = os.getenv('FMP_API_KEY_2')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
