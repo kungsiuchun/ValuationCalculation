@@ -6,7 +6,11 @@ import json
 import os
 import time
 import logging
+from dotenv import load_dotenv
+
 from datetime import datetime
+
+load_dotenv()
 
 # 設定日誌格式
 logging.basicConfig(
@@ -19,6 +23,7 @@ logger = logging.getLogger(__name__)
 # --- 1. 配置 ---
 FMP_API_KEY = os.getenv('FMP_API_KEY')
 FMP_API_KEY_2 = os.getenv('FMP_API_KEY_2')
+FMP_API_KEY_3 = os.getenv('FMP_API_KEY_3')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
@@ -108,6 +113,7 @@ def get_fmp_fragmented(endpoint, ticker):
     自動建立對應 ticker 的子資料夾，並實施『增量合併策略』。
     防止新 API 數據覆蓋掉舊的歷史財報數據 (尤其是解決 FMP 5年限制)。
     """
+    print(FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3)
     ticker = ticker.upper()
     combined_all_quarters = []
     ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker)
@@ -150,7 +156,7 @@ def get_fmp_fragmented(endpoint, ticker):
             action = "Incremental Update" if cache_exists else "Initial Fetch"
             logger.info(f"<{ticker}> {action} for {q} {endpoint}...")
             
-            api_keys_to_try = [FMP_API_KEY, FMP_API_KEY_2]
+            api_keys_to_try = [FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3]
             
             for api_key in api_keys_to_try:
                 url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={api_key}"

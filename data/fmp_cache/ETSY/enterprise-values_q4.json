@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "ETSY",
+        "date": "2024-12-31",
+        "stockPrice": 52.89,
+        "numberOfShares": 114944000,
+        "marketCapitalization": 6079388160,
+        "minusCashAndCashEquivalents": 811178000,
+        "addTotalDebt": 2387713000,
+        "enterpriseValue": 7655923160
+    },
+    {
+        "symbol": "ETSY",
+        "date": "2023-12-31",
+        "stockPrice": 81.05,
+        "numberOfShares": 119599093,
+        "marketCapitalization": 9693506487,
+        "minusCashAndCashEquivalents": 914323000,
+        "addTotalDebt": 2389516000,
+        "enterpriseValue": 11168699487
+    },
+    {
+        "symbol": "ETSY",
+        "date": "2022-12-31",
+        "stockPrice": 119.78,
+        "numberOfShares": 125656123,
+        "marketCapitalization": 15051090412,
+        "minusCashAndCashEquivalents": 921278000,
+        "addTotalDebt": 2390070000,
+        "enterpriseValue": 16519882412
+    },
+    {
+        "symbol": "ETSY",
+        "date": "2021-12-31",
+        "stockPrice": 218.94,
+        "numberOfShares": 127141606,
+        "marketCapitalization": 27836383217,
+        "minusCashAndCashEquivalents": 780196000,
+        "addTotalDebt": 2388119000,
+        "enterpriseValue": 29444306217
+    },
+    {
+        "symbol": "ETSY",
+        "date": "2020-12-31",
+        "stockPrice": 177.91,
+        "numberOfShares": 125975077,
+        "marketCapitalization": 22412225949,
+        "minusCashAndCashEquivalents": 1244099000,
+        "addTotalDebt": 1137533000,
+        "enterpriseValue": 22305659949
+    }
+]
