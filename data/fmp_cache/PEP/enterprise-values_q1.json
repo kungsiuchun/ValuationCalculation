@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "PEP",
+        "date": "2025-03-22",
+        "stockPrice": 145.45,
+        "numberOfShares": 1372000000,
+        "marketCapitalization": 199557399999,
+        "minusCashAndCashEquivalents": 8268000000,
+        "addTotalDebt": 48518000000,
+        "enterpriseValue": 239807399999
+    },
+    {
+        "symbol": "PEP",
+        "date": "2024-03-23",
+        "stockPrice": 172.02,
+        "numberOfShares": 1375000000,
+        "marketCapitalization": 236527500000,
+        "minusCashAndCashEquivalents": 8047000000,
+        "addTotalDebt": 45868000000,
+        "enterpriseValue": 274348500000
+    },
+    {
+        "symbol": "PEP",
+        "date": "2023-03-25",
+        "stockPrice": 179.09,
+        "numberOfShares": 1378000000,
+        "marketCapitalization": 246786020000,
+        "minusCashAndCashEquivalents": 4770000000,
+        "addTotalDebt": 41767000000,
+        "enterpriseValue": 283783020000
+    },
+    {
+        "symbol": "PEP",
+        "date": "2022-03-19",
+        "stockPrice": 162.79,
+        "numberOfShares": 1383000000,
+        "marketCapitalization": 225138570000,
+        "minusCashAndCashEquivalents": 6561000000,
+        "addTotalDebt": 40049000000,
+        "enterpriseValue": 258626570000
+    },
+    {
+        "symbol": "PEP",
+        "date": "2021-03-20",
+        "stockPrice": 134.5,
+        "numberOfShares": 1380000000,
+        "marketCapitalization": 185610000000,
+        "minusCashAndCashEquivalents": 5661000000,
+        "addTotalDebt": 43665000000,
+        "enterpriseValue": 223614000000
+    }
+]

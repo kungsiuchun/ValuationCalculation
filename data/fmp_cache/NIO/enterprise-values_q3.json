@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "NIO",
+        "date": "2025-09-30",
+        "stockPrice": 54.24,
+        "numberOfShares": 2428558076,
+        "marketCapitalization": 131732202859,
+        "minusCashAndCashEquivalents": 9270823000,
+        "addTotalDebt": 27640475000,
+        "enterpriseValue": 150101854859
+    },
+    {
+        "symbol": "NIO",
+        "date": "2024-09-30",
+        "stockPrice": 46.87,
+        "numberOfShares": 2055159000,
+        "marketCapitalization": 96333991542,
+        "minusCashAndCashEquivalents": 23791903000,
+        "addTotalDebt": 33879550000,
+        "enterpriseValue": 106421638542
+    },
+    {
+        "symbol": "NIO",
+        "date": "2023-09-30",
+        "stockPrice": 66,
+        "numberOfShares": 1735661387,
+        "marketCapitalization": 114547611440,
+        "minusCashAndCashEquivalents": 24084635000,
+        "addTotalDebt": 32237099000,
+        "enterpriseValue": 122700075440
+    },
+    {
+        "symbol": "NIO",
+        "date": "2022-09-30",
+        "stockPrice": 112.18,
+        "numberOfShares": 1640001909,
+        "marketCapitalization": 183975241951,
+        "minusCashAndCashEquivalents": 18080674000,
+        "addTotalDebt": 27001735000,
+        "enterpriseValue": 192896302951
+    },
+    {
+        "symbol": "NIO",
+        "date": "2021-09-30",
+        "stockPrice": 229.69,
+        "numberOfShares": 1567807244,
+        "marketCapitalization": 360113342763,
+        "minusCashAndCashEquivalents": 21594871000,
+        "addTotalDebt": 19202505000,
+        "enterpriseValue": 357720976763
+    }
+]

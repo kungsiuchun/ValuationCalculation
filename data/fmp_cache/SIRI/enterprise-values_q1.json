@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "SIRI",
+        "date": "2025-03-31",
+        "stockPrice": 22.55,
+        "numberOfShares": 339000000,
+        "marketCapitalization": 7644450000,
+        "minusCashAndCashEquivalents": 127000000,
+        "addTotalDebt": 10466000000,
+        "enterpriseValue": 17983450000
+    },
+    {
+        "symbol": "SIRI",
+        "date": "2024-03-31",
+        "stockPrice": 38.3,
+        "numberOfShares": 384503772,
+        "marketCapitalization": 14726494467,
+        "minusCashAndCashEquivalents": 71000000,
+        "addTotalDebt": 9577000000,
+        "enterpriseValue": 24232494467
+    },
+    {
+        "symbol": "SIRI",
+        "date": "2023-03-31",
+        "stockPrice": 39.7,
+        "numberOfShares": 388900000,
+        "marketCapitalization": 15439330000,
+        "minusCashAndCashEquivalents": 53000000,
+        "addTotalDebt": 9871000000,
+        "enterpriseValue": 25257330000
+    },
+    {
+        "symbol": "SIRI",
+        "date": "2022-03-31",
+        "stockPrice": 66.2,
+        "numberOfShares": 394800000,
+        "marketCapitalization": 26135760000,
+        "minusCashAndCashEquivalents": 76000000,
+        "addTotalDebt": 10228000000,
+        "enterpriseValue": 36287760000
+    },
+    {
+        "symbol": "SIRI",
+        "date": "2021-03-31",
+        "stockPrice": 60.9,
+        "numberOfShares": 413700000,
+        "marketCapitalization": 25194330000,
+        "minusCashAndCashEquivalents": 59000000,
+        "addTotalDebt": 9333000000,
+        "enterpriseValue": 34468330000
+    }
+]

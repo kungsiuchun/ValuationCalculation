@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "NOK",
+        "date": "2025-03-31",
+        "stockPrice": 4.87,
+        "numberOfShares": 5379665000,
+        "marketCapitalization": 26199006207,
+        "minusCashAndCashEquivalents": 5543000000,
+        "addTotalDebt": 5065000000,
+        "enterpriseValue": 25721006207
+    },
+    {
+        "symbol": "NOK",
+        "date": "2024-03-31",
+        "stockPrice": 3.26,
+        "numberOfShares": 5525756000,
+        "marketCapitalization": 17996005853,
+        "minusCashAndCashEquivalents": 6561000000,
+        "addTotalDebt": 4756000000,
+        "enterpriseValue": 16191005853
+    },
+    {
+        "symbol": "NOK",
+        "date": "2023-03-31",
+        "stockPrice": 4.53,
+        "numberOfShares": 5578005000,
+        "marketCapitalization": 25251740195,
+        "minusCashAndCashEquivalents": 5244294150,
+        "addTotalDebt": 5803815900,
+        "enterpriseValue": 25811261945
+    },
+    {
+        "symbol": "NOK",
+        "date": "2022-03-31",
+        "stockPrice": 4.93,
+        "numberOfShares": 5634737000,
+        "marketCapitalization": 27790624309,
+        "minusCashAndCashEquivalents": 6341000000,
+        "addTotalDebt": 5687000000,
+        "enterpriseValue": 27136624309
+    },
+    {
+        "symbol": "NOK",
+        "date": "2021-03-31",
+        "stockPrice": 3.38,
+        "numberOfShares": 5624071000,
+        "marketCapitalization": 18984074156,
+        "minusCashAndCashEquivalents": 7315000000,
+        "addTotalDebt": 6193000000,
+        "enterpriseValue": 17862074156
+    }
+]

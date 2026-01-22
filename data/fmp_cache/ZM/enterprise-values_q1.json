@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "ZM",
+        "date": "2025-04-30",
+        "stockPrice": 77.54,
+        "numberOfShares": 304909000,
+        "marketCapitalization": 23642643860,
+        "minusCashAndCashEquivalents": 1228847000,
+        "addTotalDebt": 61477000,
+        "enterpriseValue": 22475273860
+    },
+    {
+        "symbol": "ZM",
+        "date": "2024-04-30",
+        "stockPrice": 61.1,
+        "numberOfShares": 308700582,
+        "marketCapitalization": 18861605560,
+        "minusCashAndCashEquivalents": 1885603000,
+        "addTotalDebt": 67856000,
+        "enterpriseValue": 17043858560
+    },
+    {
+        "symbol": "ZM",
+        "date": "2023-04-30",
+        "stockPrice": 61.68,
+        "numberOfShares": 295409207,
+        "marketCapitalization": 18220839887,
+        "minusCashAndCashEquivalents": 1029546000,
+        "addTotalDebt": 91129000,
+        "enterpriseValue": 17282422887
+    },
+    {
+        "symbol": "ZM",
+        "date": "2022-04-30",
+        "stockPrice": 99.57,
+        "numberOfShares": 299147105,
+        "marketCapitalization": 29786077244,
+        "minusCashAndCashEquivalents": 1407305000,
+        "addTotalDebt": 101188000,
+        "enterpriseValue": 28479960244
+    },
+    {
+        "symbol": "ZM",
+        "date": "2021-04-30",
+        "stockPrice": 319.57,
+        "numberOfShares": 293794778,
+        "marketCapitalization": 93887997205,
+        "minusCashAndCashEquivalents": 1557270000,
+        "addTotalDebt": 102909000,
+        "enterpriseValue": 92433636205
+    }
+]

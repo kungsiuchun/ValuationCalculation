@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "CARR",
+        "date": "2025-03-31",
+        "stockPrice": 63.4,
+        "numberOfShares": 866900000,
+        "marketCapitalization": 54961460000,
+        "minusCashAndCashEquivalents": 1698000000,
+        "addTotalDebt": 11621000000,
+        "enterpriseValue": 64884460000
+    },
+    {
+        "symbol": "CARR",
+        "date": "2024-03-31",
+        "stockPrice": 57.4,
+        "numberOfShares": 899200000,
+        "marketCapitalization": 51614080000,
+        "minusCashAndCashEquivalents": 1313000000,
+        "addTotalDebt": 17400000000,
+        "enterpriseValue": 67701080000
+    },
+    {
+        "symbol": "CARR",
+        "date": "2023-03-31",
+        "stockPrice": 45.75,
+        "numberOfShares": 835000000,
+        "marketCapitalization": 38201250000,
+        "minusCashAndCashEquivalents": 3347000000,
+        "addTotalDebt": 9356000000,
+        "enterpriseValue": 44210250000
+    },
+    {
+        "symbol": "CARR",
+        "date": "2022-03-31",
+        "stockPrice": 45.87,
+        "numberOfShares": 853300000,
+        "marketCapitalization": 39140871000,
+        "minusCashAndCashEquivalents": 3604000000,
+        "addTotalDebt": 9052000000,
+        "enterpriseValue": 44588871000
+    },
+    {
+        "symbol": "CARR",
+        "date": "2021-03-31",
+        "stockPrice": 42.22,
+        "numberOfShares": 869300000,
+        "marketCapitalization": 36701846000,
+        "minusCashAndCashEquivalents": 2599000000,
+        "addTotalDebt": 10351000000,
+        "enterpriseValue": 44453846000
+    }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "RKT",
+        "date": "2025-03-31",
+        "stockPrice": 12.07,
+        "numberOfShares": 147717296,
+        "marketCapitalization": 2390576360,
+        "minusCashAndCashEquivalents": 1408800000,
+        "addTotalDebt": 14802693000,
+        "enterpriseValue": 15784469360
+    },
+    {
+        "symbol": "RKT",
+        "date": "2024-03-31",
+        "stockPrice": 13.86,
+        "numberOfShares": 136991743,
+        "marketCapitalization": 2545784412,
+        "minusCashAndCashEquivalents": 861410000,
+        "addTotalDebt": 12342515000,
+        "enterpriseValue": 14026889412
+    },
+    {
+        "symbol": "RKT",
+        "date": "2023-03-31",
+        "stockPrice": 9.06,
+        "numberOfShares": 124732722,
+        "marketCapitalization": 1515209200,
+        "minusCashAndCashEquivalents": 893383000,
+        "addTotalDebt": 11794573000,
+        "enterpriseValue": 12416399200
+    },
+    {
+        "symbol": "RKT",
+        "date": "2022-03-31",
+        "stockPrice": 11.12,
+        "numberOfShares": 122691728,
+        "marketCapitalization": 1829296366,
+        "minusCashAndCashEquivalents": 2310661000,
+        "addTotalDebt": 14180788000,
+        "enterpriseValue": 13699423366
+    },
+    {
+        "symbol": "RKT",
+        "date": "2021-03-31",
+        "stockPrice": 23.09,
+        "numberOfShares": 115673524,
+        "marketCapitalization": 3581144958,
+        "minusCashAndCashEquivalents": 2864906000,
+        "addTotalDebt": 23967461000,
+        "enterpriseValue": 24683699958
+    }
+]

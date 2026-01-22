@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "BIDU",
+        "date": "2025-03-31",
+        "stockPrice": 667.79,
+        "numberOfShares": 343875000,
+        "marketCapitalization": 229635628073,
+        "minusCashAndCashEquivalents": 49202000000,
+        "addTotalDebt": 102053000000,
+        "enterpriseValue": 282486628073
+    },
+    {
+        "symbol": "BIDU",
+        "date": "2024-03-31",
+        "stockPrice": 784.02,
+        "numberOfShares": 350500000,
+        "marketCapitalization": 274799430600,
+        "minusCashAndCashEquivalents": 30418000000,
+        "addTotalDebt": 89397000000,
+        "enterpriseValue": 333778430600
+    },
+    {
+        "symbol": "BIDU",
+        "date": "2023-03-31",
+        "stockPrice": 1036.38,
+        "numberOfShares": 349750000,
+        "marketCapitalization": 362474860516,
+        "minusCashAndCashEquivalents": 23638000000,
+        "addTotalDebt": 94427000000,
+        "enterpriseValue": 433263860516
+    },
+    {
+        "symbol": "BIDU",
+        "date": "2022-03-31",
+        "stockPrice": 839.05,
+        "numberOfShares": 345875000,
+        "marketCapitalization": 290205242775,
+        "minusCashAndCashEquivalents": 36832000000,
+        "addTotalDebt": 91580000000,
+        "enterpriseValue": 344953242775
+    },
+    {
+        "symbol": "BIDU",
+        "date": "2021-03-31",
+        "stockPrice": 1425.52,
+        "numberOfShares": 336500000,
+        "marketCapitalization": 479686850745,
+        "minusCashAndCashEquivalents": 41544000000,
+        "addTotalDebt": 82678000000,
+        "enterpriseValue": 520820850745
+    }
+]

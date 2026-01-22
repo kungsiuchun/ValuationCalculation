@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "WFC",
+        "date": "2025-03-31",
+        "stockPrice": 71.79,
+        "numberOfShares": 3280400000,
+        "marketCapitalization": 235499916000,
+        "minusCashAndCashEquivalents": 177565000000,
+        "addTotalDebt": 313436000000,
+        "enterpriseValue": 371370916000
+    },
+    {
+        "symbol": "WFC",
+        "date": "2024-03-31",
+        "stockPrice": 57.61,
+        "numberOfShares": 3560100000,
+        "marketCapitalization": 205097361000,
+        "minusCashAndCashEquivalents": 269647000000,
+        "addTotalDebt": 296778000000,
+        "enterpriseValue": 232228361000
+    },
+    {
+        "symbol": "WFC",
+        "date": "2023-03-31",
+        "stockPrice": 37.38,
+        "numberOfShares": 3785600000,
+        "marketCapitalization": 141505728000,
+        "minusCashAndCashEquivalents": 162436000000,
+        "addTotalDebt": 254473000000,
+        "enterpriseValue": 233542728000
+    },
+    {
+        "symbol": "WFC",
+        "date": "2022-03-31",
+        "stockPrice": 48.46,
+        "numberOfShares": 3831100000,
+        "marketCapitalization": 185655106000,
+        "minusCashAndCashEquivalents": 201895000000,
+        "addTotalDebt": 186938000000,
+        "enterpriseValue": 170698106000
+    },
+    {
+        "symbol": "WFC",
+        "date": "2021-03-31",
+        "stockPrice": 39.07,
+        "numberOfShares": 4141300000,
+        "marketCapitalization": 161800591000,
+        "minusCashAndCashEquivalents": 286733000000,
+        "addTotalDebt": 242232000000,
+        "enterpriseValue": 117299591000
+    }
+]
