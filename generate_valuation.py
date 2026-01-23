@@ -6,9 +6,9 @@ import json
 import os
 import time
 import logging
-# from dotenv import load_dotenv
-
 from datetime import datetime
+
+# from dotenv import load_dotenv
 
 # load_dotenv()
 
@@ -27,8 +27,7 @@ FMP_API_KEY_3 = os.getenv('FMP_API_KEY_3')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = ["INTC"] 
-[
+DOW_30 = [
     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
     "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE",
     "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
