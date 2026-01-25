@@ -1,6 +1,16 @@
 [
     {
         "symbol": "INTC",
+        "date": "2025-12-27",
+        "stockPrice": 36.2,
+        "numberOfShares": 4856000000,
+        "marketCapitalization": 175787200000,
+        "minusCashAndCashEquivalents": 14265000000,
+        "addTotalDebt": 46585000000,
+        "enterpriseValue": 208107200000
+    },
+    {
+        "symbol": "INTC",
         "date": "2024-12-31",
         "stockPrice": 20.05,
         "numberOfShares": 4319000000,
@@ -8,6 +18,16 @@
         "minusCashAndCashEquivalents": 8249000000,
         "addTotalDebt": 50011000000,
         "enterpriseValue": 128357950000
+    },
+    {
+        "symbol": "INTC",
+        "date": "2024-12-28",
+        "stockPrice": 20.3,
+        "numberOfShares": 4319000000,
+        "marketCapitalization": 87675700000,
+        "minusCashAndCashEquivalents": 8249000000,
+        "addTotalDebt": 50011000000,
+        "enterpriseValue": 129437700000
     },
     {
         "symbol": "INTC",

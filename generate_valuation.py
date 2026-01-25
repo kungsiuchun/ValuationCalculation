@@ -27,7 +27,7 @@ FMP_API_KEY_3 = os.getenv('FMP_API_KEY_3')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = [
+DOW_30 =[
     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
     "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE",
     "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
@@ -136,6 +136,7 @@ def get_fmp_fragmented(endpoint, ticker):
         if cache_exists:
             mtime = os.path.getmtime(cache_path)
             is_expired = (time.time() - mtime) > (CACHE_EXPIRY_DAYS * 86400)
+            is_expired = True # Forcing expiry for running in Github Actions frequently
 
         # 決定是否需要調用 API
         # 條件：緩存不存在 OR 該季度是我們追蹤的「下一個增量點」且已過期
