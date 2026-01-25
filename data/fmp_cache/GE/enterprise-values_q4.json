@@ -1,6 +1,16 @@
 [
     {
         "symbol": "GE",
+        "date": "2025-12-31",
+        "stockPrice": 308.03,
+        "numberOfShares": 1067000000,
+        "marketCapitalization": 328668010000,
+        "minusCashAndCashEquivalents": 12392000000,
+        "addTotalDebt": 20494000000,
+        "enterpriseValue": 336770010000
+    },
+    {
+        "symbol": "GE",
         "date": "2024-12-31",
         "stockPrice": 166.79,
         "numberOfShares": 1078977273,

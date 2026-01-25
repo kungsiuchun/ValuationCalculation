@@ -21,6 +21,16 @@
     },
     {
         "symbol": "INTC",
+        "date": "2024-03-30",
+        "stockPrice": 44.17,
+        "numberOfShares": 4242000000,
+        "marketCapitalization": 187369140000,
+        "minusCashAndCashEquivalents": 6923000000,
+        "addTotalDebt": 52450000000,
+        "enterpriseValue": 232896140000
+    },
+    {
+        "symbol": "INTC",
         "date": "2023-04-01",
         "stockPrice": 32.67,
         "numberOfShares": 4154000000,
