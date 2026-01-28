@@ -1,6 +1,16 @@
 [
     {
         "symbol": "GM",
+        "date": "2025-12-31",
+        "stockPrice": 81.32,
+        "numberOfShares": 919444000,
+        "marketCapitalization": 74769186080,
+        "minusCashAndCashEquivalents": 20945000000,
+        "addTotalDebt": 130277000000,
+        "enterpriseValue": 184101186080
+    },
+    {
+        "symbol": "GM",
         "date": "2024-12-31",
         "stockPrice": 53.27,
         "numberOfShares": 1115500000,
