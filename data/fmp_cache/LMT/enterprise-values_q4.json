@@ -1,6 +1,16 @@
 [
     {
         "symbol": "LMT",
+        "date": "2025-12-31",
+        "stockPrice": 483.67,
+        "numberOfShares": 230900000,
+        "marketCapitalization": 111679403000,
+        "minusCashAndCashEquivalents": 4121000000,
+        "addTotalDebt": 1168000000,
+        "enterpriseValue": 108726403000
+    },
+    {
+        "symbol": "LMT",
         "date": "2024-12-31",
         "stockPrice": 485.94,
         "numberOfShares": 236000000,
