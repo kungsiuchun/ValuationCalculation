@@ -1,6 +1,16 @@
 [
     {
         "symbol": "DIS",
+        "date": "2025-12-27",
+        "stockPrice": 113.56,
+        "numberOfShares": 1786000000,
+        "marketCapitalization": 202818160000,
+        "minusCashAndCashEquivalents": 5678000000,
+        "addTotalDebt": 46640000000,
+        "enterpriseValue": 243780160000
+    },
+    {
+        "symbol": "DIS",
         "date": "2024-12-28",
         "stockPrice": 111.55,
         "numberOfShares": 1812000000,
