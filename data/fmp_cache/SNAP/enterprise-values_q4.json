@@ -1,6 +1,16 @@
 [
     {
         "symbol": "SNAP",
+        "date": "2025-12-31",
+        "stockPrice": 8.07,
+        "numberOfShares": 1694598000,
+        "marketCapitalization": 13675405860,
+        "minusCashAndCashEquivalents": 1030435000,
+        "addTotalDebt": 653271000,
+        "enterpriseValue": 13298241860
+    },
+    {
+        "symbol": "SNAP",
         "date": "2024-12-31",
         "stockPrice": 10.77,
         "numberOfShares": 1717119000,

@@ -21,6 +21,16 @@
     },
     {
         "symbol": "JNJ",
+        "date": "2024-12-29",
+        "stockPrice": 143.34,
+        "numberOfShares": 2406922000,
+        "marketCapitalization": 345008199480,
+        "minusCashAndCashEquivalents": 24105000000,
+        "addTotalDebt": 36634000000,
+        "enterpriseValue": 357537199480
+    },
+    {
+        "symbol": "JNJ",
         "date": "2023-12-31",
         "stockPrice": 156.74,
         "numberOfShares": 2407200000,
