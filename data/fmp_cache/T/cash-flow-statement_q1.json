@@ -45,8 +45,8 @@
         "operatingCashFlow": 9049000000,
         "capitalExpenditure": -4277000000,
         "freeCashFlow": 4772000000,
-        "incomeTaxesPaid": 0,
-        "interestPaid": 0
+        "incomeTaxesPaid": 11000000,
+        "interestPaid": 1804000000
     },
     {
         "date": "2024-03-31",

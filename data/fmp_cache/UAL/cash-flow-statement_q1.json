@@ -87,7 +87,7 @@
         "preferredDividendsPaid": 0,
         "otherFinancingActivities": -18000000,
         "netCashProvidedByFinancingActivities": -1938000000,
-        "effectOfForexChangesOnCash": 0,
+        "effectOfForexChangesOnCash": 2000000,
         "netChangeInCash": 2351000000,
         "cashAtEndOfPeriod": 8685000000,
         "cashAtBeginningOfPeriod": 6334000000,

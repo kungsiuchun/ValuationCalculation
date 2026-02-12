@@ -1,6 +1,16 @@
 [
     {
         "symbol": "CSCO",
+        "date": "2026-01-24",
+        "stockPrice": 74.59,
+        "numberOfShares": 3955000000,
+        "marketCapitalization": 295003450000,
+        "minusCashAndCashEquivalents": 7458000000,
+        "addTotalDebt": 30086000000,
+        "enterpriseValue": 317631450000
+    },
+    {
+        "symbol": "CSCO",
         "date": "2025-01-25",
         "stockPrice": 62.23,
         "numberOfShares": 3981000000,
