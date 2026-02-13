@@ -15,9 +15,9 @@
         "stockPrice": 207.56,
         "numberOfShares": 2428600000,
         "marketCapitalization": 504080216000,
-        "minusCashAndCashEquivalents": 0,
-        "addTotalDebt": 0,
-        "enterpriseValue": 504080216000
+        "minusCashAndCashEquivalents": 19709000000,
+        "addTotalDebt": 47933000000,
+        "enterpriseValue": 532304216000
     },
     {
         "symbol": "JNJ",

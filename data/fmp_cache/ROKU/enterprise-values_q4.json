@@ -1,6 +1,16 @@
 [
     {
         "symbol": "ROKU",
+        "date": "2025-12-31",
+        "stockPrice": 108.49,
+        "numberOfShares": 148041000,
+        "marketCapitalization": 16060968090,
+        "minusCashAndCashEquivalents": 1587068000,
+        "addTotalDebt": 871798000,
+        "enterpriseValue": 15345698090
+    },
+    {
+        "symbol": "ROKU",
         "date": "2024-12-31",
         "stockPrice": 74.34,
         "numberOfShares": 145554000,
