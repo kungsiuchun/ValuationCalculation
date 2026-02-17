@@ -5,9 +5,9 @@
         "stockPrice": 13.12,
         "numberOfShares": 3979000000,
         "marketCapitalization": 52204480000,
-        "minusCashAndCashEquivalents": 0,
-        "addTotalDebt": 0,
-        "enterpriseValue": 52204480000
+        "minusCashAndCashEquivalents": 23356000000,
+        "addTotalDebt": 167573000000,
+        "enterpriseValue": 196421480000
     },
     {
         "symbol": "F",
