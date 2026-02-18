@@ -3,11 +3,11 @@
         "symbol": "ET",
         "date": "2025-12-31",
         "stockPrice": 16.49,
-        "numberOfShares": 3639286000,
-        "marketCapitalization": 60011826139,
+        "numberOfShares": 3650000000,
+        "marketCapitalization": 60188499999,
         "minusCashAndCashEquivalents": 0,
         "addTotalDebt": 69823000000,
-        "enterpriseValue": 129834826139
+        "enterpriseValue": 130011499999
     },
     {
         "symbol": "ET",
