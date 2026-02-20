@@ -1,6 +1,16 @@
 [
     {
         "symbol": "WMT",
+        "date": "2026-01-31",
+        "stockPrice": 119.14,
+        "numberOfShares": 7971000000,
+        "marketCapitalization": 949664940000,
+        "minusCashAndCashEquivalents": 10727000000,
+        "addTotalDebt": 67095000000,
+        "enterpriseValue": 1006032940000
+    },
+    {
+        "symbol": "WMT",
         "date": "2025-01-31",
         "stockPrice": 98.16,
         "numberOfShares": 8029000000,
