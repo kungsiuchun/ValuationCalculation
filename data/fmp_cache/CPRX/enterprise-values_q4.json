@@ -1,6 +1,16 @@
 [
     {
         "symbol": "CPRX",
+        "date": "2025-12-31",
+        "stockPrice": 23.34,
+        "numberOfShares": 122600730,
+        "marketCapitalization": 2861501038,
+        "minusCashAndCashEquivalents": 709171000,
+        "addTotalDebt": 2350000,
+        "enterpriseValue": 2154680038
+    },
+    {
+        "symbol": "CPRX",
         "date": "2024-12-31",
         "stockPrice": 20.87,
         "numberOfShares": 119892000,

@@ -1,6 +1,16 @@
 [
     {
         "symbol": "ZM",
+        "date": "2026-01-31",
+        "stockPrice": 92.1,
+        "numberOfShares": 296454680,
+        "marketCapitalization": 27303476028,
+        "minusCashAndCashEquivalents": 1272877000,
+        "addTotalDebt": 30710000,
+        "enterpriseValue": 26061309028
+    },
+    {
+        "symbol": "ZM",
         "date": "2025-01-31",
         "stockPrice": 86.94,
         "numberOfShares": 306554000,
