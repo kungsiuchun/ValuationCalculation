@@ -1,6 +1,16 @@
 [
     {
         "symbol": "COST",
+        "date": "2026-02-15",
+        "stockPrice": 1018.48,
+        "numberOfShares": 443961000,
+        "marketCapitalization": 452165399280,
+        "minusCashAndCashEquivalents": 17383000000,
+        "addTotalDebt": 2477000000,
+        "enterpriseValue": 437259399280
+    },
+    {
+        "symbol": "COST",
         "date": "2025-02-16",
         "stockPrice": 1071.85,
         "numberOfShares": 443982000,
