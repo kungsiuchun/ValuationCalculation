@@ -1,6 +1,16 @@
 [
     {
         "symbol": "DOCU",
+        "date": "2026-01-31",
+        "stockPrice": 52.54,
+        "numberOfShares": 200477000,
+        "marketCapitalization": 10533061580,
+        "minusCashAndCashEquivalents": 602442000,
+        "addTotalDebt": 185119000,
+        "enterpriseValue": 10115738580
+    },
+    {
+        "symbol": "DOCU",
         "date": "2025-01-31",
         "stockPrice": 96.73,
         "numberOfShares": 203299000,
