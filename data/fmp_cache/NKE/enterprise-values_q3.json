@@ -5,9 +5,9 @@
         "stockPrice": 62.18,
         "numberOfShares": 1478900000,
         "marketCapitalization": 91958002000,
-        "minusCashAndCashEquivalents": 0,
-        "addTotalDebt": 0,
-        "enterpriseValue": 91958002000
+        "minusCashAndCashEquivalents": 6660000000,
+        "addTotalDebt": 11178000000,
+        "enterpriseValue": 96476002000
     },
     {
         "symbol": "NKE",
