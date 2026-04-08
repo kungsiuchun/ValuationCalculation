@@ -1,6 +1,16 @@
 [
     {
         "symbol": "DAL",
+        "date": "2026-03-31",
+        "stockPrice": 66.48,
+        "numberOfShares": 652000000,
+        "marketCapitalization": 43344960000,
+        "minusCashAndCashEquivalents": 5053000000,
+        "addTotalDebt": 14164000000,
+        "enterpriseValue": 52455960000
+    },
+    {
+        "symbol": "DAL",
         "date": "2025-03-31",
         "stockPrice": 43.6,
         "numberOfShares": 644000000,
