@@ -1,6 +1,16 @@
 [
     {
         "symbol": "T",
+        "date": "2026-03-31",
+        "stockPrice": 28.99,
+        "numberOfShares": 7169000000,
+        "marketCapitalization": 207829310000,
+        "minusCashAndCashEquivalents": 11964000000,
+        "addTotalDebt": 157314000000,
+        "enterpriseValue": 353179310000
+    },
+    {
+        "symbol": "T",
         "date": "2025-03-31",
         "stockPrice": 28.28,
         "numberOfShares": 7213000000,
