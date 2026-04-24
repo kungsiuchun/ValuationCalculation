@@ -1,6 +1,16 @@
 [
     {
         "symbol": "AAL",
+        "date": "2026-03-31",
+        "stockPrice": 10.74,
+        "numberOfShares": 661181000,
+        "marketCapitalization": 7101083940,
+        "minusCashAndCashEquivalents": 903000000,
+        "addTotalDebt": 34532000000,
+        "enterpriseValue": 40730083940
+    },
+    {
+        "symbol": "AAL",
         "date": "2025-03-31",
         "stockPrice": 10.55,
         "numberOfShares": 658880000,
