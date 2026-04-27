@@ -1,6 +1,16 @@
 [
     {
         "symbol": "VZ",
+        "date": "2026-03-31",
+        "stockPrice": 50.2,
+        "numberOfShares": 4205000000,
+        "marketCapitalization": 211091000000,
+        "minusCashAndCashEquivalents": 0,
+        "addTotalDebt": 0,
+        "enterpriseValue": 211091000000
+    },
+    {
+        "symbol": "VZ",
         "date": "2025-03-31",
         "stockPrice": 45.36,
         "numberOfShares": 4222000000,
