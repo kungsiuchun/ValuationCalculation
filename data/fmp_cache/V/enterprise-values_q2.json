@@ -1,6 +1,16 @@
 [
     {
         "symbol": "V",
+        "date": "2026-03-31",
+        "stockPrice": 302.24,
+        "numberOfShares": 1913451000,
+        "marketCapitalization": 578321430240,
+        "minusCashAndCashEquivalents": 12404000000,
+        "addTotalDebt": 23976000000,
+        "enterpriseValue": 589893430240
+    },
+    {
+        "symbol": "V",
         "date": "2025-03-31",
         "stockPrice": 350.46,
         "numberOfShares": 1949986500,
