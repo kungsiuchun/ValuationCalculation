@@ -1,6 +1,16 @@
 [
     {
         "symbol": "F",
+        "date": "2026-03-31",
+        "stockPrice": 11.54,
+        "numberOfShares": 3991000000,
+        "marketCapitalization": 46056140000,
+        "minusCashAndCashEquivalents": 17649000000,
+        "addTotalDebt": 157126000000,
+        "enterpriseValue": 185533140000
+    },
+    {
+        "symbol": "F",
         "date": "2025-03-31",
         "stockPrice": 10.03,
         "numberOfShares": 3968000000,

@@ -1,6 +1,16 @@
 [
     {
         "symbol": "RIVN",
+        "date": "2026-03-31",
+        "stockPrice": 15.05,
+        "numberOfShares": 1249000000,
+        "marketCapitalization": 18797450000,
+        "minusCashAndCashEquivalents": 2845000000,
+        "addTotalDebt": 5022000000,
+        "enterpriseValue": 20974450000
+    },
+    {
+        "symbol": "RIVN",
         "date": "2025-03-31",
         "stockPrice": 12.45,
         "numberOfShares": 1137000000,

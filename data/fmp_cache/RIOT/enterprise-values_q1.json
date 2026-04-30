@@ -1,6 +1,16 @@
 [
     {
         "symbol": "RIOT",
+        "date": "2026-03-31",
+        "stockPrice": 12.36,
+        "numberOfShares": 347624244,
+        "marketCapitalization": 4296635655,
+        "minusCashAndCashEquivalents": 205666000,
+        "addTotalDebt": 289524000,
+        "enterpriseValue": 4380493655
+    },
+    {
+        "symbol": "RIOT",
         "date": "2025-03-31",
         "stockPrice": 7.12,
         "numberOfShares": 329508000,
