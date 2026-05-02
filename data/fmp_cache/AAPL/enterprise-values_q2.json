@@ -1,6 +1,16 @@
 [
     {
         "symbol": "AAPL",
+        "date": "2026-03-28",
+        "stockPrice": 248.8,
+        "numberOfShares": 14710718000,
+        "marketCapitalization": 3660026638400,
+        "minusCashAndCashEquivalents": 45572000000,
+        "addTotalDebt": 1997000000,
+        "enterpriseValue": 3616451638400
+    },
+    {
+        "symbol": "AAPL",
         "date": "2025-03-29",
         "stockPrice": 217.9,
         "numberOfShares": 14994082000,

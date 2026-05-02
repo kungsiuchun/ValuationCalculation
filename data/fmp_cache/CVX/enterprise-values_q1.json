@@ -1,6 +1,16 @@
 [
     {
         "symbol": "CVX",
+        "date": "2026-03-31",
+        "stockPrice": 206.9,
+        "numberOfShares": 1980146000,
+        "marketCapitalization": 409692207400,
+        "minusCashAndCashEquivalents": 0,
+        "addTotalDebt": 0,
+        "enterpriseValue": 409692207400
+    },
+    {
+        "symbol": "CVX",
         "date": "2025-03-31",
         "stockPrice": 167.29,
         "numberOfShares": 1744628000,

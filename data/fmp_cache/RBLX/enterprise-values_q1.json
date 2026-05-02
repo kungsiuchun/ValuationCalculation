@@ -1,6 +1,16 @@
 [
     {
         "symbol": "RBLX",
+        "date": "2026-03-31",
+        "stockPrice": 56.56,
+        "numberOfShares": 711697000,
+        "marketCapitalization": 40253582320,
+        "minusCashAndCashEquivalents": 1188000000,
+        "addTotalDebt": 625000000,
+        "enterpriseValue": 39690582320
+    },
+    {
+        "symbol": "RBLX",
         "date": "2025-03-31",
         "stockPrice": 58.29,
         "numberOfShares": 671657000,
