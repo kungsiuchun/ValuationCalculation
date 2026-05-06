@@ -1,6 +1,16 @@
 [
     {
         "symbol": "UBER",
+        "date": "2026-03-31",
+        "stockPrice": 71.93,
+        "numberOfShares": 2052187000,
+        "marketCapitalization": 147613810910,
+        "minusCashAndCashEquivalents": 6238000000,
+        "addTotalDebt": 1710000000,
+        "enterpriseValue": 143085810910
+    },
+    {
+        "symbol": "UBER",
         "date": "2025-03-31",
         "stockPrice": 72.86,
         "numberOfShares": 2092464000,

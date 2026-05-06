@@ -1,6 +1,16 @@
 [
     {
         "symbol": "LCID",
+        "date": "2026-03-31",
+        "stockPrice": 9.53,
+        "numberOfShares": 3282858610,
+        "marketCapitalization": 31285642553,
+        "minusCashAndCashEquivalents": 700356000,
+        "addTotalDebt": 816311000,
+        "enterpriseValue": 31401597553
+    },
+    {
+        "symbol": "LCID",
         "date": "2025-03-31",
         "stockPrice": 24.2,
         "numberOfShares": 303631700,
