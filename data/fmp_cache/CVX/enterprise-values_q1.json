@@ -5,9 +5,9 @@
         "stockPrice": 206.9,
         "numberOfShares": 1980146000,
         "marketCapitalization": 409692207400,
-        "minusCashAndCashEquivalents": 0,
-        "addTotalDebt": 0,
-        "enterpriseValue": 409692207400
+        "minusCashAndCashEquivalents": 5323000000,
+        "addTotalDebt": 45428000000,
+        "enterpriseValue": 449797207400
     },
     {
         "symbol": "CVX",
