@@ -1,6 +1,16 @@
 [
     {
         "symbol": "COIN",
+        "date": "2026-03-31",
+        "stockPrice": 174.61,
+        "numberOfShares": 264775000,
+        "marketCapitalization": 46232362750,
+        "minusCashAndCashEquivalents": 10499829000,
+        "addTotalDebt": 7211684000,
+        "enterpriseValue": 42944217750
+    },
+    {
+        "symbol": "COIN",
         "date": "2025-03-31",
         "stockPrice": 172.23,
         "numberOfShares": 253878000,

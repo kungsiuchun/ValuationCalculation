@@ -5,9 +5,9 @@
         "stockPrice": 217.49,
         "numberOfShares": 1773864000,
         "marketCapitalization": 385797681360,
-        "minusCashAndCashEquivalents": 0,
-        "addTotalDebt": 0,
-        "enterpriseValue": 385797681360
+        "minusCashAndCashEquivalents": 9391000000,
+        "addTotalDebt": 72858000000,
+        "enterpriseValue": 449264681360
     },
     {
         "symbol": "ABBV",
