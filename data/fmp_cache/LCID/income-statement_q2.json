@@ -78,8 +78,8 @@
         "bottomLineNetIncome": -790251000,
         "eps": -3.42,
         "epsDiluted": -3.42,
-        "weightedAverageShsOut": 231036053,
-        "weightedAverageShsOutDil": 231036053
+        "weightedAverageShsOut": 231036052,
+        "weightedAverageShsOutDil": 231036052
     },
     {
         "date": "2023-06-30",
@@ -159,7 +159,7 @@
         "netIncomeDeductions": 334843000,
         "bottomLineNetIncome": -555268000,
         "eps": -1.32,
-        "epsDiluted": -1.3,
+        "epsDiluted": -3.29,
         "weightedAverageShsOut": 166930381,
         "weightedAverageShsOutDil": 168681540
     },
@@ -199,9 +199,9 @@
         "netIncome": -261726000,
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": -261726000,
-        "eps": -1.6,
-        "epsDiluted": -1.6,
-        "weightedAverageShsOut": 161862153,
-        "weightedAverageShsOutDil": 161862153
+        "eps": -72.1,
+        "epsDiluted": -72.1,
+        "weightedAverageShsOut": 3629850,
+        "weightedAverageShsOutDil": 3629850
     }
 ]
