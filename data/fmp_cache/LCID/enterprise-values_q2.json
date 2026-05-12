@@ -13,11 +13,11 @@
         "symbol": "LCID",
         "date": "2024-06-30",
         "stockPrice": 26.4,
-        "numberOfShares": 231036053,
-        "marketCapitalization": 6099351799,
+        "numberOfShares": 231036052,
+        "marketCapitalization": 6099351772,
         "minusCashAndCashEquivalents": 1353581000,
         "addTotalDebt": 2416003000,
-        "enterpriseValue": 7161773799
+        "enterpriseValue": 7161773772
     },
     {
         "symbol": "LCID",
@@ -43,10 +43,10 @@
         "symbol": "LCID",
         "date": "2021-06-30",
         "stockPrice": 288.2,
-        "numberOfShares": 161862153,
-        "marketCapitalization": 46648672494,
+        "numberOfShares": 3629850,
+        "marketCapitalization": 1046122770,
         "minusCashAndCashEquivalents": 1000159,
         "addTotalDebt": 1200000,
-        "enterpriseValue": 46648872335
+        "enterpriseValue": 1046322611
     }
 ]
