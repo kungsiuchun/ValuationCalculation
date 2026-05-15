@@ -5,9 +5,9 @@
         "stockPrice": 68.69,
         "numberOfShares": 3960000000,
         "marketCapitalization": 272012400000,
-        "minusCashAndCashEquivalents": 9473000000,
-        "addTotalDebt": 29643000000,
-        "enterpriseValue": 292182400000
+        "minusCashAndCashEquivalents": 8346000000,
+        "addTotalDebt": 28093000000,
+        "enterpriseValue": 291759400000
     },
     {
         "symbol": "CSCO",
@@ -18,6 +18,16 @@
         "minusCashAndCashEquivalents": 9023000000,
         "addTotalDebt": 32232000000,
         "enterpriseValue": 217881333722
+    },
+    {
+        "symbol": "CSCO",
+        "date": "2024-07-27",
+        "stockPrice": 47.88,
+        "numberOfShares": 4018004824,
+        "marketCapitalization": 192382070973,
+        "minusCashAndCashEquivalents": 7508000000,
+        "addTotalDebt": 30973000000,
+        "enterpriseValue": 215847070973
     },
     {
         "symbol": "CSCO",
