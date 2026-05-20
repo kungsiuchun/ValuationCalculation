@@ -3,11 +3,11 @@
         "symbol": "BABA",
         "date": "2026-03-31",
         "stockPrice": 865.36,
-        "numberOfShares": 2322375000,
-        "marketCapitalization": 2009691242831,
+        "numberOfShares": 2321000000,
+        "marketCapitalization": 2008501372349,
         "minusCashAndCashEquivalents": 172919777000,
         "addTotalDebt": 259024995000,
-        "enterpriseValue": 2095796460831
+        "enterpriseValue": 2094606590349
     },
     {
         "symbol": "BABA",
