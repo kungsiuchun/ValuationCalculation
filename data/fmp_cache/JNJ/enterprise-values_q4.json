@@ -1,6 +1,26 @@
 [
     {
         "symbol": "JNJ",
+        "date": "2025-12-31",
+        "stockPrice": 206.95,
+        "numberOfShares": 2428600000,
+        "marketCapitalization": 502598770000,
+        "minusCashAndCashEquivalents": 0,
+        "addTotalDebt": 0,
+        "enterpriseValue": 502598770000
+    },
+    {
+        "symbol": "JNJ",
+        "date": "2025-12-28",
+        "stockPrice": 207.56,
+        "numberOfShares": 2428600000,
+        "marketCapitalization": 504080216000,
+        "minusCashAndCashEquivalents": 19709000000,
+        "addTotalDebt": 47933000000,
+        "enterpriseValue": 532304216000
+    },
+    {
+        "symbol": "JNJ",
         "date": "2024-12-31",
         "stockPrice": 144.62,
         "numberOfShares": 2406922000,
@@ -8,6 +28,16 @@
         "minusCashAndCashEquivalents": 24105000000,
         "addTotalDebt": 36634000000,
         "enterpriseValue": 360618059640
+    },
+    {
+        "symbol": "JNJ",
+        "date": "2024-12-29",
+        "stockPrice": 143.34,
+        "numberOfShares": 2406922000,
+        "marketCapitalization": 345008199480,
+        "minusCashAndCashEquivalents": 24105000000,
+        "addTotalDebt": 36634000000,
+        "enterpriseValue": 357537199480
     },
     {
         "symbol": "JNJ",

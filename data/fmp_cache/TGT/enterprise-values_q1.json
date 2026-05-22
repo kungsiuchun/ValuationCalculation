@@ -1,6 +1,16 @@
 [
     {
         "symbol": "TGT",
+        "date": "2026-05-02",
+        "stockPrice": 128.89,
+        "numberOfShares": 453800000,
+        "marketCapitalization": 58490281999,
+        "minusCashAndCashEquivalents": 3534000000,
+        "addTotalDebt": 4549000000,
+        "enterpriseValue": 59505281999
+    },
+    {
+        "symbol": "TGT",
         "date": "2025-05-03",
         "stockPrice": 97.37,
         "numberOfShares": 455000000,

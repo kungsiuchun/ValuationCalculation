@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "ROKU",
+        "date": "2025-06-30",
+        "stockPrice": 87.89,
+        "numberOfShares": 146888000,
+        "marketCapitalization": 12909986320,
+        "minusCashAndCashEquivalents": 2253276000,
+        "addTotalDebt": 567158000,
+        "enterpriseValue": 11223868320
+    },
+    {
+        "symbol": "ROKU",
+        "date": "2024-06-30",
+        "stockPrice": 62.47,
+        "numberOfShares": 144339000,
+        "marketCapitalization": 9016857330,
+        "minusCashAndCashEquivalents": 2058465000,
+        "addTotalDebt": 627445000,
+        "enterpriseValue": 7585837330
+    },
+    {
+        "symbol": "ROKU",
+        "date": "2023-06-30",
+        "stockPrice": 63.96,
+        "numberOfShares": 141033000,
+        "marketCapitalization": 9020470680,
+        "minusCashAndCashEquivalents": 1755261000,
+        "addTotalDebt": 648742000,
+        "enterpriseValue": 7913951680
+    },
+    {
+        "symbol": "ROKU",
+        "date": "2022-06-30",
+        "stockPrice": 82.14,
+        "numberOfShares": 136849000,
+        "marketCapitalization": 11240776860,
+        "minusCashAndCashEquivalents": 2050412000,
+        "addTotalDebt": 721320000,
+        "enterpriseValue": 9911684860
+    },
+    {
+        "symbol": "ROKU",
+        "date": "2021-06-30",
+        "stockPrice": 459.25,
+        "numberOfShares": 132705000,
+        "marketCapitalization": 60944771250,
+        "minusCashAndCashEquivalents": 2083273000,
+        "addTotalDebt": 463260000,
+        "enterpriseValue": 59324758250
+    }
+]

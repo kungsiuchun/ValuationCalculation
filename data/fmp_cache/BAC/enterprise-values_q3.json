@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "BAC",
+        "date": "2025-09-30",
+        "stockPrice": 51.59,
+        "numberOfShares": 7466000000,
+        "marketCapitalization": 385170940000,
+        "minusCashAndCashEquivalents": 246507000000,
+        "addTotalDebt": 707772000000,
+        "enterpriseValue": 846435940000
+    },
+    {
+        "symbol": "BAC",
+        "date": "2024-09-30",
+        "stockPrice": 39.68,
+        "numberOfShares": 7818000000,
+        "marketCapitalization": 310218240000,
+        "minusCashAndCashEquivalents": 303740000000,
+        "addTotalDebt": 733325000000,
+        "enterpriseValue": 739803240000
+    },
+    {
+        "symbol": "BAC",
+        "date": "2023-09-30",
+        "stockPrice": 27.38,
+        "numberOfShares": 8017100000,
+        "marketCapitalization": 219508198000,
+        "minusCashAndCashEquivalents": 359721000000,
+        "addTotalDebt": 631258000000,
+        "enterpriseValue": 491045198000
+    },
+    {
+        "symbol": "BAC",
+        "date": "2022-09-30",
+        "stockPrice": 30.2,
+        "numberOfShares": 8107700000,
+        "marketCapitalization": 244852540000,
+        "minusCashAndCashEquivalents": 212425000000,
+        "addTotalDebt": 505793000000,
+        "enterpriseValue": 538220540000
+    },
+    {
+        "symbol": "BAC",
+        "date": "2021-09-30",
+        "stockPrice": 42.45,
+        "numberOfShares": 8430700000,
+        "marketCapitalization": 357883215000,
+        "minusCashAndCashEquivalents": 286372000000,
+        "addTotalDebt": 506327000000,
+        "enterpriseValue": 577838215000
+    }
+]

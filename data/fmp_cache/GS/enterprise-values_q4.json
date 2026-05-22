@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "GS",
+        "date": "2025-12-31",
+        "stockPrice": 879,
+        "numberOfShares": 312700000,
+        "marketCapitalization": 274863300000,
+        "minusCashAndCashEquivalents": 164000000000,
+        "addTotalDebt": 619000000000,
+        "enterpriseValue": 729863300000
+    },
+    {
+        "symbol": "GS",
+        "date": "2024-12-31",
+        "stockPrice": 572.62,
+        "numberOfShares": 322400000,
+        "marketCapitalization": 184612688000,
+        "minusCashAndCashEquivalents": 182092000000,
+        "addTotalDebt": 616935000000,
+        "enterpriseValue": 619455688000
+    },
+    {
+        "symbol": "GS",
+        "date": "2023-12-31",
+        "stockPrice": 385.77,
+        "numberOfShares": 340800000,
+        "marketCapitalization": 131470416000,
+        "minusCashAndCashEquivalents": 241577000000,
+        "addTotalDebt": 583135000000,
+        "enterpriseValue": 473028416000
+    },
+    {
+        "symbol": "GS",
+        "date": "2022-12-31",
+        "stockPrice": 343.38,
+        "numberOfShares": 349500000,
+        "marketCapitalization": 120011310000,
+        "minusCashAndCashEquivalents": 241825000000,
+        "addTotalDebt": 434548000000,
+        "enterpriseValue": 312734310000
+    },
+    {
+        "symbol": "GS",
+        "date": "2021-12-31",
+        "stockPrice": 382.55,
+        "numberOfShares": 346599996,
+        "marketCapitalization": 132591828469,
+        "minusCashAndCashEquivalents": 261036000000,
+        "addTotalDebt": 487762000000,
+        "enterpriseValue": 359317828469
+    }
+]

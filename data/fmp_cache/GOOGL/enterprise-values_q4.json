@@ -1,6 +1,16 @@
 [
     {
         "symbol": "GOOGL",
+        "date": "2025-12-31",
+        "stockPrice": 313,
+        "numberOfShares": 12073000000,
+        "marketCapitalization": 3778849000000,
+        "minusCashAndCashEquivalents": 30708000000,
+        "addTotalDebt": 59291000000,
+        "enterpriseValue": 3807432000000
+    },
+    {
+        "symbol": "GOOGL",
         "date": "2024-12-31",
         "stockPrice": 189.3,
         "numberOfShares": 12228000000,

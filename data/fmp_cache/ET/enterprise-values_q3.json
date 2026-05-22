@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "ET",
+        "date": "2025-09-30",
+        "stockPrice": 17.16,
+        "numberOfShares": 3639286000,
+        "marketCapitalization": 62450147760,
+        "minusCashAndCashEquivalents": 3574000000,
+        "addTotalDebt": 63974000000,
+        "enterpriseValue": 122850147760
+    },
+    {
+        "symbol": "ET",
+        "date": "2024-09-30",
+        "stockPrice": 16.05,
+        "numberOfShares": 3415200000,
+        "marketCapitalization": 54813960000,
+        "minusCashAndCashEquivalents": 299000000,
+        "addTotalDebt": 60065000000,
+        "enterpriseValue": 114579960000
+    },
+    {
+        "symbol": "ET",
+        "date": "2023-09-30",
+        "stockPrice": 14.03,
+        "numberOfShares": 3144000000,
+        "marketCapitalization": 44110320000,
+        "minusCashAndCashEquivalents": 514000000,
+        "addTotalDebt": 48901000000,
+        "enterpriseValue": 92497320000
+    },
+    {
+        "symbol": "ET",
+        "date": "2022-09-30",
+        "stockPrice": 11.03,
+        "numberOfShares": 3087600000,
+        "marketCapitalization": 34056227999,
+        "minusCashAndCashEquivalents": 326000000,
+        "addTotalDebt": 48252000000,
+        "enterpriseValue": 81982227999
+    },
+    {
+        "symbol": "ET",
+        "date": "2021-09-30",
+        "stockPrice": 9.58,
+        "numberOfShares": 2705200000,
+        "marketCapitalization": 25915816000,
+        "minusCashAndCashEquivalents": 313000000,
+        "addTotalDebt": 46316000000,
+        "enterpriseValue": 71918816000
+    }
+]

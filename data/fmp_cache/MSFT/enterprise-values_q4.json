@@ -3,11 +3,11 @@
         "symbol": "MSFT",
         "date": "2025-06-30",
         "stockPrice": 497.41,
-        "numberOfShares": 7433000000,
-        "marketCapitalization": 3697248530000,
+        "numberOfShares": 7432000000,
+        "marketCapitalization": 3696751120000,
         "minusCashAndCashEquivalents": 30242000000,
-        "addTotalDebt": 60588000000,
-        "enterpriseValue": 3727594530000
+        "addTotalDebt": 112184000000,
+        "enterpriseValue": 3778693120000
     },
     {
         "symbol": "MSFT",
@@ -16,8 +16,8 @@
         "numberOfShares": 7433000000,
         "marketCapitalization": 3394874090000,
         "minusCashAndCashEquivalents": 18315000000,
-        "addTotalDebt": 67127000000,
-        "enterpriseValue": 3443686090000
+        "addTotalDebt": 97852000000,
+        "enterpriseValue": 3474411090000
     },
     {
         "symbol": "MSFT",
@@ -26,8 +26,8 @@
         "numberOfShares": 7434000000,
         "marketCapitalization": 2531574360000,
         "minusCashAndCashEquivalents": 34704000000,
-        "addTotalDebt": 59965000000,
-        "enterpriseValue": 2556835360000
+        "addTotalDebt": 79441000000,
+        "enterpriseValue": 2576311360000
     },
     {
         "symbol": "MSFT",
@@ -36,8 +36,8 @@
         "numberOfShares": 7474000000,
         "marketCapitalization": 1919547420000,
         "minusCashAndCashEquivalents": 13931000000,
-        "addTotalDebt": 61270000000,
-        "enterpriseValue": 1966886420000
+        "addTotalDebt": 78400000000,
+        "enterpriseValue": 1984016420000
     },
     {
         "symbol": "MSFT",
@@ -46,7 +46,7 @@
         "numberOfShares": 7527000000,
         "marketCapitalization": 2039064299999,
         "minusCashAndCashEquivalents": 14224000000,
-        "addTotalDebt": 67775000000,
-        "enterpriseValue": 2092615299999
+        "addTotalDebt": 82278000000,
+        "enterpriseValue": 2107118299999
     }
 ]

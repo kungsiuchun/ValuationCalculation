@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "DAL",
+        "date": "2025-09-30",
+        "stockPrice": 56.75,
+        "numberOfShares": 648000000,
+        "marketCapitalization": 36774000000,
+        "minusCashAndCashEquivalents": 3791000000,
+        "addTotalDebt": 21721000000,
+        "enterpriseValue": 54704000000
+    },
+    {
+        "symbol": "DAL",
+        "date": "2024-09-30",
+        "stockPrice": 50.79,
+        "numberOfShares": 641000000,
+        "marketCapitalization": 32556390000,
+        "minusCashAndCashEquivalents": 3969000000,
+        "addTotalDebt": 24388000000,
+        "enterpriseValue": 52975390000
+    },
+    {
+        "symbol": "DAL",
+        "date": "2023-09-30",
+        "stockPrice": 37,
+        "numberOfShares": 639000000,
+        "marketCapitalization": 23643000000,
+        "minusCashAndCashEquivalents": 2835000000,
+        "addTotalDebt": 26799000000,
+        "enterpriseValue": 47607000000
+    },
+    {
+        "symbol": "DAL",
+        "date": "2022-09-30",
+        "stockPrice": 28.06,
+        "numberOfShares": 638000000,
+        "marketCapitalization": 17902280000,
+        "minusCashAndCashEquivalents": 7023000000,
+        "addTotalDebt": 30836000000,
+        "enterpriseValue": 41715280000
+    },
+    {
+        "symbol": "DAL",
+        "date": "2021-09-30",
+        "stockPrice": 42.61,
+        "numberOfShares": 637000000,
+        "marketCapitalization": 27142570000,
+        "minusCashAndCashEquivalents": 8785000000,
+        "addTotalDebt": 34197000000,
+        "enterpriseValue": 52554570000
+    }
+]

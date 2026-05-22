@@ -1,6 +1,16 @@
 [
     {
         "symbol": "SBUX",
+        "date": "2025-12-28",
+        "stockPrice": 85.57,
+        "numberOfShares": 1138000000,
+        "marketCapitalization": 97378659999,
+        "minusCashAndCashEquivalents": 3413400000,
+        "addTotalDebt": 33518500000,
+        "enterpriseValue": 127483759999
+    },
+    {
+        "symbol": "SBUX",
         "date": "2024-12-29",
         "stockPrice": 90.58,
         "numberOfShares": 1134700000,

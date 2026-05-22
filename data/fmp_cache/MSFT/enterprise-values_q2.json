@@ -1,6 +1,16 @@
 [
     {
         "symbol": "MSFT",
+        "date": "2025-12-31",
+        "stockPrice": 483.62,
+        "numberOfShares": 7431000000,
+        "marketCapitalization": 3593780220000,
+        "minusCashAndCashEquivalents": 24296000000,
+        "addTotalDebt": 57607000000,
+        "enterpriseValue": 3627091220000
+    },
+    {
+        "symbol": "MSFT",
         "date": "2024-12-31",
         "stockPrice": 421.5,
         "numberOfShares": 7435000000,

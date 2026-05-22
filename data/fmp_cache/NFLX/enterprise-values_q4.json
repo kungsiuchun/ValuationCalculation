@@ -1,6 +1,16 @@
 [
     {
         "symbol": "NFLX",
+        "date": "2025-12-31",
+        "stockPrice": 93.76,
+        "numberOfShares": 4229221000,
+        "marketCapitalization": 396531760960,
+        "minusCashAndCashEquivalents": 9033681000,
+        "addTotalDebt": 14462836000,
+        "enterpriseValue": 401960915960
+    },
+    {
+        "symbol": "NFLX",
         "date": "2024-12-31",
         "stockPrice": 89.13,
         "numberOfShares": 4277160000,

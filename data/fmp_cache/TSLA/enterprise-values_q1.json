@@ -1,6 +1,16 @@
 [
     {
         "symbol": "TSLA",
+        "date": "2026-03-31",
+        "stockPrice": 371.75,
+        "numberOfShares": 3234000000,
+        "marketCapitalization": 1202239500000,
+        "minusCashAndCashEquivalents": 16603000000,
+        "addTotalDebt": 9229000000,
+        "enterpriseValue": 1194865500000
+    },
+    {
+        "symbol": "TSLA",
         "date": "2025-03-31",
         "stockPrice": 259.16,
         "numberOfShares": 3218000000,

@@ -1,6 +1,16 @@
 [
     {
         "symbol": "HOOD",
+        "date": "2025-12-31",
+        "stockPrice": 113.1,
+        "numberOfShares": 897877147,
+        "marketCapitalization": 101549905325,
+        "minusCashAndCashEquivalents": 4261000000,
+        "addTotalDebt": 0,
+        "enterpriseValue": 97288905325
+    },
+    {
+        "symbol": "HOOD",
         "date": "2024-12-31",
         "stockPrice": 37.26,
         "numberOfShares": 883884676,

@@ -1,6 +1,16 @@
 [
     {
         "symbol": "BA",
+        "date": "2025-12-31",
+        "stockPrice": 217.12,
+        "numberOfShares": 768083097,
+        "marketCapitalization": 166766202020,
+        "minusCashAndCashEquivalents": 10921000000,
+        "addTotalDebt": 54098000000,
+        "enterpriseValue": 209943202020
+    },
+    {
+        "symbol": "BA",
         "date": "2024-12-31",
         "stockPrice": 177,
         "numberOfShares": 718100000,

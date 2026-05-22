@@ -1,109 +1,221 @@
-import requests
+﻿import requests
 import pandas as pd
 import numpy as np
 import yfinance as yf
 import json
 import os
 import time
+import logging
 from datetime import datetime
 
-# --- 1. 配置 ---
+# from dotenv import load_dotenv
+
+# load_dotenv()
+
+# è¨­å®šæ—¥èªŒæ ¼å¼
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger(__name__)
+
+# --- 1. é…ç½® ---
 FMP_API_KEY = os.getenv('FMP_API_KEY')
+FMP_API_KEY_2 = os.getenv('FMP_API_KEY_2')
+FMP_API_KEY_3 = os.getenv('FMP_API_KEY_3')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
-CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # 緩存主目錄
-DOW_30 = [
-    "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", 
-    "PYPL", "SOFI", "HOOD", "WMT", "GE", "CSCO", "JNJ", "CVX", "PLTR",
-    "UNH",  "TSM", "DIS", "COST", "INTC", "KO", "TGT", "NKE", "BA", 
-    "SHOP", "SBUX", "ADBE"
+CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # ç·©å­˜ä¸»ç›®éŒ„
+DOW_30 =[
+    "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
+    "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE",
+    "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
+    "SQ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
+    "ABBV", "ETSY", "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL",
+    "AAL", "TSM", "SONY", "ET", "COIN", "RIVN", "RIOT", "CPRX", "NOK",
+    "ROKU", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM",
+    "NIO", "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "SIRI", "FUBO", "RKT"
 ]
+# DOW_30 = [
+#     "AAPL", "ABBV", "ADBE", "AMD", "AMZN", "BA", "BABA", "BAC",
+#     "COST", "CSCO", "CVX", "DIS", "ETSY", "FDX", "GE", "GOOGL",
+#     "HOOD", "INTC", "JNJ", "JPM", "KO", "META", "MSFT", "NFLX",
+#     "NKE", "NVDA", "PFE", "PLTR", "PYPL", "RBLX", "SBUX", "SHOP",
+#     "SNAP", "SOFI", "T", "TGT", "TSLA", "TSM", "UBER",
+#     "UNH", "V", "VZ", "WMT", "XOM"
+# ]
+
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
+CACHE_EXPIRY_DAYS = 3
 
-# --- 2. 抽取層 (Extract Layer) ---
+# --- Helper Functions --- Get latest processed quarter ---
+def get_latest_processed_quarter(ticker):
+    # Path to the ticker's cache directory
+    ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker.upper())
+    if not os.path.exists(ticker_cache_dir):
+        return None
+
+    # Use pandas to read all JSON files in the directory
+    try:
+        dfs = []
+        for f_name in os.listdir(ticker_cache_dir):
+            if f_name.endswith('.json'):
+                file_path = os.path.join(ticker_cache_dir, f_name)
+                df = pd.read_json(file_path)
+                # Extract the statement type from the filename (e.g., "income-statement_q1.json" -> "income-statement")
+                df['statement_type'] = f_name.split('_')[0]
+                dfs.append(df)
+    except Exception as e:
+        logger.warning(f"Error reading JSON files from {ticker_cache_dir}: {e}")
+        return None
+
+    if not dfs:
+        return None
+
+    combined_df = pd.concat(dfs).set_index('date')
+    combined_df = combined_df.groupby('date').agg(statement_count=('statement_type', 'count'), period=('period', 'first')).reset_index().set_index('date').sort_index()
+
+    # Filter for dates where all statement types are present (or at least 4, assuming 4 statement types)
+    combined_df = combined_df[combined_df['statement_count'] > 3]
+
+    # Find the maximum date from the combined DataFrame's index
+
+    if combined_df.empty:
+        return None
+    else:
+        latest_date_str = combined_df.index.max().strftime('%Y-%m-%d')
+        latest_period = combined_df.loc[latest_date_str, 'period']
+        quarter = latest_period.lower()  # e.g., 'Q1', 'Q2', etc.
+        return quarter
+
+
+
+
+def get_next_quarter(current_q_str):
+    """
+    Input: 'Q3' -> Output: 'Q4'
+    Input: 'Q4' -> Output: 'Q1'
+    """
+    q_num = int(current_q_str[-1])
+
+    if q_num < 4:
+        return f"q{q_num + 1}"
+    else:
+        return "q1"
+
+# --- 2. æŠ½å–å±¤ (Extract Layer) ---
 def get_fmp_fragmented(endpoint, ticker):
     """
-    [Data Engineering Logic]: 
-    自動建立對應 ticker 的子資料夾，並實施『增量合併策略』。
-    防止新 API 數據覆蓋掉舊的歷史財報數據 (尤其是解決 FMP 5年限制)。
+    [Data Engineering Logic]:
+    è‡ªå‹•å»ºç«‹å°æ‡‰ ticker çš„å­è³‡æ–™å¤¾ï¼Œä¸¦å¯¦æ–½ã€Žå¢žé‡åˆä½µç­–ç•¥ã€ã€‚
+    é˜²æ­¢æ–° API æ•¸æ“šè¦†è“‹æŽ‰èˆŠçš„æ­·å²è²¡å ±æ•¸æ“š (å°¤å…¶æ˜¯è§£æ±º FMP 5å¹´é™åˆ¶)ã€‚
     """
+    ticker = ticker.upper()
     combined_all_quarters = []
-    
-    # 建立 ticker 專屬路徑：data/fmp_cache/{ticker}
-    ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker.upper())
-    os.makedirs(ticker_cache_dir, exist_ok=True) 
+    ticker_cache_dir = os.path.join(CACHE_BASE_DIR, ticker)
+    os.makedirs(ticker_cache_dir, exist_ok=True)
 
+    # 1. ç²å–æœ€æ–°å·²è™•ç†çš„å­£åº¦ï¼Œæ±ºå®šå¢žé‡æŠ“å–çš„ç›®æ¨™
+    latest_q = get_latest_processed_quarter(ticker)
+    next_q = get_next_quarter(latest_q) if latest_q else None
+
+    logger.info(f"<{ticker}> Start fragmented fetch. Latest processed: {latest_q} and next target is: {next_q}")
+
+    # 2. éæ­·å››å­£é€²è¡Œè™•ç†
     for q in QUARTERS:
+        print("--- Processing", q, "for", ticker," ", endpoint, "---")
         cache_path = os.path.join(ticker_cache_dir, f"{endpoint}_{q}.json")
-        
-        # 1. 讀取現有的緩存數據 (如果存在)
+        is_target_increment = (q == next_q)
+
+        # æª¢æŸ¥ç·©å­˜ç‹€æ…‹
+        cache_exists = os.path.exists(cache_path)
+        is_expired = False
+        if cache_exists:
+            mtime = os.path.getmtime(cache_path)
+            is_expired = (time.time() - mtime) > (CACHE_EXPIRY_DAYS * 86400)
+            is_expired = True # Forcing expiry for running in Github Actions frequently
+
+        # æ±ºå®šæ˜¯å¦éœ€è¦èª¿ç”¨ API
+        # æ¢ä»¶ï¼šç·©å­˜ä¸å­˜åœ¨ OR è©²å­£åº¦æ˜¯æˆ‘å€‘è¿½è¹¤çš„ã€Œä¸‹ä¸€å€‹å¢žé‡é»žã€ä¸”å·²éŽæœŸ
+        needs_api_call = not cache_exists or (is_target_increment and is_expired)
+        print(f"needs_api_call for {ticker} {q} {endpoint}: {needs_api_call}")
+
         existing_data = []
-        if os.path.exists(cache_path):
+        if cache_exists:
             try:
                 with open(cache_path, 'r') as f:
+                    logger.info(f"<{ticker}> Loading existing cache for {q} {endpoint}...")
                     existing_data = json.load(f)
             except Exception as e:
-                print(f"  ⚠️ [Warning] Failed to load cache {cache_path}: {e}")
-                existing_data = []
+                logger.error(f"<{ticker}> Failed to load cache {q} {endpoint}: {e}")
 
-        # 2. 檢查是否需要 call API (7天有效期)
-        # 如果文件不存在，或者已過期，則發起請求
-        is_expired = not os.path.exists(cache_path) or (time.time() - os.path.getmtime(cache_path)) > (7 * 86400)
+        if needs_api_call:
+            action = "Incremental Update" if cache_exists else "Initial Fetch"
+            logger.info(f"<{ticker}> {action} for {q} {endpoint}...")
 
-        if is_expired:
-            url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={FMP_API_KEY}"
-            try:
-                print(f"  🚀 [API Call] Fetching {ticker} {endpoint} {q} for incremental update...")
-                res = requests.get(url).json()
-                print(f"    🔍 Retrieved {len(res) if isinstance(res, list) else 0} records from API.")
-                
-                if isinstance(res, list) and len(res) > 0:
-                    # --- 核心增量合併邏輯 ---
-                    # A. 建立一個以日期為 key 的 dictionary，優先放入「舊數據」
-                    data_map = {item['date']: item for item in existing_data}
-                    
-                    # B. 用「新數據」去更新/覆蓋相同的日期點 (確保最新數據最準確)
-                    # 如果是舊日期 API 沒回傳，則原本 data_map 裡的舊數據會被保留
-                    for item in res:
-                        data_map[item['date']] = item
-                    
-                    # C. 轉回列表並按日期排序 (由新到舊)
-                    merged_res = sorted(data_map.values(), key=lambda x: x['date'], reverse=True)
-                    
-                    # D. 寫回檔案 (這現在包含了 5 年前的歷史 + 剛抓到的新數據)
-                    with open(cache_path, 'w') as f:
-                        print(f"  💾 [Cache Update] Writing merged data to {cache_path} ({len(merged_res)} records)")
-                        json.dump(merged_res, f, indent=4)
-                    
-                    # 將合併後的結果加入最終回傳清單
-                    combined_all_quarters.extend(merged_res)
-                else:
-                    # 如果 API 沒回傳新數據，至少保留舊數據
-                    combined_all_quarters.extend(existing_data)
-                    
-                time.sleep(0.2)
-            except Exception as e:
-                print(f"  ❌ [Error] Failed to fetch {endpoint} {q}: {e}")
-                combined_all_quarters.extend(existing_data)
-        else:
-            # 3. 緩存未過期，直接使用現有的完整緩存
-            combined_all_quarters.extend(existing_data)
-            
+            api_keys_to_try = [FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3]
+
+            for api_key in api_keys_to_try:
+                url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={api_key}"
+                try:
+                    response = requests.get(url)
+                    response.raise_for_status() # æª¢æŸ¥ HTTP ç‹€æ…‹ç¢¼
+                    res_json = response.json()
+
+                    if isinstance(res_json, list):
+                        if len(res_json) > 0:
+                            # åŸ·è¡Œå¢žé‡åˆä½µé‚è¼¯
+                            data_map = {item['date']: item for item in existing_data}
+                            for item in res_json:
+                                data_map[item['date']] = item
+
+                            merged_res = sorted(data_map.values(), key=lambda x: x['date'], reverse=True)
+
+                            with open(cache_path, 'w') as f:
+                                json.dump(merged_res, f, indent=4)
+
+                            existing_data = merged_res
+                            logger.info(f"<{ticker}> {q} Cache updated. Records: {len(merged_res)} using key: {api_key}")
+                            break # Successfully fetched, break from API key loop
+                        else:
+                            logger.warning(f"<{ticker}> API returned empty list for {q} using key: {api_key}.")
+                            # If empty list, try next key if available, or continue if it's the last key
+                    else:
+                        # è™•ç† API å›žå‚³éŒ¯èª¤è¨Šæ¯çš„æƒ…æ³ (ä¾‹å¦‚ï¼šInvalid API Key)
+                        error_msg = res_json.get("Error Message", "Unknown API error")
+                        logger.error(f"<{ticker}> API Error for {q} using key: {api_key}: {error_msg}")
+                        # If error, try next key if available
+
+                    time.sleep(0.1) # ç¨å¾®é™ä½Žé »çŽ‡ï¼Œé¿å… Rate Limit
+                except requests.exceptions.HTTPError as http_err:
+                    if http_err.response.status_code == 429:
+                        logger.warning(f"<{ticker}> Rate limit hit (429) for {q} {endpoint} using key: {api_key}. Trying next key if available.")
+                        time.sleep(1) # Wait a bit longer before trying the next key
+                        continue # Try the next API key
+                    else:
+                        logger.error(f"<{ticker}> HTTP error fetching {q} {endpoint} using key: {api_key}: {http_err}")
+                        break # Other HTTP errors are critical, stop trying
+                except Exception as e:
+                    logger.error(f"<{ticker}> Critical error fetching {q} {endpoint} using key: {api_key}: {e}")
+                    break # Other errors are critical, stop trying
+
+        # å°‡æ•¸æ“šåŒ¯ç¸½åˆ°æœ€çµ‚çµæžœ
+        combined_all_quarters.extend(existing_data)
+
+    logger.info(f"<{ticker}> Completed. Total records across all quarters: {len(combined_all_quarters)}")
     return combined_all_quarters
 
-# --- 3. 轉換層 (Transform Layer) ---
+
+# --- 3. è½‰æ›å±¤ (Transform Layer) ---
 def build_quarterly_ttm(ticker):
     inc_list = get_fmp_fragmented("income-statement", ticker)
-    print(f"inc_list length: {len(inc_list)}")
     cf_list = get_fmp_fragmented("cash-flow-statement", ticker)
-    print(f"cf_list length: {len(cf_list)}")
     ev_list = get_fmp_fragmented("enterprise-values", ticker)
-    print(f"ev_list length: {len(ev_list)}")
     bs_list = get_fmp_fragmented("balance-sheet-statement", ticker)
-    print(f"bs_list length: {len(bs_list)}")
-    
+
 
     if not all([inc_list, cf_list, ev_list, bs_list]): return None, None
 
@@ -114,24 +226,23 @@ def build_quarterly_ttm(ticker):
     for df in [df_inc, df_cf, df_ev]:
         df.index = pd.to_datetime(df.index).tz_localize(None)
 
-    # --- 關鍵修正：自動偵測匯率與 ADR 比例 ---
+    # --- é—œéµä¿®æ­£ï¼šè‡ªå‹•åµæ¸¬åŒ¯çŽ‡èˆ‡ ADR æ¯”ä¾‹ ---
     currency = df_inc['reportedCurrency'].iloc[-1] if 'reportedCurrency' in df_inc.columns else "USD"
-    fx_rate = 32.5 if currency == "TWD" else 1.0  # 台積電數據通常是 TWD
-    adr_ratio = 5.0 if ticker.upper() == "TSM" else 1.0 # 1 TSM = 5 股普通股
+    fx_rate = 32.5 if currency == "TWD" else 1.0  # å°ç©é›»æ•¸æ“šé€šå¸¸æ˜¯ TWD
 
-    # --- 計算 P/S 必備的 Revenue TTM ---
-    # 先計算每季度的 Sales Per Share
-    # 注意：Revenue 在 income-statement，numberOfShares 在 enterprise-values
+    # --- è¨ˆç®— P/S å¿…å‚™çš„ Revenue TTM ---
+    # å…ˆè¨ˆç®—æ¯å­£åº¦çš„ Sales Per Share
+    # æ³¨æ„ï¼šRevenue åœ¨ income-statementï¼ŒnumberOfShares åœ¨ enterprise-values
     df_main = pd.concat([
-        df_inc[['eps', 'revenue','netIncome']], 
-        df_cf['freeCashFlow'], 
+        df_inc[['eps', 'revenue','netIncome']],
+        df_cf['freeCashFlow'],
         df_ev['numberOfShares']
     ], axis=1).ffill()
-    
-    # 統一使用總額除以 (總股數/ADR比例) 再除以匯率
-    # 這樣算出來才是「每一單位美金 ADR」對應的價值
-    # 計算每股營收 (Sales Per Share)
-    
+
+    # çµ±ä¸€ä½¿ç”¨ç¸½é¡é™¤ä»¥ (ç¸½è‚¡æ•¸/ADRæ¯”ä¾‹) å†é™¤ä»¥åŒ¯çŽ‡
+    # é€™æ¨£ç®—å‡ºä¾†æ‰æ˜¯ã€Œæ¯ä¸€å–®ä½ç¾Žé‡‘ ADRã€å°æ‡‰çš„åƒ¹å€¼
+    # è¨ˆç®—æ¯è‚¡ç‡Ÿæ”¶ (Sales Per Share)
+
     df_main['sales_ps_adj'] = (df_main['revenue'] / df_main['numberOfShares'] ) / fx_rate
     df_main['eps_adj'] = (df_main['netIncome'] / df_main['numberOfShares'] ) / fx_rate
     df_main['fcf_ps_adj'] = (df_main['freeCashFlow'] / df_main['numberOfShares'] ) / fx_rate
@@ -141,46 +252,46 @@ def build_quarterly_ttm(ticker):
 
     # # Prevents the dataframe from wrapping to a new line
     # pd.set_option('display.expand_frame_repr', False)
-    
-    # 計算 TTM (滾動四個季度總和)
+
+    # è¨ˆç®— TTM (æ»¾å‹•å››å€‹å­£åº¦ç¸½å’Œ)
     df_main['eps_ttm'] = df_main['eps_adj'].rolling(window=4).sum()
     df_main['fcf_ps_ttm'] = df_main['fcf_ps_adj'].rolling(window=4).sum()
     df_main['sales_ps_ttm'] = df_main['sales_ps_adj'].rolling(window=4).sum()
 
 
     return (
-        df_main[['eps_ttm']].dropna(), 
-        df_main[['fcf_ps_ttm']].dropna(), 
+        df_main[['eps_ttm']].dropna(),
+        df_main[['fcf_ps_ttm']].dropna(),
         df_main[['sales_ps_ttm']].dropna()
     )
 
-# --- 3. 核心估值邏輯 (Senior Analyst Hybrid Version) ---
+# --- 3. æ ¸å¿ƒä¼°å€¼é‚è¼¯ (Senior Analyst Hybrid Version) ---
 def calculate_bands(ticker, prices_df, metrics_df, col_name):
-    # 日期標準化與全時間軸合併
+    # æ—¥æœŸæ¨™æº–åŒ–èˆ‡å…¨æ™‚é–“è»¸åˆä½µ
     prices_df.index = pd.to_datetime(prices_df.index).tz_localize(None).normalize()
     metrics_df.index = pd.to_datetime(metrics_df.index).tz_localize(None).normalize()
-    
+
     all_dates = prices_df.index.union(metrics_df.index).sort_values()
     df = pd.DataFrame(index=all_dates).join(prices_df)
     df['metric_raw'] = metrics_df[col_name]
 
-    # 處理拆分調整因子 (即使 yfinance 調整過，此處仍保留邏輯以防萬一)
+    # è™•ç†æ‹†åˆ†èª¿æ•´å› å­ (å³ä½¿ yfinance èª¿æ•´éŽï¼Œæ­¤è™•ä»ä¿ç•™é‚è¼¯ä»¥é˜²è¬ä¸€)
     df['adj_ratio'] = (df['Adj Close'] / df['Close'].replace(0, np.nan)).ffill().bfill()
     df['metric_adj'] = df['metric_raw'] * df['adj_ratio']
     df['metric_final'] = df['metric_adj'].interpolate(method='time').ffill().bfill()
 
-    # 計算倍數：排除負值
+    # è¨ˆç®—å€æ•¸ï¼šæŽ’é™¤è² å€¼
     df['multiple'] = df['Adj Close'] / df['metric_final']
     df.loc[df['metric_final'] <= 0, 'multiple'] = np.nan
 
-    # --- 策略選擇邏輯 ---
-    # 如果負值或極端值比例過高 (如 AMZN)，自動切換至 Median
+    # --- ç­–ç•¥é¸æ“‡é‚è¼¯ ---
+    # å¦‚æžœè² å€¼æˆ–æ¥µç«¯å€¼æ¯”ä¾‹éŽé«˜ (å¦‚ AMZN)ï¼Œè‡ªå‹•åˆ‡æ›è‡³ Median
     null_ratio = df['multiple'].isna().mean()
     use_median = True if (ticker == "AMZN" or null_ratio > 0.1) else False
-    
-    # 3. 【核心修正】百分位剪枝 (Percentile Approach)
-    # 我們計算該股票歷史上 90% 分位數的值作為上限
-    # 這樣 AMZN 的 1000x 會被剪掉，但 AAPL 的 35x 會被完整保留
+
+    # 3. ã€æ ¸å¿ƒä¿®æ­£ã€‘ç™¾åˆ†ä½å‰ªæž (Percentile Approach)
+    # æˆ‘å€‘è¨ˆç®—è©²è‚¡ç¥¨æ­·å²ä¸Š 90% åˆ†ä½æ•¸çš„å€¼ä½œç‚ºä¸Šé™
+    # é€™æ¨£ AMZN çš„ 1000x æœƒè¢«å‰ªæŽ‰ï¼Œä½† AAPL çš„ 35x æœƒè¢«å®Œæ•´ä¿ç•™
     if df['multiple'].notna().any():
         upper_limit = df['multiple'].quantile(0.95)
         lower_limit = df['multiple'].quantile(0.05)
@@ -190,15 +301,15 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
     avgs = {}
 
     for label, window in WINDOWS.items():
-        # Hybrid 滾動計算
+        # Hybrid æ»¾å‹•è¨ˆç®—
         if use_median:
             m_col = df['multiple'].rolling(window=window, min_periods=60).median()
         else:
             m_col = df['multiple'].rolling(window=window, min_periods=60).mean()
-            
+
         s_col = df['multiple'].rolling(window=window, min_periods=60).std().fillna(0)
-        
-        # 防止標準差過大導致 Band 炸開 (上限設為均值的 50%)
+
+        # é˜²æ­¢æ¨™æº–å·®éŽå¤§å°Žè‡´ Band ç‚¸é–‹ (ä¸Šé™è¨­ç‚ºå‡å€¼çš„ 50%)
         s_col = s_col.clip(upper=m_col * 0.5)
 
         res = pd.DataFrame(index=df.index)
@@ -208,12 +319,12 @@ def calculate_bands(ticker, prices_df, metrics_df, col_name):
         res['down1'] = (m_col - s_col) * df['metric_final']
         res['down2'] = (m_col - 2 * s_col) * df['metric_final']
 
-        # 強制歸零邏輯：指標為負則估值為 0
+        # å¼·åˆ¶æ­¸é›¶é‚è¼¯ï¼šæŒ‡æ¨™ç‚ºè² å‰‡ä¼°å€¼ç‚º 0
         for c in res.columns:
             res.loc[df['metric_final'] <= 0, c] = 0
 
         results[label] = res.loc[prices_df.index].clip(lower=0).ffill().round(2)
-        
+
         last_val = m_col.dropna().iloc[-1] if not m_col.dropna().empty else 0
         avgs[label] = round(float(last_val), 2)
 
@@ -227,47 +338,64 @@ def clean_nans(obj):
     elif isinstance(obj, list):
         return [clean_nans(v) for v in obj]
     elif isinstance(obj, float) and np.isnan(obj):
-        return None # JSON 支援 null，不支援 NaN
+        return None # JSON æ”¯æ´ nullï¼Œä¸æ”¯æ´ NaN
     return obj
 
-# --- 5. 主程序 ---
+# --- 5. ä¸»ç¨‹åº ---
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    # 呼叫 Debug
+    # å‘¼å« Debug
     ## test_amzn_valuation_logic()
 
     for ticker in DOW_30:
-        # 1. 獲取股價數據
-        # 我們使用 auto_adjust=False 以手動處理 Close/Adj Close 來對齊指標量級
-        print(f"\n🏗️  Pipeline Starting: {ticker}")
-        prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)      
-  
+        final_dir = os.path.join(OUTPUT_DIR, "results", ticker.upper())
+        output_file = os.path.join(final_dir, "valuation_summary.json")
+
+        if os.path.exists(output_file):
+            with open(output_file, 'r') as f:
+                try:
+                    data = json.load(f)
+                    last_updated_str = data.get("last_updated")
+                    if last_updated_str:
+                        last_updated = datetime.strptime(last_updated_str, "%Y-%m-%d %H:%M:%S")
+                        if (datetime.now() - last_updated).days < 1:
+                            print(f"Skipping {ticker}: Valuation data is less than 1 day old.")
+                            continue
+                except json.JSONDecodeError:
+                    print(f"Error decoding JSON for {ticker}, reprocessing.")
+
+        # 1. ç²å–è‚¡åƒ¹æ•¸æ“š
+        # æˆ‘å€‘ä½¿ç”¨ auto_adjust=False ä»¥æ‰‹å‹•è™•ç† Close/Adj Close ä¾†å°é½ŠæŒ‡æ¨™é‡ç´š
+        print(f"\nðŸ—ï¸  Pipeline Starting: {ticker}")
+        prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)
+
         if prices.empty:
-            print(f"  ⚠️ [Skip] No price data for {ticker}")
+            print(f"  âš ï¸ [Skip] No price data for {ticker}")
             continue
 
         prices.index = prices.index.tz_localize(None)
 
         prices_df = prices[['Close', 'Adj Close']].copy()
 
-        # 2. 獲取財務指標數據 (TTM)
-        # 現在 build_quarterly_ttm 會回傳三個指標
+        # 2. ç²å–è²¡å‹™æŒ‡æ¨™æ•¸æ“š (TTM)
+        # ç¾åœ¨ build_quarterly_ttm æœƒå›žå‚³ä¸‰å€‹æŒ‡æ¨™
         eps_ttm, fcf_ttm, sales_ttm = build_quarterly_ttm(ticker)
         if eps_ttm is None: continue
 
+        # 3. è¨ˆç®—ä¼°å€¼å¸¶
         pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
         fcf_res, fcf_avgs = calculate_bands(ticker, prices_df, fcf_ttm, 'fcf_ps_ttm')
         ps_res, ps_avgs = calculate_bands(ticker, prices_df, sales_ttm, 'sales_ps_ttm')
-        
-        # 4. 封裝歷史數據用於前端繪圖
+
+        # 4. å°è£æ­·å²æ•¸æ“šç”¨æ–¼å‰ç«¯ç¹ªåœ–
         history = []
-        # 只取 2021 年以後的數據點以優化前端加載速度
+        # åªå– 2021 å¹´ä»¥å¾Œçš„æ•¸æ“šé»žä»¥å„ªåŒ–å‰ç«¯åŠ è¼‰é€Ÿåº¦
         plot_df = prices_df[prices_df.index >= '2021-01-01']
         plot_df.index = plot_df.index.tz_localize(None).normalize()
 
         for date, row in plot_df.iterrows():
-            # 確保該日期在所有指標計算結果中都存在
+            # ç¢ºä¿è©²æ—¥æœŸåœ¨æ‰€æœ‰æŒ‡æ¨™è¨ˆç®—çµæžœä¸­éƒ½å­˜åœ¨
             if date not in pe_res["1Y"].index: continue
             history.append({
                 "date": date.strftime("%Y-%m-%d"),
@@ -276,29 +404,29 @@ def main():
                     lb: {
                         "pe": pe_res[lb].loc[date].round(2).to_dict(),
                         "fcf": fcf_res[lb].loc[date].round(2).to_dict(),
-                        "ps": ps_res[lb].loc[date].to_dict()   # 加入 P/S
+                        "ps": ps_res[lb].loc[date].to_dict()   # åŠ å…¥ P/S
                     } for lb in WINDOWS
                 }
             })
-        # --- 更新 JSON 結構，加入 last_updated ---
+        # --- æ›´æ–° JSON çµæ§‹ï¼ŒåŠ å…¥ last_updated ---
         output_data = {
-            "ticker": ticker.upper(), 
-            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # 加入這行
+            "ticker": ticker.upper(),
+            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # åŠ å…¥é€™è¡Œ
             "averages": {
-                "pe": pe_avgs, 
+                "pe": pe_avgs,
                 "fcf": fcf_avgs,
                 "ps": ps_avgs
-            }, 
+            },
             "data": history
         }
 
-        # 最後結果也存入 ticker 資料夾
+        # æœ€å¾Œçµæžœä¹Ÿå­˜å…¥ ticker è³‡æ–™å¤¾
         final_dir = os.path.join(OUTPUT_DIR, "results", ticker.upper())
         os.makedirs(final_dir, exist_ok=True)
-        
+
         with open(os.path.join(final_dir, "valuation_summary.json"), "w") as f:
             json.dump(clean_nans(output_data), f, indent=4)
-        print(f"✨ [Success] {ticker} pipeline execution completed. Folder: {final_dir} {len(history)} points generated.")
+        print(f"âœ¨ [Success] {ticker} pipeline execution completed. Folder: {final_dir} {len(history)} points generated.")
 
 if __name__ == "__main__":
     main()

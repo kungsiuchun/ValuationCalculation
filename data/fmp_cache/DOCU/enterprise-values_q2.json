@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "DOCU",
+        "date": "2025-07-31",
+        "stockPrice": 75.64,
+        "numberOfShares": 202957000,
+        "marketCapitalization": 15351667480,
+        "minusCashAndCashEquivalents": 599986000,
+        "addTotalDebt": 126942000,
+        "enterpriseValue": 14878623480
+    },
+    {
+        "symbol": "DOCU",
+        "date": "2024-07-31",
+        "stockPrice": 55.48,
+        "numberOfShares": 204604000,
+        "marketCapitalization": 11351429920,
+        "minusCashAndCashEquivalents": 619064000,
+        "addTotalDebt": 135601000,
+        "enterpriseValue": 10867966920
+    },
+    {
+        "symbol": "DOCU",
+        "date": "2023-07-31",
+        "stockPrice": 53.82,
+        "numberOfShares": 203703000,
+        "marketCapitalization": 10963295460,
+        "minusCashAndCashEquivalents": 1017778000,
+        "addTotalDebt": 878904000,
+        "enterpriseValue": 10824421460
+    },
+    {
+        "symbol": "DOCU",
+        "date": "2022-07-31",
+        "stockPrice": 65.51,
+        "numberOfShares": 200618000,
+        "marketCapitalization": 13142485180,
+        "minusCashAndCashEquivalents": 637186000,
+        "addTotalDebt": 854635000,
+        "enterpriseValue": 13359934180
+    },
+    {
+        "symbol": "DOCU",
+        "date": "2021-07-31",
+        "stockPrice": 298.04,
+        "numberOfShares": 195996000,
+        "marketCapitalization": 58414647840,
+        "minusCashAndCashEquivalents": 518577000,
+        "addTotalDebt": 913280000,
+        "enterpriseValue": 58809350840
+    }
+]

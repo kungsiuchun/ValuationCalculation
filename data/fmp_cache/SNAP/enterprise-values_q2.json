@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "SNAP",
+        "date": "2025-06-30",
+        "stockPrice": 8.69,
+        "numberOfShares": 1674854000,
+        "marketCapitalization": 14554481260,
+        "minusCashAndCashEquivalents": 925973000,
+        "addTotalDebt": 4191995000,
+        "enterpriseValue": 17820503260
+    },
+    {
+        "symbol": "SNAP",
+        "date": "2024-06-30",
+        "stockPrice": 16.02,
+        "numberOfShares": 1644736000,
+        "marketCapitalization": 26348670720,
+        "minusCashAndCashEquivalents": 1060551000,
+        "addTotalDebt": 4239908000,
+        "enterpriseValue": 29528027720
+    },
+    {
+        "symbol": "SNAP",
+        "date": "2023-06-30",
+        "stockPrice": 11.84,
+        "numberOfShares": 1603172000,
+        "marketCapitalization": 18981556480,
+        "minusCashAndCashEquivalents": 1228629000,
+        "addTotalDebt": 4160778000,
+        "enterpriseValue": 21913705480
+    },
+    {
+        "symbol": "SNAP",
+        "date": "2022-06-30",
+        "stockPrice": 13.13,
+        "numberOfShares": 1632140000,
+        "marketCapitalization": 21429998200,
+        "minusCashAndCashEquivalents": 2298122000,
+        "addTotalDebt": 4204571000,
+        "enterpriseValue": 23336447200
+    },
+    {
+        "symbol": "SNAP",
+        "date": "2021-06-30",
+        "stockPrice": 68.14,
+        "numberOfShares": 1547234000,
+        "marketCapitalization": 105428524760,
+        "minusCashAndCashEquivalents": 2051961000,
+        "addTotalDebt": 2906530000,
+        "enterpriseValue": 106283093760
+    }
+]

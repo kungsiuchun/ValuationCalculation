@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "F",
+        "date": "2025-06-30",
+        "stockPrice": 10.85,
+        "numberOfShares": 3980000000,
+        "marketCapitalization": 43183000000,
+        "minusCashAndCashEquivalents": 23020000000,
+        "addTotalDebt": 160239000000,
+        "enterpriseValue": 180402000000
+    },
+    {
+        "symbol": "F",
+        "date": "2024-06-30",
+        "stockPrice": 12.76,
+        "numberOfShares": 3985000000,
+        "marketCapitalization": 50848600000,
+        "minusCashAndCashEquivalents": 19953000000,
+        "addTotalDebt": 152895000000,
+        "enterpriseValue": 183790600000
+    },
+    {
+        "symbol": "F",
+        "date": "2023-06-30",
+        "stockPrice": 15.13,
+        "numberOfShares": 4003000000,
+        "marketCapitalization": 60565390000,
+        "minusCashAndCashEquivalents": 26406000000,
+        "addTotalDebt": 144850000000,
+        "enterpriseValue": 179009390000
+    },
+    {
+        "symbol": "F",
+        "date": "2022-06-30",
+        "stockPrice": 11.13,
+        "numberOfShares": 4021000000,
+        "marketCapitalization": 44753730000,
+        "minusCashAndCashEquivalents": 19516000000,
+        "addTotalDebt": 130234000000,
+        "enterpriseValue": 155471730000
+    },
+    {
+        "symbol": "F",
+        "date": "2021-06-30",
+        "stockPrice": 14.86,
+        "numberOfShares": 3992000000,
+        "marketCapitalization": 59321120000,
+        "minusCashAndCashEquivalents": 22955000000,
+        "addTotalDebt": 148226000000,
+        "enterpriseValue": 184592120000
+    }
+]

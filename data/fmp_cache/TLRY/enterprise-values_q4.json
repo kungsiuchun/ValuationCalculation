@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "TLRY",
+        "date": "2025-05-31",
+        "stockPrice": 4.26,
+        "numberOfShares": 97796000,
+        "marketCapitalization": 416610960,
+        "minusCashAndCashEquivalents": 304167868,
+        "addTotalDebt": 451086879,
+        "enterpriseValue": 563529971
+    },
+    {
+        "symbol": "TLRY",
+        "date": "2024-05-31",
+        "stockPrice": 18,
+        "numberOfShares": 79367500,
+        "marketCapitalization": 1428615000,
+        "minusCashAndCashEquivalents": 311129233,
+        "addTotalDebt": 527746524,
+        "enterpriseValue": 1645232291
+    },
+    {
+        "symbol": "TLRY",
+        "date": "2023-05-31",
+        "stockPrice": 16.7,
+        "numberOfShares": 79879333,
+        "marketCapitalization": 1333984861,
+        "minusCashAndCashEquivalents": 278327793,
+        "addTotalDebt": 794890720,
+        "enterpriseValue": 1850547788
+    },
+    {
+        "symbol": "TLRY",
+        "date": "2022-05-31",
+        "stockPrice": 44.9,
+        "numberOfShares": 50866667,
+        "marketCapitalization": 2283913348,
+        "minusCashAndCashEquivalents": 524287953,
+        "addTotalDebt": 786359446,
+        "enterpriseValue": 2545984841
+    },
+    {
+        "symbol": "TLRY",
+        "date": "2021-05-31",
+        "stockPrice": 169.8,
+        "numberOfShares": 44644064,
+        "marketCapitalization": 7580562067,
+        "minusCashAndCashEquivalents": 488466000,
+        "addTotalDebt": 938659000,
+        "enterpriseValue": 8030755067
+    }
+]

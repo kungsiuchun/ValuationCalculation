@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "CCL",
+        "date": "2025-05-31",
+        "stockPrice": 23.22,
+        "numberOfShares": 1312000000,
+        "marketCapitalization": 30464640000,
+        "minusCashAndCashEquivalents": 2146000000,
+        "addTotalDebt": 28648000000,
+        "enterpriseValue": 56966640000
+    },
+    {
+        "symbol": "CCL",
+        "date": "2024-05-31",
+        "stockPrice": 15.08,
+        "numberOfShares": 1267000000,
+        "marketCapitalization": 19106360000,
+        "minusCashAndCashEquivalents": 1646000000,
+        "addTotalDebt": 30653000000,
+        "enterpriseValue": 48113360000
+    },
+    {
+        "symbol": "CCL",
+        "date": "2023-05-31",
+        "stockPrice": 11.23,
+        "numberOfShares": 1263000000,
+        "marketCapitalization": 14183490000,
+        "minusCashAndCashEquivalents": 4468000000,
+        "addTotalDebt": 35079000000,
+        "enterpriseValue": 44794490000
+    },
+    {
+        "symbol": "CCL",
+        "date": "2022-05-31",
+        "stockPrice": 13.88,
+        "numberOfShares": 1140000000,
+        "marketCapitalization": 15823200000,
+        "minusCashAndCashEquivalents": 7054000000,
+        "addTotalDebt": 36394000000,
+        "enterpriseValue": 45163200000
+    },
+    {
+        "symbol": "CCL",
+        "date": "2021-05-31",
+        "stockPrice": 30.15,
+        "numberOfShares": 1132000000,
+        "marketCapitalization": 34129800000,
+        "minusCashAndCashEquivalents": 7067000000,
+        "addTotalDebt": 32234000000,
+        "enterpriseValue": 59296800000
+    }
+]

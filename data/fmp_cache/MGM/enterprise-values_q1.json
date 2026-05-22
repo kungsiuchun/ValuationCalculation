@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "MGM",
+        "date": "2025-03-31",
+        "stockPrice": 29.64,
+        "numberOfShares": 287125000,
+        "marketCapitalization": 8510385000,
+        "minusCashAndCashEquivalents": 2270563000,
+        "addTotalDebt": 31471558000,
+        "enterpriseValue": 37711380000
+    },
+    {
+        "symbol": "MGM",
+        "date": "2024-03-31",
+        "stockPrice": 47.78,
+        "numberOfShares": 320488000,
+        "marketCapitalization": 15312916640,
+        "minusCashAndCashEquivalents": 2722292000,
+        "addTotalDebt": 31385646000,
+        "enterpriseValue": 43976270640
+    },
+    {
+        "symbol": "MGM",
+        "date": "2023-03-31",
+        "stockPrice": 44.42,
+        "numberOfShares": 374085000,
+        "marketCapitalization": 16616855700,
+        "minusCashAndCashEquivalents": 4505318000,
+        "addTotalDebt": 32023296000,
+        "enterpriseValue": 44134833700
+    },
+    {
+        "symbol": "MGM",
+        "date": "2022-03-31",
+        "stockPrice": 41.94,
+        "numberOfShares": 442916000,
+        "marketCapitalization": 18575897040,
+        "minusCashAndCashEquivalents": 2719115000,
+        "addTotalDebt": 23567187000,
+        "enterpriseValue": 39423969040
+    },
+    {
+        "symbol": "MGM",
+        "date": "2021-03-31",
+        "stockPrice": 37.99,
+        "numberOfShares": 494575362,
+        "marketCapitalization": 18788918002,
+        "minusCashAndCashEquivalents": 6171512000,
+        "addTotalDebt": 21812920000,
+        "enterpriseValue": 34430326002
+    }
+]

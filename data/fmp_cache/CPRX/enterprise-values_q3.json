@@ -1,0 +1,52 @@
+[
+    {
+        "symbol": "CPRX",
+        "date": "2025-09-30",
+        "stockPrice": 19.7,
+        "numberOfShares": 122600730,
+        "marketCapitalization": 2415234381,
+        "minusCashAndCashEquivalents": 689892000,
+        "addTotalDebt": 2889000,
+        "enterpriseValue": 1728231381
+    },
+    {
+        "symbol": "CPRX",
+        "date": "2024-09-30",
+        "stockPrice": 19.88,
+        "numberOfShares": 118931000,
+        "marketCapitalization": 2364348280,
+        "minusCashAndCashEquivalents": 442331000,
+        "addTotalDebt": 3282000,
+        "enterpriseValue": 1925299280
+    },
+    {
+        "symbol": "CPRX",
+        "date": "2023-09-30",
+        "stockPrice": 11.69,
+        "numberOfShares": 106568137,
+        "marketCapitalization": 1245781521,
+        "minusCashAndCashEquivalents": 120971000,
+        "addTotalDebt": 3643000,
+        "enterpriseValue": 1128453521
+    },
+    {
+        "symbol": "CPRX",
+        "date": "2022-09-30",
+        "stockPrice": 12.83,
+        "numberOfShares": 103318572,
+        "marketCapitalization": 1325577278,
+        "minusCashAndCashEquivalents": 256065000,
+        "addTotalDebt": 3973000,
+        "enterpriseValue": 1073485278
+    },
+    {
+        "symbol": "CPRX",
+        "date": "2021-09-30",
+        "stockPrice": 5.3,
+        "numberOfShares": 103196550,
+        "marketCapitalization": 546941715,
+        "minusCashAndCashEquivalents": 154836000,
+        "addTotalDebt": 4251000,
+        "enterpriseValue": 396356715
+    }
+]

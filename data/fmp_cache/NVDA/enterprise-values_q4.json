@@ -1,6 +1,16 @@
 [
     {
         "symbol": "NVDA",
+        "date": "2026-01-25",
+        "stockPrice": 186.47,
+        "numberOfShares": 24304000000,
+        "marketCapitalization": 4531966880000,
+        "minusCashAndCashEquivalents": 62556000000,
+        "addTotalDebt": 11040000000,
+        "enterpriseValue": 4480450880000
+    },
+    {
+        "symbol": "NVDA",
         "date": "2025-01-26",
         "stockPrice": 118.42,
         "numberOfShares": 24489000000,
