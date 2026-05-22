@@ -156,8 +156,8 @@
         "revenue_yoy":3.9840507239,
         "netIncome_qoq":-4.0794417606,
         "netIncome_yoy":5.5522740697,
-        "operatingCashFlow_qoq":0.0,
-        "operatingCashFlow_yoy":-109.7596585804,
+        "operatingCashFlow_qoq":null,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":0.5952380952,
         "eps_yoy":16.5517241379
     },

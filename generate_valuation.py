@@ -156,7 +156,10 @@ def get_fmp_fragmented(endpoint, ticker):
             action = "Incremental Update" if cache_exists else "Initial Fetch"
             logger.info(f"<{ticker}> {action} for {q} {endpoint}...")
 
-            api_keys_to_try = [FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3]
+            api_keys_to_try = [key for key in [FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3] if key]
+            if not api_keys_to_try:
+                logger.error(f"<{ticker}> No FMP API keys configured; using existing cache for {q} {endpoint}.")
+                continue
 
             for api_key in api_keys_to_try:
                 url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={api_key}"
@@ -217,7 +220,8 @@ def build_quarterly_ttm(ticker):
     bs_list = get_fmp_fragmented("balance-sheet-statement", ticker)
 
 
-    if not all([inc_list, cf_list, ev_list, bs_list]): return None, None
+    if not all([inc_list, cf_list, ev_list, bs_list]):
+        return None, None, None
 
     df_inc = pd.DataFrame(inc_list).drop_duplicates('date').set_index('date').sort_index()
     df_cf = pd.DataFrame(cf_list).drop_duplicates('date').set_index('date').sort_index()

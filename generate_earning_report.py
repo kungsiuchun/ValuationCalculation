@@ -1,7 +1,11 @@
 import os
 import json
+import sys
 import pandas as pd
 from pathlib import Path
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 # Configuration
 DATA_DIR = Path('data/fmp_cache')
@@ -80,11 +84,11 @@ def calculate_growth_metrics(df):
     for kpi in kpis:
         if kpi in df.columns:
             # QoQ: Compare to the row immediately above (previous quarter)
-            df[f'{kpi}_qoq'] = df[kpi].pct_change(periods=1) * 100
-            
+            df[f'{kpi}_qoq'] = df[kpi].pct_change(periods=1, fill_method=None) * 100
+
             # YoY: Compare to 4 rows above (same quarter last year)
             # This assumes your data is consistently quarterly with no gaps
-            df[f'{kpi}_yoy'] = df[kpi].pct_change(periods=4) * 100
+            df[f'{kpi}_yoy'] = df[kpi].pct_change(periods=4, fill_method=None) * 100
             
     # Return to descending order (newest first) for the JSON export
     return df.sort_values('date', ascending=False)

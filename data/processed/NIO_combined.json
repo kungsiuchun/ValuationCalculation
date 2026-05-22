@@ -156,7 +156,7 @@
         "revenue_yoy":16.7100025234,
         "netIncome_qoq":-28.7972299651,
         "netIncome_yoy":-28.8017721989,
-        "operatingCashFlow_qoq":0.0,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":null,
         "eps_qoq":-34.632034632,
         "eps_yoy":-39.6
@@ -805,7 +805,7 @@
         "netIncome_qoq":0.2977740584,
         "netIncome_yoy":11.0833251056,
         "operatingCashFlow_qoq":-100.0,
-        "operatingCashFlow_yoy":-100.0,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":0.0,
         "eps_yoy":-6.3670411985
     },
@@ -1129,7 +1129,7 @@
         "netIncome_qoq":-5.9872803706,
         "netIncome_yoy":9.4572041263,
         "operatingCashFlow_qoq":-100.0,
-        "operatingCashFlow_yoy":-100.0,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":-19.1823899371,
         "eps_yoy":-11.6838487973
     },
@@ -1290,7 +1290,7 @@
         "revenue_yoy":6.4721953117,
         "netIncome_qoq":20.8300125156,
         "netIncome_yoy":-4.3492827786,
-        "operatingCashFlow_qoq":-188.0868127262,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":-505.7705492375,
         "eps_qoq":19.1011235955,
         "eps_yoy":-10.4225352113
@@ -1452,8 +1452,8 @@
         "revenue_yoy":46.6421449774,
         "netIncome_qoq":-24.3927247851,
         "netIncome_yoy":11.7400152572,
-        "operatingCashFlow_qoq":0.0,
-        "operatingCashFlow_yoy":759.9647168225,
+        "operatingCashFlow_qoq":null,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":-27.8378378378,
         "eps_yoy":5.5335968379
     },
@@ -1614,7 +1614,7 @@
         "revenue_yoy":-14.7743414438,
         "netIncome_qoq":27.443980374,
         "netIncome_yoy":123.020697936,
-        "operatingCashFlow_qoq":360.6484633504,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":759.9647168225,
         "eps_qoq":27.147766323,
         "eps_yoy":120.2380952381
@@ -1776,8 +1776,8 @@
         "revenue_yoy":7.7279269404,
         "netIncome_qoq":-17.845662766,
         "netIncome_yoy":163.2070674693,
-        "operatingCashFlow_qoq":0.0,
-        "operatingCashFlow_yoy":-326.1662092416,
+        "operatingCashFlow_qoq":null,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":-18.0281690141,
         "eps_yoy":159.8214285714
     },
@@ -1938,7 +1938,7 @@
         "revenue_yoy":62.2455569492,
         "netIncome_qoq":41.154691091,
         "netIncome_yoy":168.3103878357,
-        "operatingCashFlow_qoq":86.6856801318,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":-326.1662092416,
         "eps_qoq":40.3162055336,
         "eps_yoy":161.0294117647
@@ -2100,8 +2100,8 @@
         "revenue_yoy":32.6027115333,
         "netIncome_qoq":50.903749643,
         "netIncome_yoy":44.8946254613,
-        "operatingCashFlow_qoq":0.0,
-        "operatingCashFlow_yoy":-258.040997526,
+        "operatingCashFlow_qoq":null,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":50.5952380952,
         "eps_yoy":39.010989011
     },
@@ -2262,7 +2262,7 @@
         "revenue_yoy":21.8312824254,
         "netIncome_qoq":50.4082654717,
         "netIncome_yoy":316.3664135106,
-        "operatingCashFlow_qoq":-221.1481293487,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":-258.040997526,
         "eps_qoq":50.0,
         "eps_yoy":300.0
@@ -2424,8 +2424,8 @@
         "revenue_yoy":24.1565341862,
         "netIncome_qoq":-16.2527727785,
         "netIncome_yoy":-62.5630159017,
-        "operatingCashFlow_qoq":0.0,
-        "operatingCashFlow_yoy":-48.1694966395,
+        "operatingCashFlow_qoq":null,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":-17.6470588235,
         "eps_yoy":-64.3312101911
     },
@@ -2586,7 +2586,7 @@
         "revenue_yoy":49.0830648157,
         "netIncome_qoq":-23.7727757665,
         "netIncome_yoy":57.1897423765,
-        "operatingCashFlow_qoq":30.4526932241,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":-48.1694966395,
         "eps_qoq":-25.2747252747,
         "eps_yoy":29.5238095238
@@ -2748,8 +2748,8 @@
         "revenue_yoy":null,
         "netIncome_qoq":333.634117374,
         "netIncome_yoy":null,
-        "operatingCashFlow_qoq":0.0,
-        "operatingCashFlow_yoy":161.4228159132,
+        "operatingCashFlow_qoq":null,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":333.3333333333,
         "eps_yoy":null
     },
@@ -2910,7 +2910,7 @@
         "revenue_yoy":null,
         "netIncome_qoq":-86.4762582667,
         "netIncome_yoy":null,
-        "operatingCashFlow_qoq":-60.2687364442,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":-162.1476444565,
         "eps_qoq":-86.6242038217,
         "eps_yoy":null
@@ -3072,8 +3072,8 @@
         "revenue_yoy":null,
         "netIncome_qoq":251.6363667839,
         "netIncome_yoy":null,
-        "operatingCashFlow_qoq":0.0,
-        "operatingCashFlow_yoy":-233.0406480293,
+        "operatingCashFlow_qoq":null,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":199.0476190476,
         "eps_yoy":null
     },

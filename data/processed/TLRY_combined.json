@@ -2583,13 +2583,13 @@
         "totalDebt":932806758.0,
         "netDebt":577419922.0,
         "revenue_qoq":-2.7562750993,
-        "revenue_yoy":2.205317037,
+        "revenue_yoy":null,
         "netIncome_qoq":-21446.8667265369,
-        "netIncome_yoy":-116.7892411509,
+        "netIncome_yoy":null,
         "operatingCashFlow_qoq":167.0161841387,
-        "operatingCashFlow_yoy":2453.0110517229,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":-22452.6040774959,
-        "eps_yoy":-106.6238660638
+        "eps_yoy":null
     },
     {
         "date":"2021-11-30",
@@ -2749,7 +2749,7 @@
         "netIncome_qoq":-99.5084495734,
         "netIncome_yoy":-99.9213503257,
         "operatingCashFlow_qoq":-81.8401685784,
-        "operatingCashFlow_yoy":856.1259591652,
+        "operatingCashFlow_yoy":null,
         "eps_qoq":-99.4907107084,
         "eps_yoy":-99.9703664681
     },
@@ -3068,13 +3068,13 @@
         "totalInvestments":25791000.0,
         "totalDebt":938659000.0,
         "netDebt":450193000.0,
-        "revenue_qoq":-2.7015875182,
+        "revenue_qoq":null,
         "revenue_yoy":null,
-        "netIncome_qoq":-105.3644008011,
+        "netIncome_qoq":null,
         "netIncome_yoy":null,
-        "operatingCashFlow_qoq":-432.4487430109,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":null,
-        "eps_qoq":-112.5848823948,
+        "eps_qoq":null,
         "eps_yoy":null
     },
     {
@@ -3230,13 +3230,13 @@
         "totalInvestments":8861822.0,
         "totalDebt":728809555.0,
         "netDebt":519166085.0,
-        "revenue_qoq":0.0,
+        "revenue_qoq":null,
         "revenue_yoy":null,
-        "netIncome_qoq":0.0,
+        "netIncome_qoq":null,
         "netIncome_yoy":null,
-        "operatingCashFlow_qoq":0.0,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":null,
-        "eps_qoq":0.0,
+        "eps_qoq":null,
         "eps_yoy":null
     },
     {
@@ -3396,7 +3396,7 @@
         "revenue_yoy":null,
         "netIncome_qoq":null,
         "netIncome_yoy":null,
-        "operatingCashFlow_qoq":0.0,
+        "operatingCashFlow_qoq":null,
         "operatingCashFlow_yoy":null,
         "eps_qoq":null,
         "eps_yoy":null
