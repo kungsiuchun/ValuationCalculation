@@ -57,6 +57,7 @@ def get_fmp_fragmented(endpoint, ticker):
             try:
                 print(f"  🚀 [API Call] Fetching {ticker} {endpoint} {q} for incremental update...")
                 res = requests.get(url).json()
+                print(f"    🔍 Retrieved {len(res) if isinstance(res, list) else 0} records from API.")
                 
                 if isinstance(res, list) and len(res) > 0:
                     # --- 核心增量合併邏輯 ---
@@ -73,6 +74,7 @@ def get_fmp_fragmented(endpoint, ticker):
                     
                     # D. 寫回檔案 (這現在包含了 5 年前的歷史 + 剛抓到的新數據)
                     with open(cache_path, 'w') as f:
+                        print(f"  💾 [Cache Update] Writing merged data to {cache_path} ({len(merged_res)} records)")
                         json.dump(merged_res, f, indent=4)
                     
                     # 將合併後的結果加入最終回傳清單
@@ -94,10 +96,16 @@ def get_fmp_fragmented(endpoint, ticker):
 # --- 3. 轉換層 (Transform Layer) ---
 def build_quarterly_ttm(ticker):
     inc_list = get_fmp_fragmented("income-statement", ticker)
+    print(f"inc_list length: {len(inc_list)}")
     cf_list = get_fmp_fragmented("cash-flow-statement", ticker)
+    print(f"cf_list length: {len(cf_list)}")
     ev_list = get_fmp_fragmented("enterprise-values", ticker)
+    print(f"ev_list length: {len(ev_list)}")
+    bs_list = get_fmp_fragmented("balance-sheet-statement", ticker)
+    print(f"bs_list length: {len(bs_list)}")
+    
 
-    if not all([inc_list, cf_list, ev_list]): return None, None
+    if not all([inc_list, cf_list, ev_list, bs_list]): return None, None
 
     df_inc = pd.DataFrame(inc_list).drop_duplicates('date').set_index('date').sort_index()
     df_cf = pd.DataFrame(cf_list).drop_duplicates('date').set_index('date').sort_index()
@@ -233,8 +241,8 @@ def main():
         # 1. 獲取股價數據
         # 我們使用 auto_adjust=False 以手動處理 Close/Adj Close 來對齊指標量級
         print(f"\n🏗️  Pipeline Starting: {ticker}")
-        prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)
-
+        prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)      
+  
         if prices.empty:
             print(f"  ⚠️ [Skip] No price data for {ticker}")
             continue
