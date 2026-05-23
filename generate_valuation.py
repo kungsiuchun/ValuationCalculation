@@ -50,6 +50,8 @@ DOW_30 =[
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
 CACHE_EXPIRY_DAYS = 3
+YFINANCE_MAX_ATTEMPTS = 3
+YFINANCE_RETRY_DELAY_SECONDS = 15
 
 # --- Helper Functions --- Get latest processed quarter ---
 def get_latest_processed_quarter(ticker):
@@ -345,6 +347,35 @@ def clean_nans(obj):
         return None # JSON æ”¯æ´ nullï¼Œä¸æ”¯æ´ NaN
     return obj
 
+def fetch_price_history(ticker, attempts=YFINANCE_MAX_ATTEMPTS, delay_seconds=YFINANCE_RETRY_DELAY_SECONDS):
+    last_error = None
+
+    for attempt in range(1, attempts + 1):
+        try:
+            prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)
+            if prices.empty:
+                logger.warning("<%s> No Yahoo price data returned.", ticker)
+                return prices
+            missing_columns = {"Close", "Adj Close"} - set(prices.columns)
+            if missing_columns:
+                logger.warning("<%s> Yahoo price data missing columns: %s", ticker, sorted(missing_columns))
+                return pd.DataFrame()
+            return prices
+        except Exception as exc:
+            last_error = exc
+            logger.warning(
+                "<%s> Yahoo price fetch failed on attempt %s/%s: %s",
+                ticker,
+                attempt,
+                attempts,
+                exc,
+            )
+            if attempt < attempts:
+                time.sleep(delay_seconds)
+
+    logger.error("<%s> Skipping after Yahoo price fetch failed: %s", ticker, last_error)
+    return pd.DataFrame()
+
 # --- 5. ä¸»ç¨‹åº ---
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -372,7 +403,7 @@ def main():
         # 1. ç²å–è‚¡åƒ¹æ•¸æ“š
         # æˆ‘å€‘ä½¿ç”¨ auto_adjust=False ä»¥æ‰‹å‹•è™•ç† Close/Adj Close ä¾†å°é½ŠæŒ‡æ¨™é‡ç´š
         print(f"\nðŸ—ï¸  Pipeline Starting: {ticker}")
-        prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)
+        prices = fetch_price_history(ticker)
 
         if prices.empty:
             print(f"  âš ï¸ [Skip] No price data for {ticker}")
