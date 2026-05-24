@@ -1,6 +1,16 @@
 [
     {
         "symbol": "SIRI",
+        "date": "2025-12-31",
+        "stockPrice": 20,
+        "numberOfShares": 336000000,
+        "marketCapitalization": 6720000000,
+        "minusCashAndCashEquivalents": 94000000,
+        "addTotalDebt": 9706000000,
+        "enterpriseValue": 16332000000
+    },
+    {
+        "symbol": "SIRI",
         "date": "2024-12-31",
         "stockPrice": 22.8,
         "numberOfShares": 339000000,

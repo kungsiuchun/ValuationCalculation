@@ -1,6 +1,16 @@
 [
     {
         "symbol": "PINS",
+        "date": "2025-12-31",
+        "stockPrice": 25.89,
+        "numberOfShares": 667692000,
+        "marketCapitalization": 17286545880,
+        "minusCashAndCashEquivalents": 969342000,
+        "addTotalDebt": 262018000,
+        "enterpriseValue": 16579221880
+    },
+    {
+        "symbol": "PINS",
         "date": "2024-12-31",
         "stockPrice": 29,
         "numberOfShares": 674880000,
@@ -15,9 +25,9 @@
         "stockPrice": 37.04,
         "numberOfShares": 674000000,
         "marketCapitalization": 24964960000,
-        "minusCashAndCashEquivalents": 1361936000,
+        "minusCashAndCashEquivalents": 1364478000,
         "addTotalDebt": 196282000,
-        "enterpriseValue": 23799306000
+        "enterpriseValue": 23796764000
     },
     {
         "symbol": "PINS",
@@ -25,9 +35,9 @@
         "stockPrice": 24.28,
         "numberOfShares": 674385000,
         "marketCapitalization": 16374067800,
-        "minusCashAndCashEquivalents": 1611063000,
+        "minusCashAndCashEquivalents": 1612130000,
         "addTotalDebt": 228968000,
-        "enterpriseValue": 14991972800
+        "enterpriseValue": 14990905800
     },
     {
         "symbol": "PINS",
@@ -35,9 +45,9 @@
         "stockPrice": 36.35,
         "numberOfShares": 651077000,
         "marketCapitalization": 23666648950,
-        "minusCashAndCashEquivalents": 1419630000,
+        "minusCashAndCashEquivalents": 1420767000,
         "addTotalDebt": 250874000,
-        "enterpriseValue": 22497892950
+        "enterpriseValue": 22496755950
     },
     {
         "symbol": "PINS",

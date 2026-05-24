@@ -1,6 +1,16 @@
 [
     {
         "symbol": "RKT",
+        "date": "2025-12-31",
+        "stockPrice": 19.36,
+        "numberOfShares": 2826022426,
+        "marketCapitalization": 73357573619,
+        "minusCashAndCashEquivalents": 2696000000,
+        "addTotalDebt": 0,
+        "enterpriseValue": 70661573619
+    },
+    {
+        "symbol": "RKT",
         "date": "2024-12-31",
         "stockPrice": 11.26,
         "numberOfShares": 145686451,

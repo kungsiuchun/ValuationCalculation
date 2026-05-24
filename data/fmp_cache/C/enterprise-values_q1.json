@@ -1,6 +1,16 @@
 [
     {
         "symbol": "C",
+        "date": "2026-03-31",
+        "stockPrice": 113.41,
+        "numberOfShares": 1736900000,
+        "marketCapitalization": 196981829000,
+        "minusCashAndCashEquivalents": 23625000000,
+        "addTotalDebt": 749207000000,
+        "enterpriseValue": 922563829000
+    },
+    {
+        "symbol": "C",
         "date": "2025-03-31",
         "stockPrice": 70.99,
         "numberOfShares": 1879000000,

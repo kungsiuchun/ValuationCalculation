@@ -5,9 +5,9 @@
         "stockPrice": 812.37,
         "numberOfShares": 2310875000,
         "marketCapitalization": 1877278986284,
-        "minusCashAndCashEquivalents": 224528853000,
-        "addTotalDebt": 232046174000,
-        "enterpriseValue": 1884796307284
+        "minusCashAndCashEquivalents": 183120000000,
+        "addTotalDebt": 232098000000,
+        "enterpriseValue": 1926256986284
     },
     {
         "symbol": "BABA",

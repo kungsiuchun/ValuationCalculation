@@ -1,6 +1,16 @@
 [
     {
         "symbol": "PEP",
+        "date": "2025-12-27",
+        "stockPrice": 143.78,
+        "numberOfShares": 1367340000,
+        "marketCapitalization": 196596145200,
+        "minusCashAndCashEquivalents": 9159000000,
+        "addTotalDebt": 49901000000,
+        "enterpriseValue": 237338145200
+    },
+    {
+        "symbol": "PEP",
         "date": "2024-12-31",
         "stockPrice": 152.06,
         "numberOfShares": 1373000000,

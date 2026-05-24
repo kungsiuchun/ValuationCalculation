@@ -1,43 +1,53 @@
 [
     {
         "symbol": "FUBO",
+        "date": "2025-12-31",
+        "stockPrice": 30.24,
+        "numberOfShares": 29091399,
+        "marketCapitalization": 3268457580,
+        "minusCashAndCashEquivalents": 452411000,
+        "addTotalDebt": 670318000,
+        "enterpriseValue": 3486364580
+    },
+    {
+        "symbol": "FUBO",
         "date": "2024-12-31",
-        "stockPrice": 1.26,
-        "numberOfShares": 336151610,
-        "marketCapitalization": 423551028,
+        "stockPrice": 15.12,
+        "numberOfShares": 28012634,
+        "marketCapitalization": 1573628445,
         "minusCashAndCashEquivalents": 161435000,
         "addTotalDebt": 378424000,
-        "enterpriseValue": 640540028
+        "enterpriseValue": 1790617445
     },
     {
         "symbol": "FUBO",
         "date": "2023-12-31",
-        "stockPrice": 3.18,
+        "stockPrice": 38.16,
         "numberOfShares": 294737521,
-        "marketCapitalization": 937265316,
+        "marketCapitalization": 41786909415,
         "minusCashAndCashEquivalents": 245278000,
         "addTotalDebt": 443017000,
-        "enterpriseValue": 1135004316
+        "enterpriseValue": 41984648415
     },
     {
         "symbol": "FUBO",
         "date": "2022-12-31",
-        "stockPrice": 1.74,
+        "stockPrice": 20.88,
         "numberOfShares": 200129461,
-        "marketCapitalization": 348225262,
+        "marketCapitalization": 15525227728,
         "minusCashAndCashEquivalents": 337087000,
         "addTotalDebt": 442796000,
-        "enterpriseValue": 453934262
+        "enterpriseValue": 15630936728
     },
     {
         "symbol": "FUBO",
         "date": "2021-12-31",
-        "stockPrice": 15.52,
+        "stockPrice": 186.24,
         "numberOfShares": 148052682,
-        "marketCapitalization": 2297777624,
+        "marketCapitalization": 102443805119,
         "minusCashAndCashEquivalents": 370968000,
         "addTotalDebt": 360642000,
-        "enterpriseValue": 2287451624
+        "enterpriseValue": 102433479119
     },
     {
         "symbol": "FUBO",
