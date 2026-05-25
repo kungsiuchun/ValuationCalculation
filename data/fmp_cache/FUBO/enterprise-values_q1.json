@@ -1,43 +1,53 @@
 [
     {
         "symbol": "FUBO",
+        "date": "2026-03-31",
+        "stockPrice": 9.46,
+        "numberOfShares": 30715279,
+        "marketCapitalization": 1079548256,
+        "minusCashAndCashEquivalents": 237813000,
+        "addTotalDebt": 408232000,
+        "enterpriseValue": 1249967256
+    },
+    {
+        "symbol": "FUBO",
         "date": "2025-03-31",
-        "stockPrice": 2.92,
-        "numberOfShares": 341059000,
-        "marketCapitalization": 995892280,
+        "stockPrice": 35.04,
+        "numberOfShares": 28421601,
+        "marketCapitalization": 3700062797,
         "minusCashAndCashEquivalents": 321617000,
         "addTotalDebt": 376767000,
-        "enterpriseValue": 1051042280
+        "enterpriseValue": 3755212797
     },
     {
         "symbol": "FUBO",
         "date": "2024-03-31",
-        "stockPrice": 1.58,
-        "numberOfShares": 294789000,
-        "marketCapitalization": 465766620,
+        "stockPrice": 18.96,
+        "numberOfShares": 299363298,
+        "marketCapitalization": 21087900652,
         "minusCashAndCashEquivalents": 168854000,
         "addTotalDebt": 429688000,
-        "enterpriseValue": 726600620
+        "enterpriseValue": 21348734652
     },
     {
         "symbol": "FUBO",
         "date": "2023-03-31",
-        "stockPrice": 1.21,
+        "stockPrice": 14.52,
         "numberOfShares": 225461595,
-        "marketCapitalization": 272808529,
+        "marketCapitalization": 12162858397,
         "minusCashAndCashEquivalents": 358665000,
         "addTotalDebt": 443478000,
-        "enterpriseValue": 357621529
+        "enterpriseValue": 12247671397
     },
     {
         "symbol": "FUBO",
         "date": "2022-03-31",
-        "stockPrice": 6.57,
+        "stockPrice": 78.84,
         "numberOfShares": 157503479,
-        "marketCapitalization": 1034797857,
+        "marketCapitalization": 46135286925,
         "minusCashAndCashEquivalents": 450922000,
         "addTotalDebt": 444427000,
-        "enterpriseValue": 1028302857
+        "enterpriseValue": 46128791925
     },
     {
         "symbol": "FUBO",

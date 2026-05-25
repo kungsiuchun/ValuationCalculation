@@ -1,6 +1,16 @@
 [
     {
         "symbol": "CARR",
+        "date": "2026-03-31",
+        "stockPrice": 56.31,
+        "numberOfShares": 835000000,
+        "marketCapitalization": 47018850000,
+        "minusCashAndCashEquivalents": 1374000000,
+        "addTotalDebt": 12573000000,
+        "enterpriseValue": 58217850000
+    },
+    {
+        "symbol": "CARR",
         "date": "2025-03-31",
         "stockPrice": 63.4,
         "numberOfShares": 866900000,
