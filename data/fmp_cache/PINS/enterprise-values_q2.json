@@ -25,9 +25,9 @@
         "stockPrice": 27.34,
         "numberOfShares": 674280000,
         "marketCapitalization": 18434815200,
-        "minusCashAndCashEquivalents": 1179852000,
+        "minusCashAndCashEquivalents": 1182095000,
         "addTotalDebt": 163015000,
-        "enterpriseValue": 17417978200
+        "enterpriseValue": 17415735200
     },
     {
         "symbol": "PINS",
@@ -35,9 +35,9 @@
         "stockPrice": 18.16,
         "numberOfShares": 662242000,
         "marketCapitalization": 12026314720,
-        "minusCashAndCashEquivalents": 1641509000,
+        "minusCashAndCashEquivalents": 1643343000,
         "addTotalDebt": 192543000,
-        "enterpriseValue": 10577348720
+        "enterpriseValue": 10575514720
     },
     {
         "symbol": "PINS",
@@ -45,8 +45,8 @@
         "stockPrice": 78.95,
         "numberOfShares": 636190000,
         "marketCapitalization": 50227200500,
-        "minusCashAndCashEquivalents": 1012928000,
+        "minusCashAndCashEquivalents": 1013227000,
         "addTotalDebt": 121632000,
-        "enterpriseValue": 49335904500
+        "enterpriseValue": 49335605500
     }
 ]

@@ -36,9 +36,9 @@
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": -1785000,
         "eps": -0.0104,
-        "epsDiluted": -0.0104,
+        "epsDiluted": -0.0009,
         "weightedAverageShsOut": 171438105,
-        "weightedAverageShsOutDil": 171438105
+        "weightedAverageShsOutDil": 2054761852
     },
     {
         "date": "2024-06-30",
@@ -77,9 +77,9 @@
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": 1295000,
         "eps": 0.01,
-        "epsDiluted": 0.01,
+        "epsDiluted": 0.0006,
         "weightedAverageShsOut": 139647845,
-        "weightedAverageShsOutDil": 139647845
+        "weightedAverageShsOutDil": 1997639598
     },
     {
         "date": "2023-06-30",

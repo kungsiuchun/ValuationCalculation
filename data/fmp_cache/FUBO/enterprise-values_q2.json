@@ -2,51 +2,51 @@
     {
         "symbol": "FUBO",
         "date": "2025-06-30",
-        "stockPrice": 3.86,
-        "numberOfShares": 341683408,
-        "marketCapitalization": 1318897954,
+        "stockPrice": 46.32,
+        "numberOfShares": 28473617,
+        "marketCapitalization": 4900130530,
         "minusCashAndCashEquivalents": 283580000,
         "addTotalDebt": 375252000,
-        "enterpriseValue": 1410569954
+        "enterpriseValue": 4991802530
     },
     {
         "symbol": "FUBO",
         "date": "2024-06-30",
-        "stockPrice": 1.26,
+        "stockPrice": 15.12,
         "numberOfShares": 311253856,
-        "marketCapitalization": 392179858,
+        "marketCapitalization": 17484893477,
         "minusCashAndCashEquivalents": 155189000,
         "addTotalDebt": 401383000,
-        "enterpriseValue": 638373858
+        "enterpriseValue": 17731087477
     },
     {
         "symbol": "FUBO",
         "date": "2023-06-30",
-        "stockPrice": 2.08,
+        "stockPrice": 24.96,
         "numberOfShares": 291720400,
-        "marketCapitalization": 606778432,
+        "marketCapitalization": 27052527090,
         "minusCashAndCashEquivalents": 293515000,
         "addTotalDebt": 446557000,
-        "enterpriseValue": 759820432
+        "enterpriseValue": 27205569090
     },
     {
         "symbol": "FUBO",
         "date": "2022-06-30",
-        "stockPrice": 2.47,
+        "stockPrice": 29.64,
         "numberOfShares": 185103005,
-        "marketCapitalization": 457204422,
+        "marketCapitalization": 20383939786,
         "minusCashAndCashEquivalents": 272671000,
         "addTotalDebt": 443577000,
-        "enterpriseValue": 628110422
+        "enterpriseValue": 20554845786
     },
     {
         "symbol": "FUBO",
         "date": "2021-06-30",
-        "stockPrice": 32.11,
+        "stockPrice": 385.32,
         "numberOfShares": 140596000,
-        "marketCapitalization": 4514537560,
+        "marketCapitalization": 201275528597,
         "minusCashAndCashEquivalents": 406740000,
         "addTotalDebt": 320553000,
-        "enterpriseValue": 4428350560
+        "enterpriseValue": 201189341597
     }
 ]

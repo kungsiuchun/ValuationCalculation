@@ -28,15 +28,15 @@
         "netDebtIssuance": -136000,
         "longTermNetDebtIssuance": -136000,
         "shortTermNetDebtIssuance": 0,
-        "netStockIssuance": 0,
-        "netCommonStockIssuance": 0,
-        "commonStockIssuance": 0,
+        "netStockIssuance": -2700000,
+        "netCommonStockIssuance": -2700000,
+        "commonStockIssuance": -2700000,
         "commonStockRepurchased": 0,
         "netPreferredStockIssuance": 0,
         "netDividendsPaid": 0,
         "commonDividendsPaid": 0,
         "preferredDividendsPaid": 0,
-        "otherFinancingActivities": 0,
+        "otherFinancingActivities": 2700000,
         "netCashProvidedByFinancingActivities": -136000,
         "effectOfForexChangesOnCash": 0,
         "netChangeInCash": -38029000,
@@ -46,7 +46,7 @@
         "capitalExpenditure": -3276000,
         "freeCashFlow": -37893000,
         "incomeTaxesPaid": 212000,
-        "interestPaid": 12000
+        "interestPaid": 0
     },
     {
         "date": "2024-06-30",
@@ -94,8 +94,8 @@
         "operatingCashFlow": -32270000,
         "capitalExpenditure": -207999,
         "freeCashFlow": -32478000,
-        "incomeTaxesPaid": 0,
-        "interestPaid": 0
+        "incomeTaxesPaid": 93000,
+        "interestPaid": 349000
     },
     {
         "date": "2023-06-30",
