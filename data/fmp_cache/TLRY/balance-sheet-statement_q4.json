@@ -186,7 +186,7 @@
         "totalLiabilitiesAndTotalEquity": 5923568464,
         "totalInvestments": 481770605,
         "totalDebt": 794890720,
-        "netDebt": 516562926
+        "netDebt": 516562927
     },
     {
         "date": "2022-05-31",
@@ -219,7 +219,7 @@
         "totalAssets": 6869793428,
         "totalPayables": 94233646,
         "accountPayables": 86481058,
-        "otherPayables": 7752587.5,
+        "otherPayables": 7752587,
         "accruedExpenses": 22357705,
         "shortTermDebt": 116791785,
         "capitalLeaseObligationsCurrent": 0,
