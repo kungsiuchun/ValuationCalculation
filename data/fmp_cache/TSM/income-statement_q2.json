@@ -35,10 +35,10 @@
         "netIncome": 398273000000,
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": 398273000000,
-        "eps": 76.8,
-        "epsDiluted": 76.8,
-        "weightedAverageShsOut": 5185800000,
-        "weightedAverageShsOutDil": 5185800000
+        "eps": 72.6,
+        "epsDiluted": 72.6,
+        "weightedAverageShsOut": 5185651000,
+        "weightedAverageShsOutDil": 5185775400
     },
     {
         "date": "2024-06-30",
@@ -76,8 +76,8 @@
         "netIncome": 247845528000,
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": 247845528000,
-        "eps": 47.8,
-        "epsDiluted": 47.8,
+        "eps": 48.1,
+        "epsDiluted": 48.1,
         "weightedAverageShsOut": 5185794400,
         "weightedAverageShsOutDil": 5186162400
     },
@@ -117,8 +117,8 @@
         "netIncome": 181799021000,
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": 181799021000,
-        "eps": 35.05,
-        "epsDiluted": 35.05,
+        "eps": 35.45,
+        "epsDiluted": 35.45,
         "weightedAverageShsOut": 5185853600,
         "weightedAverageShsOutDil": 5185883000
     },
@@ -158,8 +158,8 @@
         "netIncome": 237027317000,
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": 237027317000,
-        "eps": 45.7,
-        "epsDiluted": 45.7,
+        "eps": 46,
+        "epsDiluted": 46,
         "weightedAverageShsOut": 5185798600,
         "weightedAverageShsOutDil": 5185833400
     },
@@ -168,8 +168,8 @@
         "symbol": "TSM",
         "reportedCurrency": "TWD",
         "cik": "0001046179",
-        "filingDate": "2021-10-18",
-        "acceptedDate": "2021-10-18 16:04:04",
+        "filingDate": "2021-08-13",
+        "acceptedDate": "2021-08-13 06:06:10",
         "fiscalYear": "2021",
         "period": "Q2",
         "revenue": 372145122000,
@@ -199,8 +199,8 @@
         "netIncome": 134358942000,
         "netIncomeDeductions": 0,
         "bottomLineNetIncome": 134358942000,
-        "eps": 25.9,
-        "epsDiluted": 25.9,
+        "eps": 25.95,
+        "epsDiluted": 25.95,
         "weightedAverageShsOut": 5186076000,
         "weightedAverageShsOutDil": 5186076000
     }
