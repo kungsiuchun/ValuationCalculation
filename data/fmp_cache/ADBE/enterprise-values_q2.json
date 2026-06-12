@@ -1,6 +1,16 @@
 [
     {
         "symbol": "ADBE",
+        "date": "2026-05-29",
+        "stockPrice": 259.21,
+        "numberOfShares": 402000000,
+        "marketCapitalization": 104202419999,
+        "minusCashAndCashEquivalents": 4919000000,
+        "addTotalDebt": 7065000000,
+        "enterpriseValue": 106348419999
+    },
+    {
+        "symbol": "ADBE",
         "date": "2025-05-30",
         "stockPrice": 415.09,
         "numberOfShares": 432000000,
