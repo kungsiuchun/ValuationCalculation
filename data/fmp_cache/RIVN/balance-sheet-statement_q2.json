@@ -274,9 +274,9 @@
         "goodwill": 0,
         "intangibleAssets": 0,
         "goodwillAndIntangibleAssets": 0,
-        "longTermInvestments": 0,
+        "longTermInvestments": 49000000,
         "taxAssets": 0,
-        "otherNonCurrentAssets": 91000000,
+        "otherNonCurrentAssets": 42000000,
         "totalNonCurrentAssets": 2632000000,
         "otherAssets": 0,
         "totalAssets": 6491000000,
@@ -310,7 +310,7 @@
         "totalEquity": -2375000000,
         "minorityInterest": 0,
         "totalLiabilitiesAndTotalEquity": 6491000000,
-        "totalInvestments": 0,
+        "totalInvestments": 49000000,
         "totalDebt": 190000000,
         "netDebt": -3468000000
     }

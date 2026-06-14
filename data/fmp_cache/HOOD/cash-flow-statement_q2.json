@@ -119,9 +119,9 @@
         "netCashProvidedByOperatingActivities": 370000000,
         "investmentsInPropertyPlantAndEquipment": -4000000,
         "acquisitionsNet": 0,
-        "purchasesOfInvestments": 0,
-        "salesMaturitiesOfInvestments": 1000000,
-        "otherInvestingActivities": 2000000,
+        "purchasesOfInvestments": -88000000,
+        "salesMaturitiesOfInvestments": 81000000,
+        "otherInvestingActivities": 10000000,
         "netCashProvidedByInvestingActivities": -1000000,
         "netDebtIssuance": 0,
         "longTermNetDebtIssuance": 0,
@@ -242,6 +242,6 @@
         "capitalExpenditure": -16500000,
         "freeCashFlow": 2264817000,
         "incomeTaxesPaid": 0,
-        "interestPaid": 0
+        "interestPaid": 2000000
     }
 ]
