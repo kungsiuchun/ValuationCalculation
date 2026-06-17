@@ -4,49 +4,49 @@
         "date": "2025-06-30",
         "stockPrice": 46.32,
         "numberOfShares": 28473617,
-        "marketCapitalization": 4900130530,
+        "marketCapitalization": 1318897939,
         "minusCashAndCashEquivalents": 283580000,
         "addTotalDebt": 375252000,
-        "enterpriseValue": 4991802530
+        "enterpriseValue": 1410569939
     },
     {
         "symbol": "FUBO",
         "date": "2024-06-30",
         "stockPrice": 15.12,
         "numberOfShares": 311253856,
-        "marketCapitalization": 17484893477,
+        "marketCapitalization": 4706158302,
         "minusCashAndCashEquivalents": 155189000,
         "addTotalDebt": 401383000,
-        "enterpriseValue": 17731087477
+        "enterpriseValue": 4952352302
     },
     {
         "symbol": "FUBO",
         "date": "2023-06-30",
         "stockPrice": 24.96,
         "numberOfShares": 291720400,
-        "marketCapitalization": 27052527090,
+        "marketCapitalization": 7281341184,
         "minusCashAndCashEquivalents": 293515000,
         "addTotalDebt": 446557000,
-        "enterpriseValue": 27205569090
+        "enterpriseValue": 7434383184
     },
     {
         "symbol": "FUBO",
         "date": "2022-06-30",
         "stockPrice": 29.64,
         "numberOfShares": 185103005,
-        "marketCapitalization": 20383939786,
+        "marketCapitalization": 5486453068,
         "minusCashAndCashEquivalents": 272671000,
         "addTotalDebt": 443577000,
-        "enterpriseValue": 20554845786
+        "enterpriseValue": 5657359068
     },
     {
         "symbol": "FUBO",
         "date": "2021-06-30",
         "stockPrice": 385.32,
         "numberOfShares": 140596000,
-        "marketCapitalization": 201275528597,
+        "marketCapitalization": 54174450720,
         "minusCashAndCashEquivalents": 406740000,
         "addTotalDebt": 320553000,
-        "enterpriseValue": 201189341597
+        "enterpriseValue": 54088263720
     }
 ]
