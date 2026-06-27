@@ -5,9 +5,9 @@
         "stockPrice": 27.51,
         "numberOfShares": 1382000000,
         "marketCapitalization": 38018820000,
-        "minusCashAndCashEquivalents": 0,
-        "addTotalDebt": 0,
-        "enterpriseValue": 38018820000
+        "minusCashAndCashEquivalents": 2243000000,
+        "addTotalDebt": 26170000000,
+        "enterpriseValue": 61945820000
     },
     {
         "symbol": "CCL",
