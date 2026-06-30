@@ -1,6 +1,16 @@
 [
     {
         "symbol": "NKE",
+        "date": "2026-05-31",
+        "stockPrice": 45.93,
+        "numberOfShares": 1482600000,
+        "marketCapitalization": 68095818000,
+        "minusCashAndCashEquivalents": 7563000000,
+        "addTotalDebt": 11033000000,
+        "enterpriseValue": 71565818000
+    },
+    {
+        "symbol": "NKE",
         "date": "2025-05-31",
         "stockPrice": 60.59,
         "numberOfShares": 1476700000,
