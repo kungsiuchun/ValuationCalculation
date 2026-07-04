@@ -30,7 +30,7 @@
         "totalAssets": 38410000000,
         "totalPayables": 3600000000,
         "accountPayables": 3600000000,
-        "otherPayables": 377000000,
+        "otherPayables": 0,
         "accruedExpenses": 6092000000,
         "shortTermDebt": 2000000000,
         "capitalLeaseObligationsCurrent": 478000000,
