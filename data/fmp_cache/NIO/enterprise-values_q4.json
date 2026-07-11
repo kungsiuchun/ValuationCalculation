@@ -1,6 +1,16 @@
 [
     {
         "symbol": "NIO",
+        "date": "2025-12-31",
+        "stockPrice": 35.66,
+        "numberOfShares": 2510927676,
+        "marketCapitalization": 89545355622,
+        "minusCashAndCashEquivalents": 26036638000,
+        "addTotalDebt": 26246663000,
+        "enterpriseValue": 89755380622
+    },
+    {
+        "symbol": "NIO",
         "date": "2024-12-31",
         "stockPrice": 31.82,
         "numberOfShares": 2055159000,
