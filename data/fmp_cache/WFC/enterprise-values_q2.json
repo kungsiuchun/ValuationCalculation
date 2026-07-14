@@ -1,6 +1,16 @@
 [
     {
         "symbol": "WFC",
+        "date": "2026-06-30",
+        "stockPrice": 82.64,
+        "numberOfShares": 3049504950,
+        "marketCapitalization": 252011089068,
+        "minusCashAndCashEquivalents": 203375000000,
+        "addTotalDebt": 459139000000,
+        "enterpriseValue": 507775089068
+    },
+    {
+        "symbol": "WFC",
         "date": "2025-06-30",
         "stockPrice": 80.12,
         "numberOfShares": 3232700000,
