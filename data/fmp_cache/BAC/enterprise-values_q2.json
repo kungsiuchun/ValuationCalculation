@@ -1,6 +1,16 @@
 [
     {
         "symbol": "BAC",
+        "date": "2026-06-30",
+        "stockPrice": 56.98,
+        "numberOfShares": 7151200000,
+        "marketCapitalization": 407475376000,
+        "minusCashAndCashEquivalents": 28620000000,
+        "addTotalDebt": 732060000000,
+        "enterpriseValue": 1110915376000
+    },
+    {
+        "symbol": "BAC",
         "date": "2025-06-30",
         "stockPrice": 47.32,
         "numberOfShares": 7581200000,

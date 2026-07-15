@@ -1,6 +1,16 @@
 [
     {
         "symbol": "UAL",
+        "date": "2026-06-30",
+        "stockPrice": 135.99,
+        "numberOfShares": 326600000,
+        "marketCapitalization": 44414334000,
+        "minusCashAndCashEquivalents": 10166000000,
+        "addTotalDebt": 30680000000,
+        "enterpriseValue": 64928334000
+    },
+    {
+        "symbol": "UAL",
         "date": "2025-06-30",
         "stockPrice": 79.63,
         "numberOfShares": 327200000,
