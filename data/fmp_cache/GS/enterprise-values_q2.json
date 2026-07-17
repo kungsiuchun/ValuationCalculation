@@ -3,11 +3,11 @@
         "symbol": "GS",
         "date": "2026-06-30",
         "stockPrice": 1011.37,
-        "numberOfShares": 303800000,
-        "marketCapitalization": 307254206000,
-        "minusCashAndCashEquivalents": 187000000,
-        "addTotalDebt": 90000000,
-        "enterpriseValue": 307157206000
+        "numberOfShares": 300100000,
+        "marketCapitalization": 303512137000,
+        "minusCashAndCashEquivalents": 187000000000,
+        "addTotalDebt": 796000000000,
+        "enterpriseValue": 912512137000
     },
     {
         "symbol": "GS",

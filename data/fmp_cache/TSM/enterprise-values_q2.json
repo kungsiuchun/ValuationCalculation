@@ -1,6 +1,16 @@
 [
     {
         "symbol": "TSM",
+        "date": "2026-06-30",
+        "stockPrice": 15206.31,
+        "numberOfShares": 5186400000,
+        "marketCapitalization": 78865987357368,
+        "minusCashAndCashEquivalents": 3134218000000,
+        "addTotalDebt": 982447000000,
+        "enterpriseValue": 76714216357368
+    },
+    {
+        "symbol": "TSM",
         "date": "2025-06-30",
         "stockPrice": 6613.73,
         "numberOfShares": 5185651000,
