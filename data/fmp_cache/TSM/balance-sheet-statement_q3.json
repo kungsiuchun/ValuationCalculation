@@ -4,8 +4,8 @@
         "symbol": "TSM",
         "reportedCurrency": "TWD",
         "cik": "0001046179",
-        "filingDate": "2025-11-14",
-        "acceptedDate": "2025-11-14 06:05:01",
+        "filingDate": "2025-10-16",
+        "acceptedDate": "2025-10-16 06:39:55",
         "fiscalYear": "2025",
         "period": "Q3",
         "cashAndCashEquivalents": 2470759384000,
@@ -32,11 +32,11 @@
         "accountPayables": 259855651000,
         "otherPayables": 432148764000,
         "accruedExpenses": 431951770000,
-        "shortTermDebt": 0,
+        "shortTermDebt": 76225613000,
         "capitalLeaseObligationsCurrent": 0,
         "taxPayables": 0,
         "deferredRevenue": 0,
-        "otherCurrentLiabilities": 151950439000,
+        "otherCurrentLiabilities": 75724826000,
         "totalCurrentLiabilities": 1275906624000,
         "longTermDebt": 918228256000,
         "capitalLeaseObligationsNonCurrent": 30978996000,
@@ -59,8 +59,8 @@
         "minorityInterest": 37270830000,
         "totalLiabilitiesAndTotalEquity": 7354107076000,
         "totalInvestments": 429252530000,
-        "totalDebt": 949207252000,
-        "netDebt": -1521552132000
+        "totalDebt": 1025432865000,
+        "netDebt": -1445326519000
     },
     {
         "date": "2024-09-30",
@@ -123,7 +123,7 @@
         "totalLiabilitiesAndTotalEquity": 6165658176000,
         "totalInvestments": 407355703000,
         "totalDebt": 1023758503000,
-        "netDebt": -858759185000
+        "netDebt": -863022052000
     },
     {
         "date": "2023-09-30",
