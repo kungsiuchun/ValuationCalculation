@@ -1,6 +1,16 @@
 [
     {
         "symbol": "NOK",
+        "date": "2026-06-30",
+        "stockPrice": 11.62,
+        "numberOfShares": 5597472000,
+        "marketCapitalization": 65064924968,
+        "minusCashAndCashEquivalents": 4348000000,
+        "addTotalDebt": 3359000000,
+        "enterpriseValue": 64075924968
+    },
+    {
+        "symbol": "NOK",
         "date": "2025-06-30",
         "stockPrice": 4.4,
         "numberOfShares": 5378143000,
