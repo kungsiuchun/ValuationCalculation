@@ -1,6 +1,16 @@
 [
     {
         "symbol": "KO",
+        "date": "2026-07-03",
+        "stockPrice": 84.14,
+        "numberOfShares": 4302000000,
+        "marketCapitalization": 361970280000,
+        "minusCashAndCashEquivalents": 12907000000,
+        "addTotalDebt": 43543000000,
+        "enterpriseValue": 392606280000
+    },
+    {
+        "symbol": "KO",
         "date": "2025-06-27",
         "stockPrice": 70.33,
         "numberOfShares": 4303000000,
