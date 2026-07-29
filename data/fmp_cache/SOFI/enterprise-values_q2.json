@@ -1,6 +1,16 @@
 [
     {
         "symbol": "SOFI",
+        "date": "2026-06-30",
+        "stockPrice": 17.93,
+        "numberOfShares": 1280338000,
+        "marketCapitalization": 22956460340,
+        "minusCashAndCashEquivalents": 3126237000,
+        "addTotalDebt": 0,
+        "enterpriseValue": 19830223340
+    },
+    {
+        "symbol": "SOFI",
         "date": "2025-06-30",
         "stockPrice": 18.21,
         "numberOfShares": 1102525000,
