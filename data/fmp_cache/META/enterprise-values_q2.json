@@ -1,6 +1,16 @@
 [
     {
         "symbol": "META",
+        "date": "2026-06-30",
+        "stockPrice": 563.29,
+        "numberOfShares": 2543000000,
+        "marketCapitalization": 1432446470000,
+        "minusCashAndCashEquivalents": 15462000000,
+        "addTotalDebt": 112318000000,
+        "enterpriseValue": 1529302470000
+    },
+    {
+        "symbol": "META",
         "date": "2025-06-30",
         "stockPrice": 738.09,
         "numberOfShares": 2518000000,

@@ -1,6 +1,16 @@
 [
     {
         "symbol": "AMZN",
+        "date": "2026-06-30",
+        "stockPrice": 238.34,
+        "numberOfShares": 10756000000,
+        "marketCapitalization": 2563585040000,
+        "minusCashAndCashEquivalents": 78213000000,
+        "addTotalDebt": 223232000000,
+        "enterpriseValue": 2708604040000
+    },
+    {
+        "symbol": "AMZN",
         "date": "2025-06-30",
         "stockPrice": 219.39,
         "numberOfShares": 10637000000,

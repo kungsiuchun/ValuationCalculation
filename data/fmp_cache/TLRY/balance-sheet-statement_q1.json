@@ -60,7 +60,7 @@
         "totalLiabilitiesAndTotalEquity": 2860805851,
         "totalInvestments": 13972666,
         "totalDebt": 444707708,
-        "netDebt": 80929374
+        "netDebt": 80929375
     },
     {
         "date": "2024-08-31",
@@ -87,13 +87,13 @@
         "goodwillAndIntangibleAssets": 3936740369,
         "longTermInvestments": 53757711,
         "taxAssets": 0,
-        "otherNonCurrentAssets": 7199079.3,
+        "otherNonCurrentAssets": 7199079,
         "totalNonCurrentAssets": 4769688817,
         "otherAssets": 0,
         "totalAssets": 5748832396,
         "totalPayables": 138722224,
         "accountPayables": 137409745,
-        "otherPayables": 1312479.7,
+        "otherPayables": 1312479,
         "accruedExpenses": 13865343,
         "shortTermDebt": 53748269,
         "capitalLeaseObligationsCurrent": 0,
@@ -105,21 +105,21 @@
         "capitalLeaseObligationsNonCurrent": 81820227,
         "deferredRevenueNonCurrent": 0,
         "deferredTaxLiabilitiesNonCurrent": 183760647,
-        "otherNonCurrentLiabilities": 133541.1,
+        "otherNonCurrentLiabilities": 133541,
         "totalNonCurrentLiabilities": 654087005,
         "otherLiabilities": 0,
         "capitalLeaseObligations": 81820227,
         "totalLiabilities": 1050055251,
         "treasuryStock": 0,
         "preferredStock": 0,
-        "commonStock": 118703.2,
+        "commonStock": 118703,
         "retainedEarnings": -3641561931,
         "additionalPaidInCapital": 8386830263,
         "accumulatedOtherComprehensiveIncomeLoss": -53790085,
         "otherTotalStockholdersEquity": 0,
         "totalStockholdersEquity": 4691596949,
         "totalEquity": 4698777144,
-        "minorityInterest": 7180194.7,
+        "minorityInterest": 7180194,
         "totalLiabilitiesAndTotalEquity": 5748832396,
         "totalInvestments": 154748505,
         "totalDebt": 523941086,
@@ -130,8 +130,8 @@
         "symbol": "TLRY",
         "reportedCurrency": "USD",
         "cik": "0001731348",
-        "filingDate": "2023-10-04",
-        "acceptedDate": "2023-10-04 17:00:54",
+        "filingDate": "2024-10-10",
+        "acceptedDate": "2024-10-11 09:11:30",
         "fiscalYear": "2024",
         "period": "Q1",
         "cashAndCashEquivalents": 242630114,
@@ -186,7 +186,7 @@
         "totalLiabilitiesAndTotalEquity": 5962744905,
         "totalInvestments": 506866840,
         "totalDebt": 762177565,
-        "netDebt": 519547450
+        "netDebt": 519547451
     },
     {
         "date": "2022-08-31",
@@ -249,7 +249,7 @@
         "totalLiabilitiesAndTotalEquity": 7343072672,
         "totalInvestments": 371695258,
         "totalDebt": 863733262,
-        "netDebt": 219506386
+        "netDebt": 219506387
     },
     {
         "date": "2021-08-31",
@@ -265,7 +265,7 @@
         "cashAndShortTermInvestments": 472789585,
         "netReceivables": 125073505,
         "accountsReceivables": 122095774,
-        "otherReceivables": 2977731.2,
+        "otherReceivables": 2977731,
         "inventory": 316000101,
         "prepaids": 0,
         "otherCurrentAssets": 147337385,
@@ -312,6 +312,6 @@
         "totalLiabilitiesAndTotalEquity": 7521412288,
         "totalInvestments": 239310330,
         "totalDebt": 1097785210,
-        "netDebt": 624995624
+        "netDebt": 624995625
     }
 ]

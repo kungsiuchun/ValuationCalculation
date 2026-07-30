@@ -43,10 +43,10 @@
         "symbol": "SONY",
         "date": "2021-06-30",
         "stockPrice": 2159.73,
-        "numberOfShares": 6103145000,
-        "marketCapitalization": 13181118985263,
+        "numberOfShares": 6195810000,
+        "marketCapitalization": 13381249965400,
         "minusCashAndCashEquivalents": 1725218000000,
         "addTotalDebt": 2833598000000,
-        "enterpriseValue": 14289498985263
+        "enterpriseValue": 14489629965400
     }
 ]

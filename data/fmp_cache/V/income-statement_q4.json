@@ -34,11 +34,11 @@
         "otherAdjustmentsToNetIncome": 0,
         "netIncome": 5090000000,
         "netIncomeDeductions": 0,
-        "bottomLineNetIncome": 5090000000,
+        "bottomLineNetIncome": 5041000000,
         "eps": 2.62,
         "epsDiluted": 2.62,
         "weightedAverageShsOut": 1924000000,
-        "weightedAverageShsOutDil": 2173000000
+        "weightedAverageShsOutDil": 1945000000
     },
     {
         "date": "2024-09-30",
