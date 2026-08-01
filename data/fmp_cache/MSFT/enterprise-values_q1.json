@@ -6,8 +6,8 @@
         "numberOfShares": 7433000000,
         "marketCapitalization": 3849922350000,
         "minusCashAndCashEquivalents": 28849000000,
-        "addTotalDebt": 60556000000,
-        "enterpriseValue": 3881629350000
+        "addTotalDebt": 120375000000,
+        "enterpriseValue": 3941448350000
     },
     {
         "symbol": "MSFT",
@@ -16,8 +16,8 @@
         "numberOfShares": 7433000000,
         "marketCapitalization": 3198419900000,
         "minusCashAndCashEquivalents": 20840000000,
-        "addTotalDebt": 61478000000,
-        "enterpriseValue": 3239057900000
+        "addTotalDebt": 96838000000,
+        "enterpriseValue": 3274417900000
     },
     {
         "symbol": "MSFT",
@@ -26,8 +26,8 @@
         "numberOfShares": 7429000000,
         "marketCapitalization": 2345706750000,
         "minusCashAndCashEquivalents": 80452000000,
-        "addTotalDebt": 84989000000,
-        "enterpriseValue": 2350243750000
+        "addTotalDebt": 105681000000,
+        "enterpriseValue": 2370935750000
     },
     {
         "symbol": "MSFT",
@@ -36,8 +36,8 @@
         "numberOfShares": 7457000000,
         "marketCapitalization": 1736735300000,
         "minusCashAndCashEquivalents": 22884000000,
-        "addTotalDebt": 60282000000,
-        "enterpriseValue": 1774133300000
+        "addTotalDebt": 77136000000,
+        "enterpriseValue": 1790987300000
     },
     {
         "symbol": "MSFT",
@@ -46,7 +46,7 @@
         "numberOfShares": 7513000000,
         "marketCapitalization": 2118064960000,
         "minusCashAndCashEquivalents": 19165000000,
-        "addTotalDebt": 63338000000,
-        "enterpriseValue": 2162237960000
+        "addTotalDebt": 78935000000,
+        "enterpriseValue": 2177834960000
     }
 ]

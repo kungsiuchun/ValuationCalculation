@@ -20,10 +20,10 @@
         "otherNonCashItems": -945000000,
         "netCashProvidedByOperatingActivities": 29999000000,
         "investmentsInPropertyPlantAndEquipment": -18829000000,
-        "acquisitionsNet": 62000000,
+        "acquisitionsNet": -753000000,
         "purchasesOfInvestments": -5886000000,
         "salesMaturitiesOfInvestments": 4704000000,
-        "otherInvestingActivities": -1899000000,
+        "otherInvestingActivities": -1084000000,
         "netCashProvidedByInvestingActivities": -21848000000,
         "netDebtIssuance": -545000000,
         "longTermNetDebtIssuance": -545000000,
@@ -45,8 +45,8 @@
         "operatingCashFlow": 29999000000,
         "capitalExpenditure": -18829000000,
         "freeCashFlow": 11170000000,
-        "incomeTaxesPaid": 0,
-        "interestPaid": 0
+        "incomeTaxesPaid": 749000000,
+        "interestPaid": 125000000
     },
     {
         "date": "2024-09-30",

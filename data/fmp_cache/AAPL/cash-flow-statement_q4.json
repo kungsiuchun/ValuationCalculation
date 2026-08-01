@@ -13,10 +13,10 @@
         "deferredIncomeTax": 0,
         "stockBasedCompensation": 3183000000,
         "changeInWorkingCapital": -5707000000,
-        "accountsReceivables": -25922000000,
+        "accountsReceivables": -26269000000,
         "inventory": 177000000,
         "accountsPayables": 19381000000,
-        "otherWorkingCapital": 657000000,
+        "otherWorkingCapital": 1004000000,
         "otherNonCashItems": 1659000000,
         "netCashProvidedByOperatingActivities": 29728000000,
         "investmentsInPropertyPlantAndEquipment": -3242000000,
@@ -45,7 +45,7 @@
         "operatingCashFlow": 29728000000,
         "capitalExpenditure": -3242000000,
         "freeCashFlow": 26486000000,
-        "incomeTaxesPaid": 6037000000,
+        "incomeTaxesPaid": -37332000000,
         "interestPaid": 0
     },
     {

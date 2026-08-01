@@ -27,7 +27,7 @@
         "netCashProvidedByInvestingActivities": -390500000,
         "netDebtIssuance": -1250000000,
         "longTermNetDebtIssuance": -1250000000,
-        "shortTermNetDebtIssuance": 0,
+        "shortTermNetDebtIssuance": 5400000,
         "netStockIssuance": 17400000,
         "netCommonStockIssuance": 17400000,
         "commonStockIssuance": 17400000,
@@ -45,8 +45,8 @@
         "operatingCashFlow": 1381800000,
         "capitalExpenditure": -456000000,
         "freeCashFlow": 925800000,
-        "incomeTaxesPaid": 0,
-        "interestPaid": 0
+        "incomeTaxesPaid": -568100000,
+        "interestPaid": -392500000
     },
     {
         "date": "2024-09-30",

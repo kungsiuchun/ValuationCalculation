@@ -1,6 +1,16 @@
 [
     {
         "symbol": "XOM",
+        "date": "2026-06-30",
+        "stockPrice": 136.72,
+        "numberOfShares": 4173851000,
+        "marketCapitalization": 570648908720,
+        "minusCashAndCashEquivalents": 10588000000,
+        "addTotalDebt": 42368000000,
+        "enterpriseValue": 602428908720
+    },
+    {
+        "symbol": "XOM",
         "date": "2025-06-30",
         "stockPrice": 107.8,
         "numberOfShares": 4331000000,
