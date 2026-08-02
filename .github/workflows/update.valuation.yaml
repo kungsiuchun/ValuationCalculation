@@ -51,7 +51,7 @@ jobs:
         $ErrorActionPreference = $previousErrorActionPreference
         if ($exitCode -ne 0) {
           $message = ($output | Out-String)
-          if ($message -match '(?i)NoSuchKey|not found|404') {
+          if ($message -match '(?i)NoSuchKey|not found|404|specified key does not exist') {
             @{ schemaVersion = '1.0'; symbols = @() } | ConvertTo-Json -Compress | Set-Content -NoNewline $registryPath
           } else {
             throw "Coverage registry download failed: $message"
