@@ -58,6 +58,20 @@ jobs:
           }
         }
 
+    - name: Ensure 45-day R2 release cleanup
+      shell: pwsh
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $list = & npx --yes wrangler r2 bucket lifecycle list valuation-watcher-data 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "R2 lifecycle inspection failed: $($list | Out-String)" }
+        if (($list | Out-String) -notmatch 'valuation-release-expiry') {
+          & npx --yes wrangler r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 45 --force
+          if ($LASTEXITCODE -ne 0) { throw 'R2 45-day release lifecycle setup failed.' }
+        }
+
     - name: Run Pipeline Script
       env:
         FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
