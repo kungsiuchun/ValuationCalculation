@@ -44,8 +44,12 @@ jobs:
       run: |
         $ErrorActionPreference = 'Stop'
         $registryPath = 'data/watcher_coverage_universe.json'
-        $output = & npx wrangler r2 object get 'valuation-watcher-data/coverage/universe.json' --file $registryPath --remote 2>&1
-        if ($LASTEXITCODE -ne 0) {
+        $previousErrorActionPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        $output = & npx --yes wrangler r2 object get 'valuation-watcher-data/coverage/universe.json' --file $registryPath --remote 2>&1
+        $exitCode = $LASTEXITCODE
+        $ErrorActionPreference = $previousErrorActionPreference
+        if ($exitCode -ne 0) {
           $message = ($output | Out-String)
           if ($message -match '(?i)NoSuchKey|not found|404') {
             @{ schemaVersion = '1.0'; symbols = @() } | ConvertTo-Json -Compress | Set-Content -NoNewline $registryPath
