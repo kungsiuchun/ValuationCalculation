@@ -5,3 +5,4 @@ __pycache__/
 *.pyo
 *.pyd
 *.sqlite3
+data/watcher_exports/

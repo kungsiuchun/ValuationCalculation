@@ -36,12 +36,55 @@ jobs:
         # 如果你有 requirements.txt，可以用 pip install -r requirements.txt
         pip install -r requirements.txt
 
+    - name: Read private Stock Watcher coverage registry
+      shell: pwsh
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $registryPath = 'data/watcher_coverage_universe.json'
+        $output = & npx wrangler r2 object get 'valuation-watcher-data/coverage/universe.json' --file $registryPath --remote 2>&1
+        if ($LASTEXITCODE -ne 0) {
+          $message = ($output | Out-String)
+          if ($message -match '(?i)NoSuchKey|not found|404') {
+            @{ schemaVersion = '1.0'; symbols = @() } | ConvertTo-Json -Compress | Set-Content -NoNewline $registryPath
+          } else {
+            throw "Coverage registry download failed: $message"
+          }
+        }
+
     - name: Run Pipeline Script
       env:
         FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
         FMP_API_KEY_2: ${{ secrets.FMP_API_KEY_2 }}
         FMP_API_KEY_3: ${{ secrets.FMP_API_KEY_3 }}
-      run: python generate_valuation.py
+      run: python generate_valuation.py --universe-file data/watcher_coverage_universe.json --write-resolved-symbols data/watcher_coverage_symbols.json
+
+    - name: Build quarterly earnings reports
+      run: python generate_earning_report.py
+
+    - name: Build validated Stock Watcher exports
+      run: python export_watcher_data.py --expected-symbols-file data/watcher_coverage_symbols.json
+
+    - name: Publish Stock Watcher exports to private R2
+      shell: pwsh
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $releaseId = "$env:GITHUB_SHA-$env:GITHUB_RUN_ID"
+        if ([string]::IsNullOrWhiteSpace($releaseId) -or $releaseId -eq '-') { throw 'GitHub release identity is unavailable.' }
+        Get-ChildItem data/watcher_exports -Recurse -File | ForEach-Object {
+          $key = $_.FullName.Substring((Resolve-Path data/watcher_exports).Path.Length + 1).Replace('\', '/')
+          npx wrangler r2 object put "valuation-watcher-data/releases/$releaseId/$key" --file $_.FullName --remote
+          if ($LASTEXITCODE -ne 0) { throw "R2 release upload failed: $key" }
+        }
+        $pointerPath = Join-Path $env:RUNNER_TEMP 'valuation-watcher-current.json'
+        @{ schemaVersion = '1.0'; releaseId = $releaseId; generatedAt = (Get-Date).ToUniversalTime().ToString('o') } | ConvertTo-Json -Compress | Set-Content -NoNewline $pointerPath
+        npx wrangler r2 object put valuation-watcher-data/current.json --file $pointerPath --remote
+        if ($LASTEXITCODE -ne 0) { throw 'R2 release pointer update failed.' }
 
     - name: Commit and Push changes
       run: |

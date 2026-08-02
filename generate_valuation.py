@@ -6,7 +6,11 @@ import json
 import os
 import time
 import logging
+import argparse
 from datetime import datetime
+from pathlib import Path
+
+from ticker_universe import DEFAULT_TICKERS, UniverseValidationError, resolve_tickers
 
 # from dotenv import load_dotenv
 
@@ -27,16 +31,7 @@ FMP_API_KEY_3 = os.getenv('FMP_API_KEY_3')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # ç·©å­˜ä¸»ç›®éŒ„
-DOW_30 =[
-    "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
-    "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE",
-    "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
-    "SQ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
-    "ABBV", "ETSY", "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL",
-    "AAL", "TSM", "SONY", "ET", "COIN", "RIVN", "RIOT", "CPRX", "NOK",
-    "ROKU", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM",
-    "NIO", "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "SIRI", "FUBO", "RKT"
-]
+DOW_30 = list(DEFAULT_TICKERS)
 # DOW_30 = [
 #     "AAPL", "ABBV", "ADBE", "AMD", "AMZN", "BA", "BABA", "BAC",
 #     "COST", "CSCO", "CVX", "DIS", "ETSY", "FDX", "GE", "GOOGL",
@@ -377,13 +372,29 @@ def fetch_price_history(ticker, attempts=YFINANCE_MAX_ATTEMPTS, delay_seconds=YF
     return pd.DataFrame()
 
 # --- 5. ä¸»ç¨‹åº ---
-def main():
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Generate valuation data for the configured ticker universe.")
+    parser.add_argument("--symbols", help="Comma-separated symbols. When present, does not include the default universe.")
+    parser.add_argument("--universe-file", type=Path, help="Local copy of the private coverage/universe.json R2 object.")
+    parser.add_argument("--write-resolved-symbols", type=Path, help="Write the exact resolved universe for downstream export validation.")
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    try:
+        tickers = resolve_tickers(args.symbols, args.universe_file)
+    except UniverseValidationError as error:
+        raise RuntimeError(f"Ticker universe is invalid: {error}") from error
+    if args.write_resolved_symbols:
+        args.write_resolved_symbols.parent.mkdir(parents=True, exist_ok=True)
+        args.write_resolved_symbols.write_text(json.dumps({"symbols": tickers}, separators=(",", ":")), encoding="utf-8")
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     # å‘¼å« Debug
     ## test_amzn_valuation_logic()
 
-    for ticker in DOW_30:
+    for ticker in tickers:
         final_dir = os.path.join(OUTPUT_DIR, "results", ticker.upper())
         output_file = os.path.join(final_dir, "valuation_summary.json")
 
@@ -406,8 +417,7 @@ def main():
         prices = fetch_price_history(ticker)
 
         if prices.empty:
-            print(f"  âš ï¸ [Skip] No price data for {ticker}")
-            continue
+            raise RuntimeError(f"{ticker}: no Yahoo price data; refusing partial valuation release")
 
         prices.index = prices.index.tz_localize(None)
 
@@ -416,7 +426,8 @@ def main():
         # 2. ç²å–è²¡å‹™æŒ‡æ¨™æ•¸æ“š (TTM)
         # ç¾åœ¨ build_quarterly_ttm æœƒå›žå‚³ä¸‰å€‹æŒ‡æ¨™
         eps_ttm, fcf_ttm, sales_ttm = build_quarterly_ttm(ticker)
-        if eps_ttm is None: continue
+        if eps_ttm is None:
+            raise RuntimeError(f"{ticker}: no usable FMP quarterly data; refusing partial valuation release")
 
         # 3. è¨ˆç®—ä¼°å€¼å¸¶
         pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
