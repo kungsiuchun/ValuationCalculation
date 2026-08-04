@@ -276,10 +276,25 @@ jobs:
         $exportRoot = (Resolve-Path data/watcher_exports).Path
         $files = @(Get-ChildItem data/watcher_exports -Recurse -File)
         if ($files.Count -eq 0) { throw 'R2 release upload aborted: export directory is empty.' }
-        $files | ForEach-Object {
-          $key = $_.FullName.Substring($exportRoot.Length + 1).Replace('\', '/')
-          npx --yes wrangler@4.118.0 r2 object put "valuation-watcher-data/releases/$releaseId/$key" --file $_.FullName --remote
-          if ($LASTEXITCODE -ne 0) { throw "R2 release upload failed: $key" }
+        # Wrangler has no directory-upload command. Upload bounded in parallel so a
+        # normal release does not spend the whole 30-minute job budget spawning one
+        # CLI process at a time. The pointer remains a separate final gate.
+        $uploadResults = @($files | ForEach-Object -Parallel {
+          $file = $_
+          $key = $file.FullName.Substring($using:exportRoot.Length + 1).Replace('\', '/')
+          $releaseIdValue = $using:releaseId
+          $destination = "valuation-watcher-data/releases/$releaseIdValue/$key"
+          $output = & npx --yes wrangler@4.118.0 r2 object put $destination --file $file.FullName --remote 2>&1 | Out-String
+          [pscustomobject]@{
+            Key = $key
+            Success = ($LASTEXITCODE -eq 0)
+            Output = $output.Trim()
+          }
+        } -ThrottleLimit 8)
+        $failedUploads = @($uploadResults | Where-Object { -not $_.Success })
+        if ($failedUploads.Count -gt 0) {
+          $details = ($failedUploads | ForEach-Object { "$($_.Key): $($_.Output)" }) -join [Environment]::NewLine
+          throw "R2 release upload failed for $($failedUploads.Count) object(s):$([Environment]::NewLine)$details"
         }
         # The immutable prefix is complete before this single pointer write.
         $pointerPath = Join-Path $env:RUNNER_TEMP 'valuation-watcher-current.json'
