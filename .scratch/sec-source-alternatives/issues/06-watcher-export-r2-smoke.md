@@ -6,7 +6,7 @@
 
 **Blocked by:** 05 — Daily workflow budget/release gate.
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] sample symbols export 欄位、source provenance、filing date 正確
 - [ ] 12 季上限、null/負 EPS 或 FCF、日期排序 regression tests 通過

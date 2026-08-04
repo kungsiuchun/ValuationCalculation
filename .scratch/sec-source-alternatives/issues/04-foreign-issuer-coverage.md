@@ -6,7 +6,7 @@
 
 **Blocked by:** 03 — Financial source router + FMP circuit breaker.
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] foreign issuer CIK/filing mapping 可測試
 - [ ] IFRS/company-specific tags 不完整時 fail closed 並輸出 observable reason

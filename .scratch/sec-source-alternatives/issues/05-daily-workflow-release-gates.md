@@ -6,7 +6,7 @@
 
 **Blocked by:** 03 — Financial source router + FMP circuit breaker; 04 — Foreign issuer coverage.
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] workflow 執行 Python tests、schema tests、source budget checks
 - [ ] feature branch 所有 R2 write/lifecycle/git push side effects 都 skip

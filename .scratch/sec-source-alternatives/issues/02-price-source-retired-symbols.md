@@ -6,7 +6,7 @@
 
 **Blocked by:** None — can start immediately.
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] Yahoo alias/fallback 不會改變財報 cache key
 - [ ] `SQ` 使用 `XYZ` price lookup；`WBA` 等退市 symbol 明確拒絕

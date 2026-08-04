@@ -6,7 +6,7 @@
 
 **Blocked by:** None — can start immediately.
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] SEC CIK/ticker resolution及 User-Agent、timeout、cache 行為可測試
 - [ ] Company Facts facts 可轉成季度 records，日期排序、缺欄位及負值明確處理

@@ -6,7 +6,7 @@
 
 **Blocked by:** 06 — Watcher export + R2 end-to-end smoke.
 
-**Status:** ready-for-agent
+**Status:** completed
 
 - [ ] 需求完整性審查
 - [ ] 邏輯正確性及 source provenance 審查
