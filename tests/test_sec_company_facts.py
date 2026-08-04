@@ -93,6 +93,28 @@ class SECCompanyFactsNormalizationTests(unittest.TestCase):
         self.assertEqual(rows[0]["date"], "2025-03-31")
         self.assertEqual(rows[0]["revenue"], 999)
 
+    def test_financial_issuer_revenue_net_of_interest_is_supported(self):
+        payload = copy.deepcopy(self.payload)
+        payload["facts"]["us-gaap"].pop("RevenueFromContractWithCustomerExcludingAssessedTax", None)
+        payload["facts"]["us-gaap"]["RevenuesNetOfInterestExpense"] = {
+            "units": {
+                "USD": [
+                    {
+                        "start": "2025-01-01",
+                        "end": "2025-03-31",
+                        "val": 321,
+                        "filed": "2025-05-01",
+                        "fy": 2025,
+                        "fp": "Q1",
+                        "form": "10-Q",
+                    }
+                ]
+            }
+        }
+        rows = normalize_company_facts(payload, "JPM", "0000019617", max_quarters=12)
+
+        self.assertEqual(rows[0]["revenue"], 321)
+
 
 class SECCompanyFactsSourceTests(unittest.TestCase):
     @classmethod

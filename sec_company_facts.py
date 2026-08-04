@@ -71,6 +71,7 @@ _FACT_TAGS: Mapping[str, Tuple[str, ...]] = {
     "revenue": (
         "RevenueFromContractWithCustomerExcludingAssessedTax",
         "Revenues",
+        "RevenuesNetOfInterestExpense",
         "SalesRevenueNet",
     ),
     "netIncome": (
