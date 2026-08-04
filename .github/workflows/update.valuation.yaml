@@ -276,15 +276,23 @@ jobs:
         $exportRoot = (Resolve-Path data/watcher_exports).Path
         $files = @(Get-ChildItem data/watcher_exports -Recurse -File)
         if ($files.Count -eq 0) { throw 'R2 release upload aborted: export directory is empty.' }
+        # Install Wrangler once. Spawning concurrent npx processes can contend on
+        # npm's package cache and leave every upload waiting indefinitely.
+        npm install --global wrangler@4.118.0 --no-fund --no-audit
+        if ($LASTEXITCODE -ne 0) { throw 'Wrangler installation failed.' }
+        $wranglerPath = (Get-Command wrangler -CommandType Application).Path
+        if ([string]::IsNullOrWhiteSpace($wranglerPath)) { throw 'Wrangler executable is unavailable after installation.' }
+        & $wranglerPath --version
+        if ($LASTEXITCODE -ne 0) { throw 'Wrangler smoke check failed.' }
         # Wrangler has no directory-upload command. Upload bounded in parallel so a
-        # normal release does not spend the whole 30-minute job budget spawning one
-        # CLI process at a time. The pointer remains a separate final gate.
+        # normal release does not spend the whole 30-minute job budget uploading one
+        # object at a time. The pointer remains a separate final gate.
         $uploadResults = @($files | ForEach-Object -Parallel {
           $file = $_
           $key = $file.FullName.Substring($using:exportRoot.Length + 1).Replace('\', '/')
           $releaseIdValue = $using:releaseId
           $destination = "valuation-watcher-data/releases/$releaseIdValue/$key"
-          $output = & npx --yes wrangler@4.118.0 r2 object put $destination --file $file.FullName --remote 2>&1 | Out-String
+          $output = & $using:wranglerPath r2 object put $destination --file $file.FullName --remote 2>&1 | Out-String
           [pscustomobject]@{
             Key = $key
             Success = ($LASTEXITCODE -eq 0)
@@ -299,7 +307,7 @@ jobs:
         # The immutable prefix is complete before this single pointer write.
         $pointerPath = Join-Path $env:RUNNER_TEMP 'valuation-watcher-current.json'
         @{ schemaVersion = '1.0'; releaseId = $releaseId; generatedAt = (Get-Date).ToUniversalTime().ToString('o') } | ConvertTo-Json -Compress | Set-Content -NoNewline $pointerPath
-        npx --yes wrangler@4.118.0 r2 object put valuation-watcher-data/current.json --file $pointerPath --remote
+        & $wranglerPath r2 object put valuation-watcher-data/current.json --file $pointerPath --remote
         if ($LASTEXITCODE -ne 0) { throw 'R2 release pointer update failed.' }
 
     - name: Commit and Push changes
