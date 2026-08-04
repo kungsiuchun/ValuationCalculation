@@ -101,6 +101,7 @@ jobs:
       run: python export_watcher_data.py --expected-symbols-file data/watcher_coverage_symbols.json
 
     - name: Publish Stock Watcher exports to private R2
+      if: github.ref == 'refs/heads/master'
       shell: pwsh
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
@@ -120,6 +121,7 @@ jobs:
         if ($LASTEXITCODE -ne 0) { throw 'R2 release pointer update failed.' }
 
     - name: Commit and Push changes
+      if: github.ref == 'refs/heads/master'
       run: |
         # 設置 Git 使用者資訊
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
