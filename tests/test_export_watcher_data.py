@@ -95,7 +95,7 @@ class TickerUniverseTests(unittest.TestCase):
 
     def test_default_universe_excludes_foreign_symbols_without_fx_contract(self):
         tickers = resolve_tickers()
-        for symbol in ("BABA", "SONY", "NOK", "BIDU", "NIO"):
+        for symbol in ("TSM", "BABA", "SONY", "NOK", "BIDU", "NIO"):
             self.assertNotIn(symbol, tickers)
 
     def test_retired_wba_symbol_is_rejected_and_not_in_default_universe(self):
