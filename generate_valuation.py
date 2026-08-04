@@ -44,6 +44,7 @@ FMP_REQUEST_TIMEOUT_SECONDS = 30
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # ç·©å­˜ä¸»ç›®éŒ„
+SOURCE_FINANCIAL_DIR = os.path.join(OUTPUT_DIR, "source_financials")
 DOW_30 = list(DEFAULT_TICKERS)
 # DOW_30 = [
 #     "AAPL", "ABBV", "ADBE", "AMD", "AMZN", "BA", "BABA", "BAC",
@@ -598,7 +599,12 @@ def main(argv=None):
         # ç¾åœ¨ build_quarterly_ttm æœƒå›žå‚³ä¸‰å€‹æŒ‡æ¨™
         eps_ttm, fcf_ttm, sales_ttm = build_quarterly_ttm(ticker, source_router=FINANCIAL_SOURCE_ROUTER)
         if eps_ttm is None:
-            raise RuntimeError(f"{ticker}: no usable FMP quarterly data; refusing partial valuation release")
+            raise RuntimeError(f"{ticker}: no usable routed quarterly data; refusing partial valuation release")
+
+        if LAST_FINANCIAL_SOURCE_RESULT is not None:
+            os.makedirs(SOURCE_FINANCIAL_DIR, exist_ok=True)
+            with open(os.path.join(SOURCE_FINANCIAL_DIR, f"{ticker.upper()}_combined.json"), "w", encoding="utf-8") as source_file:
+                json.dump(list(LAST_FINANCIAL_SOURCE_RESULT.rows), source_file, indent=2)
 
         # 3. è¨ˆç®—ä¼°å€¼å¸¶
         pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')

@@ -14,6 +14,17 @@ def summary(symbol="TEST"):
     return {"ticker": symbol, "last_updated": "2026-07-30 22:00:00", "data": [row]}
 
 
+def source_row_fields():
+    return {
+        "source": "SEC Company Facts",
+        "sourceType": "sec_companyfacts",
+        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
+        "sourceFetchedAt": "2026-07-30T22:00:00Z",
+        "sourceDataAsOf": "2026-06-30",
+        "sourceLatestFilingDate": "2026-07-30",
+    }
+
+
 class WatcherExportTests(unittest.TestCase):
     def write_fixture(self, root: Path, symbol="TEST", quarters=13):
         results = root / "results" / symbol
@@ -21,7 +32,7 @@ class WatcherExportTests(unittest.TestCase):
         results.mkdir(parents=True)
         processed.mkdir()
         (results / "valuation_summary.json").write_text(json.dumps(summary(symbol)), encoding="utf-8")
-        rows = [{"date": f"2026-{month:02d}-01", "reportedCurrency": "USD", "revenue": month, "netIncome": -1, "eps": None, "operatingCashFlow": 2, "freeCashFlow": -3} for month in range(1, quarters + 1)]
+        rows = [{"date": f"2026-{month:02d}-01", "reportedCurrency": "USD", "revenue": month, "netIncome": -1, "eps": None, "operatingCashFlow": 2, "freeCashFlow": -3, **source_row_fields()} for month in range(1, quarters + 1)]
         (processed / f"{symbol}_combined.json").write_text(json.dumps(rows), encoding="utf-8")
         return results.parent, processed
 
@@ -34,6 +45,7 @@ class WatcherExportTests(unittest.TestCase):
             financials = json.loads((root / "exports/financials/TEST.json").read_text())
             self.assertEqual(len(financials["quarters"]), 12)
             self.assertEqual(financials["quarters"][0]["netIncome"], -1)
+            self.assertEqual(financials["financialSource"]["sourceType"], "sec_companyfacts")
             valuation = json.loads((root / "exports/valuation/TEST/pe/1Y.json").read_text())
             self.assertEqual(valuation["latest"]["bands"]["mean"], 100)
             self.assertEqual(valuation["generatedAt"], "2026-07-30T22:00:00Z")
@@ -62,6 +74,18 @@ class WatcherExportTests(unittest.TestCase):
             results, processed = self.write_fixture(root)
             with self.assertRaisesRegex(ExportValidationError, "MISSING"):
                 export_all(results, processed, root / "exports", expected_symbols=["TEST", "MISSING"])
+            self.assertFalse((root / "exports/manifest.json").exists())
+
+    def test_aborts_when_financial_rows_have_no_source_provenance(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            results, processed = self.write_fixture(root)
+            payload = json.loads((processed / "TEST_combined.json").read_text(encoding="utf-8"))
+            for row in payload:
+                row.pop("source", None)
+            (processed / "TEST_combined.json").write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ExportValidationError, "provenance"):
+                export_all(results, processed, root / "exports")
             self.assertFalse((root / "exports/manifest.json").exists())
 
 
