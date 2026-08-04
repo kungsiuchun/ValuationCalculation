@@ -40,7 +40,7 @@ SEC_FOREIGN_SOURCE = "SEC 20-F IFRS Company Facts"
 SEC_FOREIGN_SOURCE_TYPE = "SEC_FOREIGN_IFRS"
 DEFAULT_FOREIGN_CACHE_DIR = Path(__file__).resolve().parent / "data" / "sec_foreign_cache"
 DEFAULT_USER_AGENT = os.getenv(
-    "SEC_USER_AGENT", "ValuationCalculation/1.0 (contact: valuation@example.invalid)"
+    "SEC_USER_AGENT", "ValuationCalculation/1.0 (contact: github-actions[bot]@users.noreply.github.com)"
 )
 DEFAULT_TIMEOUT_SECONDS = 30.0
 DEFAULT_CACHE_TTL_SECONDS = 24 * 60 * 60

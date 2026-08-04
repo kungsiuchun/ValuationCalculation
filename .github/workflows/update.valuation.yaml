@@ -132,6 +132,7 @@ jobs:
     - name: Run Pipeline Script
       env:
         FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        SEC_USER_AGENT: "ValuationCalculation/1.0 (contact: github-actions[bot]@users.noreply.github.com)"
       run: python generate_valuation.py --universe-file data/watcher_coverage_universe.json --write-resolved-symbols data/watcher_coverage_symbols.json
 
     - name: Build quarterly earnings reports
