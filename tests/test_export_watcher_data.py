@@ -66,6 +66,11 @@ class WatcherExportTests(unittest.TestCase):
 
 
 class TickerUniverseTests(unittest.TestCase):
+    def test_retired_wba_symbol_is_rejected_and_not_in_default_universe(self):
+        self.assertNotIn("WBA", resolve_tickers())
+        with self.assertRaisesRegex(UniverseValidationError, "retired/delisted"):
+            resolve_tickers("WBA")
+
     def test_registry_is_deduplicated_with_default_universe(self):
         with tempfile.TemporaryDirectory() as temp:
             registry = Path(temp) / "universe.json"

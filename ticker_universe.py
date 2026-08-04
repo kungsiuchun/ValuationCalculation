@@ -19,6 +19,13 @@ YAHOO_SYMBOL_ALIASES = {
     "SQ": "XYZ",
 }
 
+# These symbols no longer have a live Yahoo price series and must not enter a
+# release. Keep the rejection explicit so a stale registry request is visible
+# instead of silently producing incomplete coverage.
+RETIRED_SYMBOLS = {
+    "WBA",
+}
+
 # This is the maintained baseline; requested coverage is appended from R2 at runtime.
 DEFAULT_TICKERS = (
     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
@@ -27,7 +34,7 @@ DEFAULT_TICKERS = (
     "SQ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
     "ABBV", "ETSY", "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL",
     "AAL", "TSM", "SONY", "ET", "COIN", "RIVN", "RIOT", "CPRX", "NOK",
-    "ROKU", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM",
+    "ROKU", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "MGM",
     "NIO", "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "SIRI", "FUBO", "RKT",
 )
 
@@ -40,6 +47,8 @@ def normalize_symbol(value: Any) -> str:
     symbol = str(value or "").strip().upper()
     if not SYMBOL_RE.fullmatch(symbol):
         raise UniverseValidationError(f"Invalid ticker symbol: {value!r}")
+    if symbol in RETIRED_SYMBOLS:
+        raise UniverseValidationError(f"Ticker {symbol} is retired/delisted; remove it from coverage registry")
     return symbol
 
 
