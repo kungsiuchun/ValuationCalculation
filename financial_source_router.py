@@ -497,11 +497,15 @@ class FinancialSourceRouter:
         ):
             raise FinancialSourceInvalid(source + " rows lack revenue/netIncome anchors")
         data_as_of = dated[0][0].isoformat()
-        now_date = datetime.fromtimestamp(float(self.clock()), tz=timezone.utc).date()
+        clock_value = self.clock()
+        if isinstance(clock_value, datetime):
+            now_date = clock_value.astimezone(timezone.utc).date() if clock_value.tzinfo else clock_value.date()
+        else:
+            now_date = datetime.fromtimestamp(float(clock_value), tz=timezone.utc).date()
         data_age_days = (now_date - dated[0][0]).days
         if data_age_days < 0 or data_age_days > MAX_SOURCE_AGE_DAYS:
             raise FinancialSourceStale(
-                f"{source} dataAsOf {data_as_of} is outside the {MAX_SOURCE_AGE_DAYS}-day freshness window"
+                f"{source} dataAsOf {data_as_of} is stale and outside the {MAX_SOURCE_AGE_DAYS}-day freshness window"
             )
         filing_dates: List[date] = []
         for row in rows:
