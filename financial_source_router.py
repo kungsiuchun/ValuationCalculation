@@ -31,6 +31,15 @@ from sec_company_facts import (
     SECRequestError,
     SECTickerNotFoundError,
 )
+from foreign_issuer_coverage import (
+    ForeignIssuerCoverageError,
+    ForeignIssuerCoverageResult,
+    ForeignIssuerUnavailable,
+    SEC_FOREIGN_FACTS_URL,
+    SEC_FOREIGN_SOURCE,
+    SEC_FOREIGN_SOURCE_TYPE,
+    is_foreign_issuer,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -339,7 +348,15 @@ def _is_sec_unsupported(error: BaseException) -> bool:
     # (malformed JSON, missing facts object, etc.) remain fail-closed.
     if isinstance(error, SECInvalidPayloadError):
         text = str(error).lower()
-        return "lacks quarterly revenue/net income" in text or "no quarterly observations" in text
+        # Foreign private issuers publish IFRS facts.  The domestic adapter
+        # reports the taxonomy mismatch as ``no us-gaap facts``; that is an
+        # explicit hand-off to the dedicated foreign lane, not permission to
+        # substitute Yahoo/FMP data for a known foreign issuer.
+        return (
+            "lacks quarterly revenue/net income" in text
+            or "no quarterly observations" in text
+            or "no us-gaap facts" in text
+        )
     return False
 
 
@@ -350,16 +367,23 @@ class FinancialSourceRouter:
         self,
         *,
         sec_fetcher: Optional[Callable[..., Any]] = None,
+        foreign_fetcher: Optional[Callable[..., Any]] = None,
         fmp_fetcher: Optional[Callable[..., Any]] = None,
         sec_source: Optional[Any] = None,
+        foreign_source: Optional[Any] = None,
         fmp_circuit_breaker: Optional[FMPCircuitBreaker] = None,
         clock: Callable[[], Any] = time.time,
     ) -> None:
         if sec_fetcher is not None and sec_source is not None:
             raise ValueError("provide sec_fetcher or sec_source, not both")
+        if foreign_fetcher is not None and foreign_source is not None:
+            raise ValueError("provide foreign_fetcher or foreign_source, not both")
         if sec_fetcher is None and sec_source is not None:
             sec_fetcher = sec_source.fetch
+        if foreign_fetcher is None and foreign_source is not None:
+            foreign_fetcher = foreign_source.fetch
         self.sec_fetcher = sec_fetcher
+        self.foreign_fetcher = foreign_fetcher
         self.fmp_fetcher = fmp_fetcher
         self.clock = clock
         self.fmp_circuit_breaker = fmp_circuit_breaker or FMPCircuitBreaker(clock=clock)
@@ -392,6 +416,46 @@ class FinancialSourceRouter:
         ):
             return self.fmp_fetcher(symbol, circuit_breaker=self.fmp_circuit_breaker)
         return self.fmp_fetcher(symbol)
+
+    def _call_foreign(self, symbol: str) -> Any:
+        if self.foreign_fetcher is None:
+            raise ForeignIssuerUnavailable(
+                "SEC foreign issuer coverage is not configured", symbol=symbol
+            )
+        try:
+            signature = inspect.signature(self.foreign_fetcher)
+        except (TypeError, ValueError):
+            return self.foreign_fetcher(symbol)
+        parameters = signature.parameters
+        if "max_quarters" in parameters:
+            return self.foreign_fetcher(symbol, max_quarters=12)
+        return self.foreign_fetcher(symbol)
+
+    @staticmethod
+    def _foreign_rows(payload: Any, symbol: str) -> Any:
+        """Unwrap a diagnostic coverage result while preserving typed gaps."""
+
+        if isinstance(payload, ForeignIssuerCoverageResult):
+            if not payload.available:
+                raise ForeignIssuerUnavailable(
+                    payload.reason or "SEC foreign issuer coverage is unavailable",
+                    symbol=symbol,
+                    cik=payload.cik,
+                )
+            return list(payload.rows)
+        return payload
+
+    def _route_foreign(self, symbol: str) -> FinancialSourceResult:
+        """Fetch a known foreign issuer without touching the domestic SEC lane."""
+
+        payload = self._foreign_rows(self._call_foreign(symbol), symbol)
+        return self._result(
+            symbol,
+            payload,
+            source=SEC_FOREIGN_SOURCE,
+            source_type=SEC_FOREIGN_SOURCE_TYPE,
+            source_url=SEC_FOREIGN_FACTS_URL,
+        )
 
     def _result(
         self,
@@ -496,10 +560,20 @@ class FinancialSourceRouter:
 
     def route(self, symbol: str) -> FinancialSourceResult:
         symbol = _normalise_symbol(symbol)
+        if self.foreign_fetcher is not None and is_foreign_issuer(symbol):
+            # Foreign private issuers must not pass through the domestic
+            # ``us-gaap`` resolver/cache first: their source contract is
+            # explicit CIK + 20-F + IFRS, and an unavailable result is typed.
+            return self._route_foreign(symbol)
         try:
             payload = self._call_sec(symbol)
         except Exception as error:
             if _is_sec_unsupported(error):
+                if self.foreign_fetcher is not None and is_foreign_issuer(symbol):
+                    # A known foreign issuer is never sent to FMP/Yahoo.  The
+                    # foreign lane either returns SEC 20-F/IFRS rows or a
+                    # typed UNAVAILABLE error with its concrete reason.
+                    return self._route_foreign(symbol)
                 logger.info("%s is unsupported by SEC; entering controlled FMP fallback", symbol)
                 return self._route_fmp(symbol)
             if isinstance(error, (SECCompanyFactsError, FinancialSourceError)):
@@ -547,6 +621,9 @@ __all__ = [
     "FinancialSourceStale",
     "FinancialSourceUnavailable",
     "FinancialSourceUnsupported",
+    "ForeignIssuerCoverageError",
+    "ForeignIssuerCoverageResult",
+    "ForeignIssuerUnavailable",
     "SECUnsupportedError",
     "SEC_SOURCE",
     "SEC_SOURCE_TYPE",

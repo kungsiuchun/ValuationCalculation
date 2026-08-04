@@ -21,6 +21,7 @@ from financial_source_router import (
     FMPCircuitBreaker,
 )
 from sec_company_facts import SECCompanyFactsSource
+from foreign_issuer_coverage import ForeignIssuerCoverageSource
 from ticker_universe import DEFAULT_TICKERS, UniverseValidationError, resolve_tickers, yahoo_symbol
 
 # from dotenv import load_dotenv
@@ -314,7 +315,10 @@ def fetch_fmp_financials(ticker, *, circuit_breaker=None):
 def create_financial_source_router():
     """Construct the SEC-first router used by the normal valuation CLI."""
 
-    router = FinancialSourceRouter(sec_source=SECCompanyFactsSource())
+    router = FinancialSourceRouter(
+        sec_source=SECCompanyFactsSource(),
+        foreign_source=ForeignIssuerCoverageSource(),
+    )
     router.fmp_fetcher = fetch_fmp_financials
     return router
 
