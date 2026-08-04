@@ -429,6 +429,10 @@ class FinancialSourceRouter:
             dated.append((row_date, row))
         dated.sort(key=lambda item: item[0], reverse=True)
         rows = [row for _, row in dated]
+        if not any(row.get("revenue") is not None for row in rows) or not any(
+            row.get("netIncome") is not None for row in rows
+        ):
+            raise FinancialSourceInvalid(source + " rows lack revenue/netIncome anchors")
         data_as_of = dated[0][0].isoformat()
         filing_dates: List[date] = []
         for row in rows:

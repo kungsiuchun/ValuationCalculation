@@ -247,7 +247,8 @@ def get_fmp_fragmented(endpoint, ticker, *, api_keys=None, circuit_breaker=None)
 
                     time.sleep(0.1) # ç¨å¾®é™ä½Žé »çŽ‡ï¼Œé¿å… Rate Limit
                 except requests.exceptions.HTTPError as http_err:
-                    if http_err.response.status_code == 429:
+                    status_code = getattr(getattr(http_err, "response", None), "status_code", None)
+                    if status_code == 429:
                         logger.warning(f"<{ticker}> Rate limit hit (429) for {q} {endpoint} using key: {api_key}. Trying next key if available.")
                         if circuit_breaker is not None:
                             reason = f"{ticker}: FMP HTTP 429 for {q} {endpoint}"
