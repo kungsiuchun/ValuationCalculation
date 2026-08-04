@@ -35,7 +35,7 @@ DEFAULT_CACHE_DIR = Path(__file__).resolve().parent / "data" / "sec_cache"
 # The SEC requires a descriptive User-Agent with a contact address.  A caller
 # should normally override this through ``SEC_USER_AGENT`` or the constructor.
 DEFAULT_USER_AGENT = os.getenv(
-    "SEC_USER_AGENT", "ValuationCalculation/1.0 (contact: github-actions[bot]@users.noreply.github.com)"
+    "SEC_USER_AGENT", "ValuationCalculation/1.0 contact@sius.ai"
 )
 
 
