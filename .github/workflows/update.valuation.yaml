@@ -43,7 +43,48 @@ jobs:
     - name: Run Python tests
       run: python -m unittest discover -s tests -p "test_*.py"
 
+    - name: Run schema validation tests
+      run: python -m unittest discover -s tests -p "test_export_watcher_data.py" -v
+
+    - name: Run source budget checks
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $extraFmpKeys = @(Get-ChildItem Env:FMP_API_KEY_* -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne 'FMP_API_KEY' -and -not [string]::IsNullOrWhiteSpace($_.Value) })
+        if ($extraFmpKeys.Count -gt 0) {
+          throw 'Multiple FMP API keys are disabled; refusing a retry lane that can spam the provider.'
+        }
+        @'
+        from financial_source_router import FMPCircuitBreaker, FMPCircuitOpenError
+        from foreign_issuer_coverage import DEFAULT_TIMEOUT_SECONDS as FOREIGN_TIMEOUT
+        from generate_valuation import FMP_REQUEST_TIMEOUT_SECONDS
+        from price_adapter import DEFAULT_MAX_ATTEMPTS, DEFAULT_TIMEOUT_SECONDS as PRICE_TIMEOUT
+        from sec_company_facts import DEFAULT_TIMEOUT_SECONDS as SEC_TIMEOUT
+
+        budgets = {
+            "fmp_timeout": FMP_REQUEST_TIMEOUT_SECONDS,
+            "price_timeout": PRICE_TIMEOUT,
+            "sec_timeout": SEC_TIMEOUT,
+            "foreign_timeout": FOREIGN_TIMEOUT,
+        }
+        if any(float(value) <= 0 or float(value) > 30 for value in budgets.values()):
+            raise SystemExit(f"source timeout budget exceeded: {budgets}")
+        if int(DEFAULT_MAX_ATTEMPTS) > 3:
+            raise SystemExit(f"price retry budget exceeded: {DEFAULT_MAX_ATTEMPTS}")
+
+        breaker = FMPCircuitBreaker(cooldown_seconds=300, clock=lambda: 0)
+        breaker.trip("budget probe")
+        try:
+            breaker.check()
+        except FMPCircuitOpenError:
+            pass
+        else:
+            raise SystemExit("FMP circuit breaker did not fail closed")
+        print(f"source budget checks passed: {budgets}; price_attempts={DEFAULT_MAX_ATTEMPTS}")
+        '@ | python -
+
     - name: Verify private R2 access
+      if: github.ref == 'refs/heads/master'
       shell: pwsh
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
@@ -57,6 +98,7 @@ jobs:
         }
 
     - name: Read private Stock Watcher coverage registry
+      if: github.ref == 'refs/heads/master'
       shell: pwsh
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
@@ -80,8 +122,133 @@ jobs:
           }
         }
 
+    - name: Prepare feature-branch coverage registry
+      if: github.ref != 'refs/heads/master'
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        @{ schemaVersion = '1.0'; symbols = @() } | ConvertTo-Json -Compress | Set-Content -NoNewline data/watcher_coverage_universe.json
+
+    - name: Run Pipeline Script
+      env:
+        FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+      run: python generate_valuation.py --universe-file data/watcher_coverage_universe.json --write-resolved-symbols data/watcher_coverage_symbols.json
+
+    - name: Build quarterly earnings reports
+      run: python generate_earning_report.py
+
+    - name: Validate source freshness and ticker completeness
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        @'
+        import json
+        from datetime import datetime, timezone
+        from pathlib import Path
+
+        def read(path):
+            with path.open(encoding="utf-8") as handle:
+                return json.load(handle)
+
+        expected = read(Path("data/watcher_coverage_symbols.json")).get("symbols")
+        if not isinstance(expected, list) or not expected:
+            raise SystemExit("resolved ticker universe is empty")
+
+        now = datetime.now(timezone.utc)
+        for symbol in expected:
+            symbol = str(symbol).strip().upper()
+            path = Path("data/results") / symbol / "valuation_summary.json"
+            if not path.is_file():
+                raise SystemExit(f"{symbol}: valuation output is missing")
+            body = read(path)
+            if str(body.get("ticker", "")).upper() != symbol:
+                raise SystemExit(f"{symbol}: valuation ticker identity mismatch")
+            source = body.get("financialSource")
+            if not isinstance(source, dict):
+                raise SystemExit(f"{symbol}: financial source provenance is missing")
+            if not str(source.get("source", "")).strip() or not str(source.get("sourceType", "")).strip():
+                raise SystemExit(f"{symbol}: financial source identity is incomplete")
+            freshness = source.get("freshness")
+            if not isinstance(freshness, dict):
+                raise SystemExit(f"{symbol}: financial source freshness metadata is missing")
+            freshness_status = str(freshness.get("status") or source.get("status") or "fresh").lower()
+            if freshness_status != "fresh":
+                raise SystemExit(f"{symbol}: financial source is not marked fresh")
+            try:
+                fetched = datetime.fromisoformat(str(source["fetchedAt"]).replace("Z", "+00:00"))
+                data_as_of = datetime.fromisoformat(str(source["dataAsOf"])[:10]).date()
+            except (KeyError, TypeError, ValueError) as error:
+                raise SystemExit(f"{symbol}: invalid source freshness timestamps: {error}")
+            if fetched.tzinfo is None:
+                fetched = fetched.replace(tzinfo=timezone.utc)
+            if fetched > now.replace(microsecond=0):
+                raise SystemExit(f"{symbol}: source fetchedAt is in the future")
+            if data_as_of > now.date():
+                raise SystemExit(f"{symbol}: source dataAsOf is in the future")
+            if not isinstance(body.get("data"), list) or not body["data"]:
+                raise SystemExit(f"{symbol}: valuation history is empty")
+
+        print(f"source freshness passed for {len(expected)} tickers")
+        '@ | python -
+
+    - name: Build validated Stock Watcher exports
+      run: python export_watcher_data.py --expected-symbols-file data/watcher_coverage_symbols.json
+
+    - name: Validate Stock Watcher export schema
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        @'
+        import json
+        from pathlib import Path
+
+        root = Path("data/watcher_exports").resolve()
+        def read(path):
+            with path.open(encoding="utf-8") as handle:
+                return json.load(handle)
+        manifest_path = root / "manifest.json"
+        if not manifest_path.is_file():
+            raise SystemExit("watcher manifest is missing")
+        manifest = read(manifest_path)
+        if manifest.get("schemaVersion") != "1.0":
+            raise SystemExit("watcher manifest schema version is invalid")
+        entries = manifest.get("symbols")
+        if not isinstance(entries, list) or not entries:
+            raise SystemExit("watcher manifest has no symbols")
+        expected = set(read(Path("data/watcher_coverage_symbols.json"))["symbols"])
+        actual = []
+        for entry in entries:
+            if not isinstance(entry, dict):
+                raise SystemExit("watcher manifest entry is not an object")
+            symbol = str(entry.get("symbol", "")).strip().upper()
+            if not symbol or symbol in actual:
+                raise SystemExit(f"watcher manifest has duplicate/invalid symbol: {symbol}")
+            actual.append(symbol)
+            financial_key = entry.get("financials")
+            financial_path = (root / str(financial_key)).resolve()
+            if root not in financial_path.parents or not financial_path.is_file():
+                raise SystemExit(f"{symbol}: financial export path is invalid")
+            financials = read(financial_path)
+            if financials.get("schemaVersion") != "1.0" or str(financials.get("symbol", "")).upper() != symbol:
+                raise SystemExit(f"{symbol}: financial export identity/schema mismatch")
+            quarters = financials.get("quarters")
+            if not isinstance(quarters, list) or not quarters or len(quarters) > 12:
+                raise SystemExit(f"{symbol}: financial quarter count is invalid")
+            for metric in ("pe", "fcf", "ps"):
+                for window in ("1Y", "2Y", "3Y", "5Y"):
+                    path = root / "valuation" / symbol / metric / f"{window}.json"
+                    if not path.is_file():
+                        raise SystemExit(f"{symbol}: missing valuation export {metric}/{window}")
+                    valuation = read(path)
+                    if valuation.get("schemaVersion") != "1.0" or str(valuation.get("symbol", "")).upper() != symbol:
+                        raise SystemExit(f"{symbol}: valuation export identity/schema mismatch")
+        if set(actual) != expected:
+            raise SystemExit(f"watcher manifest ticker mismatch: expected={sorted(expected)} actual={sorted(actual)}")
+        print(f"watcher export schema passed for {len(actual)} tickers")
+        '@ | python -
+
     - name: Ensure 45-day R2 release cleanup
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master' && success()
       shell: pwsh
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
@@ -95,21 +262,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'R2 45-day release lifecycle setup failed.' }
         }
 
-    - name: Run Pipeline Script
-      env:
-        FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        FMP_API_KEY_2: ${{ secrets.FMP_API_KEY_2 }}
-        FMP_API_KEY_3: ${{ secrets.FMP_API_KEY_3 }}
-      run: python generate_valuation.py --universe-file data/watcher_coverage_universe.json --write-resolved-symbols data/watcher_coverage_symbols.json
-
-    - name: Build quarterly earnings reports
-      run: python generate_earning_report.py
-
-    - name: Build validated Stock Watcher exports
-      run: python export_watcher_data.py --expected-symbols-file data/watcher_coverage_symbols.json
-
     - name: Publish Stock Watcher exports to private R2
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master' && success()
       shell: pwsh
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
@@ -118,18 +272,22 @@ jobs:
         $ErrorActionPreference = 'Stop'
         $releaseId = "$env:GITHUB_SHA-$env:GITHUB_RUN_ID"
         if ([string]::IsNullOrWhiteSpace($releaseId) -or $releaseId -eq '-') { throw 'GitHub release identity is unavailable.' }
-        Get-ChildItem data/watcher_exports -Recurse -File | ForEach-Object {
-          $key = $_.FullName.Substring((Resolve-Path data/watcher_exports).Path.Length + 1).Replace('\', '/')
+        $exportRoot = (Resolve-Path data/watcher_exports).Path
+        $files = @(Get-ChildItem data/watcher_exports -Recurse -File)
+        if ($files.Count -eq 0) { throw 'R2 release upload aborted: export directory is empty.' }
+        $files | ForEach-Object {
+          $key = $_.FullName.Substring($exportRoot.Length + 1).Replace('\', '/')
           npx --yes wrangler@4.118.0 r2 object put "valuation-watcher-data/releases/$releaseId/$key" --file $_.FullName --remote
           if ($LASTEXITCODE -ne 0) { throw "R2 release upload failed: $key" }
         }
+        # The immutable prefix is complete before this single pointer write.
         $pointerPath = Join-Path $env:RUNNER_TEMP 'valuation-watcher-current.json'
         @{ schemaVersion = '1.0'; releaseId = $releaseId; generatedAt = (Get-Date).ToUniversalTime().ToString('o') } | ConvertTo-Json -Compress | Set-Content -NoNewline $pointerPath
         npx --yes wrangler@4.118.0 r2 object put valuation-watcher-data/current.json --file $pointerPath --remote
         if ($LASTEXITCODE -ne 0) { throw 'R2 release pointer update failed.' }
 
     - name: Commit and Push changes
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master' && success()
       run: |
         # 設置 Git 使用者資訊
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
