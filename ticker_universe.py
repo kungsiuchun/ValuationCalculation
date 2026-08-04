@@ -11,10 +11,11 @@ from typing import Any
 REGISTRY_SCHEMA_VERSION = "1.0"
 SYMBOL_RE = re.compile(r"^[A-Z0-9][A-Z0-9.-]{0,14}$")
 
-# Yahoo/FMP use the current listed symbol. Keep retired symbols as input
-# aliases so an old Stock Watcher request cannot queue a permanently failing
-# ticker. Block changed NYSE `SQ` to `XYZ` effective 2025-01-21.
-SYMBOL_ALIASES = {
+# Yahoo uses the current listed symbol, while the valuation cache still uses
+# the legacy `SQ` key. Block changed NYSE `SQ` to `XYZ` effective 2025-01-21;
+# keeping this mapping at the market-data boundary avoids an expensive FMP
+# backfill before the existing SQ cache can be migrated deliberately.
+YAHOO_SYMBOL_ALIASES = {
     "SQ": "XYZ",
 }
 
@@ -23,7 +24,7 @@ DEFAULT_TICKERS = (
     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
     "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE",
     "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
-    "XYZ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
+    "SQ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
     "ABBV", "ETSY", "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL",
     "AAL", "TSM", "SONY", "ET", "COIN", "RIVN", "RIOT", "CPRX", "NOK",
     "ROKU", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM",
@@ -39,7 +40,13 @@ def normalize_symbol(value: Any) -> str:
     symbol = str(value or "").strip().upper()
     if not SYMBOL_RE.fullmatch(symbol):
         raise UniverseValidationError(f"Invalid ticker symbol: {value!r}")
-    return SYMBOL_ALIASES.get(symbol, symbol)
+    return symbol
+
+
+def yahoo_symbol(value: Any) -> str:
+    """Return the current Yahoo Finance symbol for a validated ticker."""
+    symbol = normalize_symbol(value)
+    return YAHOO_SYMBOL_ALIASES.get(symbol, symbol)
 
 
 def deduplicate_symbols(values: list[Any]) -> list[str]:

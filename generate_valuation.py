@@ -10,7 +10,7 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 
-from ticker_universe import DEFAULT_TICKERS, UniverseValidationError, resolve_tickers
+from ticker_universe import DEFAULT_TICKERS, UniverseValidationError, resolve_tickers, yahoo_symbol
 
 # from dotenv import load_dotenv
 
@@ -347,7 +347,7 @@ def fetch_price_history(ticker, attempts=YFINANCE_MAX_ATTEMPTS, delay_seconds=YF
 
     for attempt in range(1, attempts + 1):
         try:
-            prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)
+            prices = yf.Ticker(yahoo_symbol(ticker)).history(period="10y", auto_adjust=False)
             if prices.empty:
                 logger.warning("<%s> No Yahoo price data returned.", ticker)
                 return prices

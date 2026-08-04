@@ -66,19 +66,12 @@ class WatcherExportTests(unittest.TestCase):
 
 
 class TickerUniverseTests(unittest.TestCase):
-    def test_retired_sq_symbol_resolves_to_current_xyz_symbol(self):
-        self.assertEqual(resolve_tickers("SQ"), ["XYZ"])
-        self.assertIn("XYZ", resolve_tickers())
-        self.assertNotIn("SQ", resolve_tickers())
-
     def test_registry_is_deduplicated_with_default_universe(self):
         with tempfile.TemporaryDirectory() as temp:
             registry = Path(temp) / "universe.json"
-            registry.write_text(json.dumps({"schemaVersion": "1.0", "symbols": [{"symbol": "TSM", "state": "published"}, {"symbol": "SQ", "state": "queued"}, {"symbol": "XYZ", "state": "queued"}, {"symbol": "ibm", "state": "queued"}, {"symbol": "IBM", "state": "queued"}]}), encoding="utf-8")
+            registry.write_text(json.dumps({"schemaVersion": "1.0", "symbols": [{"symbol": "TSM", "state": "published"}, {"symbol": "ibm", "state": "queued"}, {"symbol": "IBM", "state": "queued"}]}), encoding="utf-8")
             tickers = resolve_tickers(registry_path=registry)
             self.assertEqual(tickers.count("TSM"), 1)
-            self.assertEqual(tickers.count("XYZ"), 1)
-            self.assertNotIn("SQ", tickers)
             self.assertEqual(tickers.count("IBM"), 1)
 
     def test_explicit_symbols_are_deduplicated_and_invalid_symbol_fails(self):

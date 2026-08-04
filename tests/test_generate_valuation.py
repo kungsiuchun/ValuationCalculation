@@ -6,9 +6,14 @@ from unittest.mock import patch
 import pandas as pd
 
 import generate_valuation
+from ticker_universe import yahoo_symbol
 
 
 class GenerateValuationBehaviorTests(unittest.TestCase):
+    def test_legacy_sq_uses_current_yahoo_symbol_without_changing_cache_key(self):
+        self.assertEqual(yahoo_symbol("SQ"), "XYZ")
+        self.assertEqual(yahoo_symbol("XYZ"), "XYZ")
+
     def test_build_quarterly_ttm_returns_three_empty_metrics_when_data_is_missing(self):
         with patch.object(generate_valuation, "get_fmp_fragmented", return_value=[]):
             result = generate_valuation.build_quarterly_ttm("MISSING")
@@ -48,9 +53,11 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
 
         class FakeTicker:
             calls = 0
+            symbols = []
 
             def __init__(self, ticker):
                 self.ticker = ticker
+                FakeTicker.symbols.append(ticker)
 
             def history(self, period, auto_adjust):
                 FakeTicker.calls += 1
@@ -64,6 +71,7 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
 
         self.assertIs(result, prices)
         self.assertEqual(FakeTicker.calls, 2)
+        self.assertEqual(FakeTicker.symbols, ["XYZ", "XYZ"])
         sleep.assert_called_once_with(0)
 
     def test_price_history_returns_empty_after_retries_are_exhausted(self):
