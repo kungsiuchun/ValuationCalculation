@@ -28,6 +28,7 @@ logger = logging.getLogger(__name__)
 FMP_API_KEY = os.getenv('FMP_API_KEY')
 FMP_API_KEY_2 = os.getenv('FMP_API_KEY_2')
 FMP_API_KEY_3 = os.getenv('FMP_API_KEY_3')
+FMP_REQUEST_TIMEOUT_SECONDS = 30
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # ç·©å­˜ä¸»ç›®éŒ„
@@ -162,7 +163,7 @@ def get_fmp_fragmented(endpoint, ticker):
             for api_key in api_keys_to_try:
                 url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={api_key}"
                 try:
-                    response = requests.get(url)
+                    response = requests.get(url, timeout=FMP_REQUEST_TIMEOUT_SECONDS)
                     response.raise_for_status() # æª¢æŸ¥ HTTP ç‹€æ…‹ç¢¼
                     res_json = response.json()
 

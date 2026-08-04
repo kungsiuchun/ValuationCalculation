@@ -30,8 +30,9 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
             def json(self):
                 return [{"date": "2026-03-31", "period": "Q1", "value": 1}]
 
-        def fake_get(url):
+        def fake_get(url, timeout=None):
             calls.append(url)
+            self.assertEqual(timeout, 30)
             return Response()
 
         with tempfile.TemporaryDirectory() as tmpdir:
