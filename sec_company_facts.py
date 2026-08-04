@@ -225,8 +225,14 @@ def _bucket(observation: _Observation) -> str:
 def _fact_observations(
     facts: Mapping[str, Any], field: str
 ) -> Tuple[List[_Observation], Optional[str]]:
-    """Extract numeric observations for the first usable tag in ``field``."""
+    """Extract observations from the usable tag with the newest filing data.
 
+    Issuers can leave an older preferred taxonomy tag populated while moving
+    current filings to a sibling tag (NVDA is a concrete example). Selecting
+    the first non-empty tag would therefore create a false "no anchors" gap.
+    """
+
+    best: Optional[Tuple[date, int, List[_Observation], str]] = None
     for tag in _FACT_TAGS[field]:
         raw_fact = facts.get(tag)
         if not isinstance(raw_fact, Mapping):
@@ -287,11 +293,16 @@ def _fact_observations(
                 )
         if observations:
             # A malformed sibling record should not poison otherwise valid
-            # observations, but a completely malformed tag must fail closed.
-            return observations, tag
+            # observations. Prefer the tag whose observations reach furthest
+            # forward in time, then the one with the broader usable history.
+            score = (max(observation.end for observation in observations), len(observations))
+            if best is None or score > best[:2]:
+                best = (score[0], score[1], observations, tag)
         if malformed and raw_fact:
             continue
-    return [], None
+    if best is None:
+        return [], None
+    return best[2], best[3]
 
 
 def _group_fiscal_year(observations: Sequence[_Observation]) -> Dict[int, List[_Observation]]:
