@@ -59,12 +59,13 @@ jobs:
         $registryPath = 'data/watcher_coverage_universe.json'
         $previousErrorActionPreference = $ErrorActionPreference
         $ErrorActionPreference = 'Continue'
-        $output = & npx --yes wrangler@4.118.0 r2 object get 'valuation-watcher-data/coverage/universe.json' --file $registryPath --remote 2>&1
+        $output = (& npx --yes wrangler@4.118.0 r2 object get 'valuation-watcher-data/coverage/universe.json' --file $registryPath --remote 2>&1 | Out-String)
         $exitCode = $LASTEXITCODE
         $ErrorActionPreference = $previousErrorActionPreference
         if ($exitCode -ne 0) {
-          $message = ($output | Out-String)
-          if ($message -match '(?i)NoSuchKey|not found|404|specified key does not exist') {
+          $message = $output.Trim()
+          Write-Host "R2 coverage registry read returned non-zero: $message"
+          if ($message -match '(?i)NoSuchKey|not found|404|does not exist') {
             @{ schemaVersion = '1.0'; symbols = @() } | ConvertTo-Json -Compress | Set-Content -NoNewline $registryPath
           } else {
             throw "Coverage registry download failed: $message"
