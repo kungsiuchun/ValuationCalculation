@@ -1,0 +1,10 @@
+{
+  "name": "Fixture Foreign Issuer Without 20-F",
+  "filings": {
+    "recent": {
+      "form": ["6-K", "6-K"],
+      "filingDate": ["2025-01-15", "2025-04-15"],
+      "accessionNumber": ["0001", "0002"]
+    }
+  }
+}

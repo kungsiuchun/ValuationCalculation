@@ -1,0 +1,16 @@
+{
+  "cik": 9999999,
+  "entityName": "Fixture Unsupported Foreign Issuer",
+  "facts": {
+    "ifrs-full": {
+      "ProfitLoss": {
+        "label": "Profit (loss)",
+        "units": {
+          "JPY": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 10, "fy": 2024, "fp": "Q1", "form": "20-F", "filed": "2025-03-01"}
+          ]
+        }
+      }
+    }
+  }
+}

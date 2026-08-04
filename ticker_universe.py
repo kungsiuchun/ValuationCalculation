@@ -11,16 +11,35 @@ from typing import Any
 REGISTRY_SCHEMA_VERSION = "1.0"
 SYMBOL_RE = re.compile(r"^[A-Z0-9][A-Z0-9.-]{0,14}$")
 
+# Yahoo uses the current listed symbol, while the valuation cache still uses
+# the legacy `SQ` key. Block changed NYSE `SQ` to `XYZ` effective 2025-01-21;
+# keeping this mapping at the market-data boundary avoids an expensive FMP
+# backfill before the existing SQ cache can be migrated deliberately.
+YAHOO_SYMBOL_ALIASES = {
+    "SQ": "XYZ",
+}
+# Kept as a read-only compatibility alias for callers that imported the old
+# name.  Financial/cache code must continue to use ``normalize_symbol`` rather
+# than this market-data mapping.
+SYMBOL_ALIASES = YAHOO_SYMBOL_ALIASES
+
+# These symbols no longer have a live Yahoo price series and must not enter a
+# release. Keep the rejection explicit so a stale registry request is visible
+# instead of silently producing incomplete coverage.
+RETIRED_SYMBOLS = {
+    "WBA",
+}
+
 # This is the maintained baseline; requested coverage is appended from R2 at runtime.
 DEFAULT_TICKERS = (
     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
     "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE",
-    "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
-    "SQ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
+    "BA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
+    "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
     "ABBV", "ETSY", "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL",
-    "AAL", "TSM", "SONY", "ET", "COIN", "RIVN", "RIOT", "CPRX", "NOK",
-    "ROKU", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "WBA", "MGM",
-    "NIO", "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "SIRI", "FUBO", "RKT",
+    "AAL", "TSM", "ET", "COIN", "RIVN", "RIOT", "CPRX",
+    "ROKU", "DOCU", "ZM", "PINS", "TLRY", "MGM",
+    "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "SIRI", "FUBO", "RKT",
 )
 
 
@@ -28,11 +47,26 @@ class UniverseValidationError(ValueError):
     pass
 
 
+def is_retired_symbol(value: Any) -> bool:
+    """Return whether a raw symbol is explicitly retired from coverage."""
+
+    symbol = str(value or "").strip().upper()
+    return bool(SYMBOL_RE.fullmatch(symbol)) and symbol in RETIRED_SYMBOLS
+
+
 def normalize_symbol(value: Any) -> str:
     symbol = str(value or "").strip().upper()
     if not SYMBOL_RE.fullmatch(symbol):
         raise UniverseValidationError(f"Invalid ticker symbol: {value!r}")
+    if is_retired_symbol(symbol):
+        raise UniverseValidationError(f"Ticker {symbol} is retired/delisted; remove it from coverage registry")
     return symbol
+
+
+def yahoo_symbol(value: Any) -> str:
+    """Return the current Yahoo Finance symbol for a validated ticker."""
+    symbol = normalize_symbol(value)
+    return YAHOO_SYMBOL_ALIASES.get(symbol, symbol)
 
 
 def deduplicate_symbols(values: list[Any]) -> list[str]:

@@ -11,6 +11,7 @@ if hasattr(sys.stdout, "reconfigure"):
 DATA_DIR = Path('data/fmp_cache')
 OUTPUT_DIR = Path('data/processed')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+SOURCE_FINANCIAL_DIR = Path('data/source_financials')
 
 def load_and_normalize_data(ticker_path):
     """
@@ -136,10 +137,31 @@ def main():
         print(f"Directory {DATA_DIR} not found.")
         return
 
-    tickers = [d for d in DATA_DIR.iterdir() if d.is_dir()]
+    ticker_paths = {d.name.upper(): d for d in DATA_DIR.iterdir() if d.is_dir()}
+    for path in SOURCE_FINANCIAL_DIR.glob("*_combined.json"):
+        ticker_paths.setdefault(path.name.removesuffix("_combined.json").upper(), DATA_DIR / path.name.removesuffix("_combined.json"))
+    tickers = [ticker_paths[name] for name in sorted(ticker_paths)]
 
     for ticker_path in tickers:
         print(f"\nPROCESSING TICKER: {ticker_path.name}")
+
+        # Prefer the rows routed by the valuation batch. This prevents the
+        # earnings export from silently reverting to legacy FMP cache data.
+        routed_path = SOURCE_FINANCIAL_DIR / f"{ticker_path.name.upper()}_combined.json"
+        if routed_path.is_file():
+            try:
+                routed_rows = json.loads(routed_path.read_text(encoding="utf-8"))
+                if not isinstance(routed_rows, list) or not routed_rows:
+                    raise ValueError("routed financial rows are empty")
+                if any(not isinstance(row, dict) or not row.get("sourceType") for row in routed_rows):
+                    raise ValueError("routed financial rows lack source provenance")
+                (OUTPUT_DIR / f"{ticker_path.name.upper()}_combined.json").write_text(
+                    json.dumps(routed_rows, ensure_ascii=False, indent=4), encoding="utf-8"
+                )
+                print(f"Using routed financial source for {ticker_path.name}: {routed_path}")
+                continue
+            except (OSError, json.JSONDecodeError, ValueError) as error:
+                raise RuntimeError(f"{ticker_path.name}: invalid routed financial artifact: {error}") from error
         
         data_store = load_and_normalize_data(ticker_path)
         combined_df = combine_statements(data_store)

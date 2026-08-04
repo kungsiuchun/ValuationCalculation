@@ -1,0 +1,76 @@
+{
+  "cik": 1046179,
+  "entityName": "Fixture Taiwan Semiconductor Manufacturing Company Limited",
+  "facts": {
+    "ifrs-full": {
+      "Revenue": {
+        "label": "Revenue",
+        "units": {
+          "TWD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 100, "accn": "20F1", "fy": 2024, "fp": "Q1", "form": "6-K", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": 110, "accn": "20F2", "fy": 2024, "fp": "Q2", "form": "6-K", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 120, "accn": "20F3", "fy": 2024, "fp": "Q3", "form": "6-K", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-10-01", "end": "2024-12-31", "val": 130, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15", "frame": "CY2024Q4"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 460, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15", "frame": "CY2024"}
+          ]
+        }
+      },
+      "ProfitLoss": {
+        "label": "Profit (loss)",
+        "units": {
+          "TWD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 20, "accn": "20F1", "fy": 2024, "fp": "Q1", "form": "6-K", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": 22, "accn": "20F2", "fy": 2024, "fp": "Q2", "form": "6-K", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 24, "accn": "20F3", "fy": 2024, "fp": "Q3", "form": "6-K", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-10-01", "end": "2024-12-31", "val": 26, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15", "frame": "CY2024Q4"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 92, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15", "frame": "CY2024"}
+          ]
+        }
+      },
+      "DilutedEarningsLossPerShare": {
+        "label": "Diluted EPS",
+        "units": {
+          "TWD/shares": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 0.2, "accn": "20F1", "fy": 2024, "fp": "Q1", "form": "6-K", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": 0.22, "accn": "20F2", "fy": 2024, "fp": "Q2", "form": "6-K", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 0.24, "accn": "20F3", "fy": 2024, "fp": "Q3", "form": "6-K", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-10-01", "end": "2024-12-31", "val": 0.26, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15", "frame": "CY2024Q4"}
+          ]
+        }
+      },
+      "CashFlowsFromUsedInOperatingActivities": {
+        "label": "Operating cash flow",
+        "units": {
+          "TWD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 30, "accn": "20F1", "fy": 2024, "fp": "Q1", "form": "6-K", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-01-01", "end": "2024-06-30", "val": 64, "accn": "20F2", "fy": 2024, "fp": "Q2", "form": "6-K", "filed": "2024-08-01"},
+            {"start": "2024-01-01", "end": "2024-09-30", "val": 102, "accn": "20F3", "fy": 2024, "fp": "Q3", "form": "6-K", "filed": "2024-11-01"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 150, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15"}
+          ]
+        }
+      },
+      "PurchaseOfPropertyPlantAndEquipment": {
+        "label": "Capital expenditure",
+        "units": {
+          "TWD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 5, "accn": "20F1", "fy": 2024, "fp": "Q1", "form": "6-K", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-01-01", "end": "2024-06-30", "val": 11, "accn": "20F2", "fy": 2024, "fp": "Q2", "form": "6-K", "filed": "2024-08-01"},
+            {"start": "2024-01-01", "end": "2024-09-30", "val": 18, "accn": "20F3", "fy": 2024, "fp": "Q3", "form": "6-K", "filed": "2024-11-01"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 25, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15"}
+          ]
+        }
+      },
+      "WeightedAverageNumberOfOrdinarySharesOutstandingDiluted": {
+        "label": "Diluted shares",
+        "units": {
+          "shares": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 100, "accn": "20F1", "fy": 2024, "fp": "Q1", "form": "6-K", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": 100, "accn": "20F2", "fy": 2024, "fp": "Q2", "form": "6-K", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 100, "accn": "20F3", "fy": 2024, "fp": "Q3", "form": "6-K", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-10-01", "end": "2024-12-31", "val": 100, "accn": "20F4", "fy": 2024, "fp": "FY", "form": "20-F", "filed": "2025-02-15", "frame": "CY2024Q4"}
+          ]
+        }
+      }
+    }
+  }
+}

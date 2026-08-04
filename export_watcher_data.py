@@ -122,9 +122,32 @@ def export_financials(rows: Any, symbol: str, generated_at: str) -> dict[str, An
     if not isinstance(rows, list):
         raise ExportValidationError(f"{symbol} earnings report is not a list")
     normalized: list[dict[str, Any]] = []
+    source_metadata: dict[str, Any] | None = None
     for row in rows:
         if not isinstance(row, dict) or not isinstance(row.get("date"), str):
             continue
+        source = str(row.get("source") or "").strip()
+        source_type = str(row.get("sourceType") or "").strip()
+        fetched_at = str(row.get("sourceFetchedAt") or "").strip()
+        data_as_of = str(row.get("sourceDataAsOf") or "").strip()
+        if not source or not source_type or not fetched_at or not data_as_of:
+            raise ExportValidationError(
+                f"{symbol} earnings row has incomplete financial source provenance"
+            )
+        row_metadata = {
+            "source": source,
+            "sourceType": source_type,
+            "sourceUrl": row.get("sourceUrl"),
+            "fetchedAt": fetched_at,
+            "dataAsOf": data_as_of,
+            "filingDate": row.get("sourceLatestFilingDate") or row.get("filingDate"),
+        }
+        if source_metadata is None:
+            source_metadata = row_metadata
+        elif row_metadata != source_metadata:
+            raise ExportValidationError(
+                f"{symbol} earnings rows contain inconsistent financial source provenance"
+            )
         normalized.append({
             "date": row["date"],
             "filingDate": row.get("filingDate"),
@@ -136,12 +159,15 @@ def export_financials(rows: Any, symbol: str, generated_at: str) -> dict[str, An
     normalized.sort(key=lambda row: row["date"], reverse=True)
     if not normalized:
         raise ExportValidationError(f"{symbol} earnings report has no dated rows")
+    if source_metadata is None:
+        raise ExportValidationError(f"{symbol} earnings report has no financial source provenance")
     return {
         "schemaVersion": SCHEMA_VERSION,
-        "source": "FMP quarterly statements transformed by ValuationCalculation",
+        "source": "ValuationCalculation financial statements export",
         "symbol": symbol,
         "generatedAt": generated_at,
         "dataAsOf": normalized[0]["date"],
+        "financialSource": source_metadata,
         "quarters": normalized[:12],
     }
 

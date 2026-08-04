@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -6,14 +7,33 @@ from unittest.mock import patch
 import pandas as pd
 
 import generate_valuation
+from ticker_universe import yahoo_symbol
 
 
 class GenerateValuationBehaviorTests(unittest.TestCase):
+    def test_legacy_sq_uses_current_yahoo_symbol_without_changing_cache_key(self):
+        self.assertEqual(yahoo_symbol("SQ"), "XYZ")
+        self.assertEqual(yahoo_symbol("XYZ"), "XYZ")
+
     def test_build_quarterly_ttm_returns_three_empty_metrics_when_data_is_missing(self):
         with patch.object(generate_valuation, "get_fmp_fragmented", return_value=[]):
             result = generate_valuation.build_quarterly_ttm("MISSING")
 
         self.assertEqual(result, (None, None, None))
+
+    def test_build_quarterly_ttm_rejects_unknown_currency_instead_of_scaling_as_usd(self):
+        rows = [
+            {
+                "date": "2026-06-30",
+                "reportedCurrency": "JPY",
+                "revenue": 100,
+                "netIncome": 10,
+                "freeCashFlow": 5,
+                "numberOfShares": 10,
+            }
+        ]
+        with self.assertRaisesRegex(RuntimeError, "unsupported financial currency JPY"):
+            generate_valuation._build_quarterly_ttm_from_rows(rows)
 
     def test_fragmented_fetch_skips_missing_api_keys(self):
         calls = []
@@ -25,8 +45,9 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
             def json(self):
                 return [{"date": "2026-03-31", "period": "Q1", "value": 1}]
 
-        def fake_get(url):
+        def fake_get(url, timeout=None):
             calls.append(url)
+            self.assertEqual(timeout, 30)
             return Response()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -43,17 +64,66 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
         self.assertIn("apikey=KEY2", calls[0])
         self.assertNotIn("apikey=None", calls[0])
 
+    def test_fragmented_fetch_rejects_stale_target_when_all_fmp_keys_fail(self):
+        class TimeoutResponse:
+            def raise_for_status(self):
+                raise generate_valuation.requests.exceptions.Timeout("FMP unavailable")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cache_dir = Path(tmpdir) / "XYZ"
+            cache_dir.mkdir(parents=True)
+            for quarter in ("q1", "q2", "q3", "q4"):
+                (cache_dir / f"income-statement_{quarter}.json").write_text(
+                    json.dumps([{"date": "2026-01-01", "value": 1}]), encoding="utf-8"
+                )
+            with patch.object(generate_valuation, "CACHE_BASE_DIR", str(Path(tmpdir))):
+                with patch.object(generate_valuation, "FMP_API_KEY", "KEY"):
+                    with patch.object(generate_valuation, "FMP_API_KEY_2", None):
+                        with patch.object(generate_valuation, "FMP_API_KEY_3", None):
+                            with patch.object(generate_valuation, "get_latest_processed_quarter", return_value="q3"):
+                                with patch.object(generate_valuation.requests, "get", return_value=TimeoutResponse()):
+                                    with self.assertRaisesRegex(RuntimeError, "refusing stale financial release"):
+                                        generate_valuation.get_fmp_fragmented("income-statement", "XYZ")
+
+    def test_fragmented_fetch_rejects_http_success_with_stale_dates(self):
+        class StaleResponse:
+            def raise_for_status(self):
+                return None
+
+            def json(self):
+                return [{"date": "2020-01-01", "value": 1}]
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cache_dir = Path(tmpdir) / "XYZ"
+            cache_dir.mkdir(parents=True)
+            for quarter in ("q1", "q2", "q3", "q4"):
+                (cache_dir / f"income-statement_{quarter}.json").write_text(
+                    json.dumps([{"date": "2025-01-01", "value": 1}]), encoding="utf-8"
+                )
+            with patch.object(generate_valuation, "CACHE_BASE_DIR", str(Path(tmpdir))):
+                with patch.object(generate_valuation, "FMP_API_KEY", "KEY"):
+                    with patch.object(generate_valuation, "FMP_API_KEY_2", None):
+                        with patch.object(generate_valuation, "FMP_API_KEY_3", None):
+                            with patch.object(generate_valuation, "get_latest_processed_quarter", return_value="q3"):
+                                with patch.object(generate_valuation.requests, "get", return_value=StaleResponse()):
+                                    with self.assertRaisesRegex(RuntimeError, "refusing stale financial release"):
+                                        generate_valuation.get_fmp_fragmented("income-statement", "XYZ")
+
     def test_price_history_retries_then_returns_data(self):
         prices = pd.DataFrame({"Close": [10.0], "Adj Close": [9.5]})
 
         class FakeTicker:
             calls = 0
+            symbols = []
+            timeouts = []
 
             def __init__(self, ticker):
                 self.ticker = ticker
+                FakeTicker.symbols.append(ticker)
 
-            def history(self, period, auto_adjust):
+            def history(self, period, auto_adjust, timeout):
                 FakeTicker.calls += 1
+                FakeTicker.timeouts.append(timeout)
                 if FakeTicker.calls == 1:
                     raise RuntimeError("Too Many Requests")
                 return prices
@@ -64,6 +134,8 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
 
         self.assertIs(result, prices)
         self.assertEqual(FakeTicker.calls, 2)
+        self.assertEqual(FakeTicker.symbols, ["XYZ", "XYZ"])
+        self.assertEqual(FakeTicker.timeouts, [30, 30])
         sleep.assert_called_once_with(0)
 
     def test_price_history_returns_empty_after_retries_are_exhausted(self):
@@ -71,7 +143,7 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
             def __init__(self, ticker):
                 self.ticker = ticker
 
-            def history(self, period, auto_adjust):
+            def history(self, period, auto_adjust, timeout):
                 raise RuntimeError("Too Many Requests")
 
         with patch.object(generate_valuation.yf, "Ticker", FakeTicker):

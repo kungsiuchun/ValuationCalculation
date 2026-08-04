@@ -10,7 +10,19 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 
-from ticker_universe import DEFAULT_TICKERS, UniverseValidationError, resolve_tickers
+from price_adapter import PriceSourceUnavailable, YahooPriceAdapter
+from financial_source_router import (
+    FMPInvalidPayloadError,
+    FMPQuotaError,
+    FMPRateLimitError,
+    FMPStalePayloadError,
+    FinancialSourceResult,
+    FinancialSourceRouter,
+    FMPCircuitBreaker,
+)
+from sec_company_facts import SECCompanyFactsSource
+from foreign_issuer_coverage import ForeignIssuerCoverageSource
+from ticker_universe import DEFAULT_TICKERS, UniverseValidationError, resolve_tickers, yahoo_symbol
 
 # from dotenv import load_dotenv
 
@@ -28,9 +40,11 @@ logger = logging.getLogger(__name__)
 FMP_API_KEY = os.getenv('FMP_API_KEY')
 FMP_API_KEY_2 = os.getenv('FMP_API_KEY_2')
 FMP_API_KEY_3 = os.getenv('FMP_API_KEY_3')
+FMP_REQUEST_TIMEOUT_SECONDS = 30
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "data")
 CACHE_BASE_DIR = os.path.join(OUTPUT_DIR, "fmp_cache") # ç·©å­˜ä¸»ç›®éŒ„
+SOURCE_FINANCIAL_DIR = os.path.join(OUTPUT_DIR, "source_financials")
 DOW_30 = list(DEFAULT_TICKERS)
 # DOW_30 = [
 #     "AAPL", "ABBV", "ADBE", "AMD", "AMZN", "BA", "BABA", "BAC",
@@ -44,9 +58,13 @@ DOW_30 = list(DEFAULT_TICKERS)
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
+SUPPORTED_FX_RATES = {"USD": 1.0, "TWD": 32.5}
 CACHE_EXPIRY_DAYS = 3
 YFINANCE_MAX_ATTEMPTS = 3
 YFINANCE_RETRY_DELAY_SECONDS = 15
+YFINANCE_TIMEOUT_SECONDS = 30
+FINANCIAL_SOURCE_ROUTER = None
+LAST_FINANCIAL_SOURCE_RESULT = None
 
 # --- Helper Functions --- Get latest processed quarter ---
 def get_latest_processed_quarter(ticker):
@@ -104,7 +122,7 @@ def get_next_quarter(current_q_str):
         return "q1"
 
 # --- 2. æŠ½å–å±¤ (Extract Layer) ---
-def get_fmp_fragmented(endpoint, ticker):
+def get_fmp_fragmented(endpoint, ticker, *, api_keys=None, circuit_breaker=None):
     """
     [Data Engineering Logic]:
     è‡ªå‹•å»ºç«‹å°æ‡‰ ticker çš„å­è³‡æ–™å¤¾ï¼Œä¸¦å¯¦æ–½ã€Žå¢žé‡åˆä½µç­–ç•¥ã€ã€‚
@@ -152,21 +170,54 @@ def get_fmp_fragmented(endpoint, ticker):
         if needs_api_call:
             action = "Incremental Update" if cache_exists else "Initial Fetch"
             logger.info(f"<{ticker}> {action} for {q} {endpoint}...")
+            refresh_succeeded = False
 
-            api_keys_to_try = [key for key in [FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3] if key]
+            configured_keys = [key for key in (FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3) if key] if api_keys is None else list(api_keys)
+            # FMP fallback is intentionally single-key.  Additional keys are
+            # not a retry lane: a rate-limit/quota response must stop the
+            # ticker rather than hide provider exhaustion.
+            if api_keys is None:
+                configured_keys = configured_keys[:1]
+            api_keys_to_try = [key for key in configured_keys if key]
             if not api_keys_to_try:
-                logger.error(f"<{ticker}> No FMP API keys configured; using existing cache for {q} {endpoint}.")
-                continue
-
-            for api_key in api_keys_to_try:
+                logger.error(f"<{ticker}> No FMP API keys configured; cannot refresh {q} {endpoint}.")
+            else:
+              for api_key in api_keys_to_try:
+                if circuit_breaker is not None:
+                    circuit_breaker.check()
                 url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={api_key}"
                 try:
-                    response = requests.get(url)
+                    response = requests.get(url, timeout=FMP_REQUEST_TIMEOUT_SECONDS)
                     response.raise_for_status() # æª¢æŸ¥ HTTP ç‹€æ…‹ç¢¼
                     res_json = response.json()
 
                     if isinstance(res_json, list):
                         if len(res_json) > 0:
+                            incoming_dates = []
+                            invalid_date = False
+                            for item in res_json:
+                                try:
+                                    incoming_dates.append(pd.to_datetime(item["date"], errors="raise"))
+                                except (KeyError, TypeError, ValueError):
+                                    invalid_date = True
+                                    break
+                            if invalid_date or not incoming_dates:
+                                logger.error(f"<{ticker}> API returned records with invalid dates for {q} {endpoint} using key: {api_key}.")
+                                if circuit_breaker is not None:
+                                    raise FMPInvalidPayloadError(f"{ticker}: invalid FMP dates for {q} {endpoint}")
+                                continue
+                            existing_dates = []
+                            for item in existing_data:
+                                try:
+                                    existing_dates.append(pd.to_datetime(item["date"], errors="raise"))
+                                except (KeyError, TypeError, ValueError):
+                                    existing_dates = []
+                                    break
+                            if existing_dates and max(incoming_dates) <= max(existing_dates):
+                                logger.error(f"<{ticker}> API returned stale dates for {q} {endpoint} using key: {api_key}; refusing stale refresh.")
+                                if circuit_breaker is not None:
+                                    raise FMPStalePayloadError(f"{ticker}: stale FMP payload for {q} {endpoint}")
+                                continue
                             # åŸ·è¡Œå¢žé‡åˆä½µé‚è¼¯
                             data_map = {item['date']: item for item in existing_data}
                             for item in res_json:
@@ -178,6 +229,7 @@ def get_fmp_fragmented(endpoint, ticker):
                                 json.dump(merged_res, f, indent=4)
 
                             existing_data = merged_res
+                            refresh_succeeded = True
                             logger.info(f"<{ticker}> {q} Cache updated. Records: {len(merged_res)} using key: {api_key}")
                             break # Successfully fetched, break from API key loop
                         else:
@@ -187,12 +239,24 @@ def get_fmp_fragmented(endpoint, ticker):
                         # è™•ç† API å›žå‚³éŒ¯èª¤è¨Šæ¯çš„æƒ…æ³ (ä¾‹å¦‚ï¼šInvalid API Key)
                         error_msg = res_json.get("Error Message", "Unknown API error")
                         logger.error(f"<{ticker}> API Error for {q} using key: {api_key}: {error_msg}")
+                        lowered_error = str(error_msg).lower()
+                        if circuit_breaker is not None and any(
+                            marker in lowered_error for marker in ("quota", "rate limit", "limit reached", "too many requests")
+                        ):
+                            reason = f"{ticker}: FMP quota/rate limit for {q} {endpoint}: {error_msg}"
+                            circuit_breaker.trip(reason)
+                            raise FMPQuotaError(reason)
                         # If error, try next key if available
 
                     time.sleep(0.1) # ç¨å¾®é™ä½Žé »çŽ‡ï¼Œé¿å… Rate Limit
                 except requests.exceptions.HTTPError as http_err:
-                    if http_err.response.status_code == 429:
+                    status_code = getattr(getattr(http_err, "response", None), "status_code", None)
+                    if status_code == 429:
                         logger.warning(f"<{ticker}> Rate limit hit (429) for {q} {endpoint} using key: {api_key}. Trying next key if available.")
+                        if circuit_breaker is not None:
+                            reason = f"{ticker}: FMP HTTP 429 for {q} {endpoint}"
+                            circuit_breaker.trip(reason)
+                            raise FMPRateLimitError(reason)
                         time.sleep(1) # Wait a bit longer before trying the next key
                         continue # Try the next API key
                     else:
@@ -202,6 +266,9 @@ def get_fmp_fragmented(endpoint, ticker):
                     logger.error(f"<{ticker}> Critical error fetching {q} {endpoint} using key: {api_key}: {e}")
                     break # Other errors are critical, stop trying
 
+            if is_target_increment and is_expired and not refresh_succeeded:
+                raise RuntimeError(f"{ticker}: {endpoint} {q} refresh failed; refusing stale financial release")
+
         # å°‡æ•¸æ“šåŒ¯ç¸½åˆ°æœ€çµ‚çµæžœ
         combined_all_quarters.extend(existing_data)
 
@@ -209,8 +276,117 @@ def get_fmp_fragmented(endpoint, ticker):
     return combined_all_quarters
 
 
-# --- 3. è½‰æ›å±¤ (Transform Layer) ---
-def build_quarterly_ttm(ticker):
+def fetch_fmp_financials(ticker, *, circuit_breaker=None):
+    """Fetch all FMP statements with one controlled API key."""
+
+    ticker = ticker.upper()
+    configured_keys = [key for key in (FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3) if key]
+    api_keys = configured_keys[:1]
+    endpoints = (
+        "income-statement",
+        "cash-flow-statement",
+        "enterprise-values",
+        "balance-sheet-statement",
+    )
+    statement_rows = {}
+    for endpoint in endpoints:
+        rows = get_fmp_fragmented(
+            endpoint,
+            ticker,
+            api_keys=api_keys,
+            circuit_breaker=circuit_breaker,
+        )
+        if not rows:
+            raise FMPInvalidPayloadError(f"{ticker}: FMP returned no {endpoint} rows")
+        statement_rows[endpoint] = rows
+
+    merged = {}
+    for rows in statement_rows.values():
+        for raw in rows:
+            if not isinstance(raw, dict) or not raw.get("date"):
+                raise FMPInvalidPayloadError(f"{ticker}: FMP row is missing date")
+            try:
+                key = pd.to_datetime(raw["date"], errors="raise").strftime("%Y-%m-%d")
+            except (TypeError, ValueError) as error:
+                raise FMPInvalidPayloadError(f"{ticker}: FMP row has invalid date") from error
+            merged.setdefault(key, {}).update(raw)
+            merged[key]["date"] = key
+    return [merged[key] for key in sorted(merged, reverse=True)]
+
+
+def create_financial_source_router():
+    """Construct the SEC-first router used by the normal valuation CLI."""
+
+    router = FinancialSourceRouter(
+        sec_source=SECCompanyFactsSource(),
+        foreign_source=ForeignIssuerCoverageSource(),
+    )
+    router.fmp_fetcher = fetch_fmp_financials
+    return router
+
+
+# --- 3. è½‰æå±¤ (Transform Layer) ---
+def _build_quarterly_ttm_from_rows(rows):
+    """Build valuation metric frames from normalized source rows."""
+
+    if not rows:
+        return None, None, None
+    try:
+        source_df = pd.DataFrame(rows)
+        source_df["date"] = pd.to_datetime(source_df["date"], errors="raise")
+    except (KeyError, TypeError, ValueError) as error:
+        raise RuntimeError("financial source returned invalid dated rows") from error
+    source_df = source_df.drop_duplicates("date").set_index("date").sort_index()
+    for field in ("eps", "revenue", "netIncome", "freeCashFlow", "numberOfShares", "reportedCurrency"):
+        if field not in source_df.columns:
+            source_df[field] = np.nan
+    if source_df["freeCashFlow"].isna().all() and {"operatingCashFlow", "capex"}.issubset(source_df.columns):
+        source_df["freeCashFlow"] = source_df["operatingCashFlow"] - source_df["capex"]
+    if source_df["numberOfShares"].isna().all() and "shares" in source_df.columns:
+        source_df["numberOfShares"] = source_df["shares"]
+    if source_df["revenue"].isna().all() or source_df["netIncome"].isna().all() or source_df["numberOfShares"].isna().all():
+        return None, None, None
+
+    currency_values = source_df["reportedCurrency"].dropna()
+    currency = str(currency_values.iloc[-1]).upper() if not currency_values.empty else "USD"
+    try:
+        fx_rate = SUPPORTED_FX_RATES[currency]
+    except KeyError as error:
+        raise RuntimeError(f"unsupported financial currency {currency}; refusing unscaled valuation") from error
+    df_main = source_df[["eps", "revenue", "netIncome", "freeCashFlow", "numberOfShares"]].copy().ffill()
+    df_main["sales_ps_adj"] = (df_main["revenue"] / df_main["numberOfShares"]) / fx_rate
+    df_main["eps_adj"] = (df_main["netIncome"] / df_main["numberOfShares"]) / fx_rate
+    df_main["fcf_ps_adj"] = (df_main["freeCashFlow"] / df_main["numberOfShares"]) / fx_rate
+    df_main["eps_ttm"] = df_main["eps_adj"].rolling(window=4).sum()
+    df_main["fcf_ps_ttm"] = df_main["fcf_ps_adj"].rolling(window=4).sum()
+    df_main["sales_ps_ttm"] = df_main["sales_ps_adj"].rolling(window=4).sum()
+    return (
+        df_main[["eps_ttm"]].dropna(),
+        df_main[["fcf_ps_ttm"]].dropna(),
+        df_main[["sales_ps_ttm"]].dropna(),
+    )
+
+
+def build_quarterly_ttm(ticker, *, source_router=None):
+    global LAST_FINANCIAL_SOURCE_RESULT
+    source_router = source_router or FINANCIAL_SOURCE_ROUTER
+    if source_router is not None:
+        result = source_router.route(ticker)
+        if not isinstance(result, FinancialSourceResult):
+            LAST_FINANCIAL_SOURCE_RESULT = None
+            return _build_quarterly_ttm_from_rows(result)
+        LAST_FINANCIAL_SOURCE_RESULT = result
+        logger.info(
+            "<%s> Financial source=%s dataAsOf=%s filingDate=%s fetchedAt=%s",
+            ticker,
+            result.source_type,
+            result.data_as_of,
+            result.latest_filing_date,
+            result.fetched_at,
+        )
+        return _build_quarterly_ttm_from_rows(result.rows)
+
+    LAST_FINANCIAL_SOURCE_RESULT = None
     inc_list = get_fmp_fragmented("income-statement", ticker)
     cf_list = get_fmp_fragmented("cash-flow-statement", ticker)
     ev_list = get_fmp_fragmented("enterprise-values", ticker)
@@ -229,7 +405,10 @@ def build_quarterly_ttm(ticker):
 
     # --- é—œéµä¿®æ­£ï¼šè‡ªå‹•åµæ¸¬åŒ¯çŽ‡èˆ‡ ADR æ¯”ä¾‹ ---
     currency = df_inc['reportedCurrency'].iloc[-1] if 'reportedCurrency' in df_inc.columns else "USD"
-    fx_rate = 32.5 if currency == "TWD" else 1.0  # å°ç©é›»æ•¸æ“šé€šå¸¸æ˜¯ TWD
+    try:
+        fx_rate = SUPPORTED_FX_RATES[str(currency).upper()]
+    except KeyError as error:
+        raise RuntimeError(f"unsupported financial currency {currency}; refusing unscaled valuation") from error
 
     # --- è¨ˆç®— P/S å¿…å‚™çš„ Revenue TTM ---
     # å…ˆè¨ˆç®—æ¯å­£åº¦çš„ Sales Per Share
@@ -342,34 +521,32 @@ def clean_nans(obj):
         return None # JSON æ”¯æ´ nullï¼Œä¸æ”¯æ´ NaN
     return obj
 
-def fetch_price_history(ticker, attempts=YFINANCE_MAX_ATTEMPTS, delay_seconds=YFINANCE_RETRY_DELAY_SECONDS):
-    last_error = None
+def fetch_price_history(
+    ticker,
+    attempts=YFINANCE_MAX_ATTEMPTS,
+    delay_seconds=YFINANCE_RETRY_DELAY_SECONDS,
+    timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+):
+    """Compatibility wrapper around the testable Yahoo price adapter.
 
-    for attempt in range(1, attempts + 1):
-        try:
-            prices = yf.Ticker(ticker).history(period="10y", auto_adjust=False)
-            if prices.empty:
-                logger.warning("<%s> No Yahoo price data returned.", ticker)
-                return prices
-            missing_columns = {"Close", "Adj Close"} - set(prices.columns)
-            if missing_columns:
-                logger.warning("<%s> Yahoo price data missing columns: %s", ticker, sorted(missing_columns))
-                return pd.DataFrame()
-            return prices
-        except Exception as exc:
-            last_error = exc
-            logger.warning(
-                "<%s> Yahoo price fetch failed on attempt %s/%s: %s",
-                ticker,
-                attempt,
-                attempts,
-                exc,
-            )
-            if attempt < attempts:
-                time.sleep(delay_seconds)
+    Existing callers use an empty DataFrame as the failure sentinel, so the
+    wrapper keeps that contract while the adapter raises a typed,
+    observable ``PriceSourceUnavailable`` for source-aware callers.
+    """
 
-    logger.error("<%s> Skipping after Yahoo price fetch failed: %s", ticker, last_error)
-    return pd.DataFrame()
+    adapter = YahooPriceAdapter(
+        ticker_factory=yf.Ticker,
+        max_attempts=attempts,
+        retry_delay_seconds=delay_seconds,
+        timeout_seconds=timeout_seconds,
+        sleep=time.sleep,
+        logger=logger,
+    )
+    try:
+        return adapter.fetch_history(ticker)
+    except PriceSourceUnavailable as error:
+        logger.error("<%s> Skipping after price source exhaustion: %s", ticker, error)
+        return pd.DataFrame()
 
 # --- 5. ä¸»ç¨‹åº ---
 def parse_args(argv=None):
@@ -390,6 +567,8 @@ def main(argv=None):
         args.write_resolved_symbols.parent.mkdir(parents=True, exist_ok=True)
         args.write_resolved_symbols.write_text(json.dumps({"symbols": tickers}, separators=(",", ":")), encoding="utf-8")
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+    global FINANCIAL_SOURCE_ROUTER
+    FINANCIAL_SOURCE_ROUTER = create_financial_source_router()
 
     # å‘¼å« Debug
     ## test_amzn_valuation_logic()
@@ -425,9 +604,14 @@ def main(argv=None):
 
         # 2. ç²å–è²¡å‹™æŒ‡æ¨™æ•¸æ“š (TTM)
         # ç¾åœ¨ build_quarterly_ttm æœƒå›žå‚³ä¸‰å€‹æŒ‡æ¨™
-        eps_ttm, fcf_ttm, sales_ttm = build_quarterly_ttm(ticker)
+        eps_ttm, fcf_ttm, sales_ttm = build_quarterly_ttm(ticker, source_router=FINANCIAL_SOURCE_ROUTER)
         if eps_ttm is None:
-            raise RuntimeError(f"{ticker}: no usable FMP quarterly data; refusing partial valuation release")
+            raise RuntimeError(f"{ticker}: no usable routed quarterly data; refusing partial valuation release")
+
+        if LAST_FINANCIAL_SOURCE_RESULT is not None:
+            os.makedirs(SOURCE_FINANCIAL_DIR, exist_ok=True)
+            with open(os.path.join(SOURCE_FINANCIAL_DIR, f"{ticker.upper()}_combined.json"), "w", encoding="utf-8") as source_file:
+                json.dump(list(LAST_FINANCIAL_SOURCE_RESULT.rows), source_file, indent=2)
 
         # 3. è¨ˆç®—ä¼°å€¼å¸¶
         pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
@@ -463,8 +647,10 @@ def main(argv=None):
                 "fcf": fcf_avgs,
                 "ps": ps_avgs
             },
-            "data": history
+            "data": history,
         }
+        if LAST_FINANCIAL_SOURCE_RESULT is not None:
+            output_data["financialSource"] = LAST_FINANCIAL_SOURCE_RESULT.metadata
 
         # æœ€å¾Œçµæžœä¹Ÿå­˜å…¥ ticker è³‡æ–™å¤¾
         final_dir = os.path.join(OUTPUT_DIR, "results", ticker.upper())
