@@ -36,17 +36,30 @@ jobs:
         # 如果你有 requirements.txt，可以用 pip install -r requirements.txt
         pip install -r requirements.txt
 
+    - name: Verify private R2 access
+      shell: pwsh
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $output = & npx --yes wrangler@4.118.0 r2 bucket list 2>&1
+        if ($LASTEXITCODE -ne 0) {
+          $message = ($output | Out-String).Trim()
+          throw "Cloudflare R2 access preflight failed. Check CLOUDFLARE_R2_API_TOKEN permissions. Details: $message"
+        }
+
     - name: Read private Stock Watcher coverage registry
       shell: pwsh
       env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       run: |
         $ErrorActionPreference = 'Stop'
         $registryPath = 'data/watcher_coverage_universe.json'
         $previousErrorActionPreference = $ErrorActionPreference
         $ErrorActionPreference = 'Continue'
-        $output = & npx --yes wrangler r2 object get 'valuation-watcher-data/coverage/universe.json' --file $registryPath --remote 2>&1
+        $output = & npx --yes wrangler@4.118.0 r2 object get 'valuation-watcher-data/coverage/universe.json' --file $registryPath --remote 2>&1
         $exitCode = $LASTEXITCODE
         $ErrorActionPreference = $previousErrorActionPreference
         if ($exitCode -ne 0) {
@@ -61,14 +74,14 @@ jobs:
     - name: Ensure 45-day R2 release cleanup
       shell: pwsh
       env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       run: |
         $ErrorActionPreference = 'Stop'
-        $list = & npx --yes wrangler r2 bucket lifecycle list valuation-watcher-data 2>&1
+        $list = & npx --yes wrangler@4.118.0 r2 bucket lifecycle list valuation-watcher-data 2>&1
         if ($LASTEXITCODE -ne 0) { throw "R2 lifecycle inspection failed: $($list | Out-String)" }
         if (($list | Out-String) -notmatch 'valuation-release-expiry') {
-          & npx --yes wrangler r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 45 --force
+          & npx --yes wrangler@4.118.0 r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 45 --force
           if ($LASTEXITCODE -ne 0) { throw 'R2 45-day release lifecycle setup failed.' }
         }
 
@@ -88,7 +101,7 @@ jobs:
     - name: Publish Stock Watcher exports to private R2
       shell: pwsh
       env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       run: |
         $ErrorActionPreference = 'Stop'
@@ -96,12 +109,12 @@ jobs:
         if ([string]::IsNullOrWhiteSpace($releaseId) -or $releaseId -eq '-') { throw 'GitHub release identity is unavailable.' }
         Get-ChildItem data/watcher_exports -Recurse -File | ForEach-Object {
           $key = $_.FullName.Substring((Resolve-Path data/watcher_exports).Path.Length + 1).Replace('\', '/')
-          npx wrangler r2 object put "valuation-watcher-data/releases/$releaseId/$key" --file $_.FullName --remote
+          npx --yes wrangler@4.118.0 r2 object put "valuation-watcher-data/releases/$releaseId/$key" --file $_.FullName --remote
           if ($LASTEXITCODE -ne 0) { throw "R2 release upload failed: $key" }
         }
         $pointerPath = Join-Path $env:RUNNER_TEMP 'valuation-watcher-current.json'
         @{ schemaVersion = '1.0'; releaseId = $releaseId; generatedAt = (Get-Date).ToUniversalTime().ToString('o') } | ConvertTo-Json -Compress | Set-Content -NoNewline $pointerPath
-        npx wrangler r2 object put valuation-watcher-data/current.json --file $pointerPath --remote
+        npx --yes wrangler@4.118.0 r2 object put valuation-watcher-data/current.json --file $pointerPath --remote
         if ($LASTEXITCODE -ne 0) { throw 'R2 release pointer update failed.' }
 
     - name: Commit and Push changes
