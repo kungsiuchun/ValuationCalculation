@@ -154,13 +154,13 @@ def get_fmp_fragmented(endpoint, ticker):
         if needs_api_call:
             action = "Incremental Update" if cache_exists else "Initial Fetch"
             logger.info(f"<{ticker}> {action} for {q} {endpoint}...")
+            refresh_succeeded = False
 
             api_keys_to_try = [key for key in [FMP_API_KEY, FMP_API_KEY_2, FMP_API_KEY_3] if key]
             if not api_keys_to_try:
-                logger.error(f"<{ticker}> No FMP API keys configured; using existing cache for {q} {endpoint}.")
-                continue
-
-            for api_key in api_keys_to_try:
+                logger.error(f"<{ticker}> No FMP API keys configured; cannot refresh {q} {endpoint}.")
+            else:
+              for api_key in api_keys_to_try:
                 url = f"https://financialmodelingprep.com/stable/{endpoint}/?symbol={ticker}&period={q}&apikey={api_key}"
                 try:
                     response = requests.get(url, timeout=FMP_REQUEST_TIMEOUT_SECONDS)
@@ -180,6 +180,7 @@ def get_fmp_fragmented(endpoint, ticker):
                                 json.dump(merged_res, f, indent=4)
 
                             existing_data = merged_res
+                            refresh_succeeded = True
                             logger.info(f"<{ticker}> {q} Cache updated. Records: {len(merged_res)} using key: {api_key}")
                             break # Successfully fetched, break from API key loop
                         else:
@@ -203,6 +204,9 @@ def get_fmp_fragmented(endpoint, ticker):
                 except Exception as e:
                     logger.error(f"<{ticker}> Critical error fetching {q} {endpoint} using key: {api_key}: {e}")
                     break # Other errors are critical, stop trying
+
+            if is_target_increment and is_expired and not refresh_succeeded:
+                raise RuntimeError(f"{ticker}: {endpoint} {q} refresh failed; refusing stale financial release")
 
         # å°‡æ•¸æ“šåŒ¯ç¸½åˆ°æœ€çµ‚çµæžœ
         combined_all_quarters.extend(existing_data)

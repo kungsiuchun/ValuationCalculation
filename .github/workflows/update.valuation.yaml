@@ -6,6 +6,9 @@ on:
     - cron: '0 22 * * *'
   workflow_dispatch: # 允許手動點擊按鈕執行
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,6 +39,9 @@ jobs:
         python -m pip install --upgrade pip
         # 如果你有 requirements.txt，可以用 pip install -r requirements.txt
         pip install -r requirements.txt
+
+    - name: Run Python tests
+      run: python -m unittest discover -s tests -p "test_*.py"
 
     - name: Verify private R2 access
       shell: pwsh
@@ -75,6 +81,7 @@ jobs:
         }
 
     - name: Ensure 45-day R2 release cleanup
+      if: github.ref == 'refs/heads/master'
       shell: pwsh
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_R2_API_TOKEN }}
