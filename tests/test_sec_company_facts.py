@@ -71,6 +71,28 @@ class SECCompanyFactsNormalizationTests(unittest.TestCase):
         self.assertEqual(len(rows), 2)
         self.assertEqual(rows[0]["date"], "2024-12-31")
 
+    def test_newer_sibling_revenue_tag_wins_over_stale_preferred_tag(self):
+        payload = copy.deepcopy(self.payload)
+        payload["facts"]["us-gaap"]["Revenues"] = {
+            "units": {
+                "USD": [
+                    {
+                        "start": "2025-01-01",
+                        "end": "2025-03-31",
+                        "val": 999,
+                        "filed": "2025-05-01",
+                        "fy": 2025,
+                        "fp": "Q1",
+                        "form": "10-Q",
+                    }
+                ]
+            }
+        }
+        rows = normalize_company_facts(payload, "AAPL", "0000320193", max_quarters=12)
+
+        self.assertEqual(rows[0]["date"], "2025-03-31")
+        self.assertEqual(rows[0]["revenue"], 999)
+
 
 class SECCompanyFactsSourceTests(unittest.TestCase):
     @classmethod
