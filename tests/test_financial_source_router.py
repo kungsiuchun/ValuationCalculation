@@ -45,6 +45,7 @@ class FinancialSourceRouterTests(unittest.TestCase):
         self.assertEqual(result.latest_filing_date, "2026-06-30")
         self.assertEqual(result.rows[0]["sourceType"], "SEC_COMPANY_FACTS")
         self.assertEqual(result.rows[0]["sourceDataAsOf"], "2026-06-30")
+        self.assertEqual(result.metadata["freshness"]["status"], "fresh")
         fmp.assert_not_called()
 
     def test_only_explicit_sec_unsupported_enters_fmp_fallback(self):

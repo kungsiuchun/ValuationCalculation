@@ -243,6 +243,7 @@ class FinancialSourceResult:
             "fetchedAt": self.fetched_at,
             "dataAsOf": self.data_as_of,
             "filingDate": self.latest_filing_date,
+            "status": "fresh",
         }
 
     @property
