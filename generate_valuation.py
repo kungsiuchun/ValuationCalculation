@@ -47,6 +47,7 @@ QUARTERS = ['q1', 'q2', 'q3', 'q4']
 CACHE_EXPIRY_DAYS = 3
 YFINANCE_MAX_ATTEMPTS = 3
 YFINANCE_RETRY_DELAY_SECONDS = 15
+YFINANCE_TIMEOUT_SECONDS = 30
 
 # --- Helper Functions --- Get latest processed quarter ---
 def get_latest_processed_quarter(ticker):
@@ -342,12 +343,21 @@ def clean_nans(obj):
         return None # JSON æ”¯æ´ nullï¼Œä¸æ”¯æ´ NaN
     return obj
 
-def fetch_price_history(ticker, attempts=YFINANCE_MAX_ATTEMPTS, delay_seconds=YFINANCE_RETRY_DELAY_SECONDS):
+def fetch_price_history(
+    ticker,
+    attempts=YFINANCE_MAX_ATTEMPTS,
+    delay_seconds=YFINANCE_RETRY_DELAY_SECONDS,
+    timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+):
     last_error = None
 
     for attempt in range(1, attempts + 1):
         try:
-            prices = yf.Ticker(yahoo_symbol(ticker)).history(period="10y", auto_adjust=False)
+            prices = yf.Ticker(yahoo_symbol(ticker)).history(
+                period="10y",
+                auto_adjust=False,
+                timeout=timeout_seconds,
+            )
             if prices.empty:
                 logger.warning("<%s> No Yahoo price data returned.", ticker)
                 return prices

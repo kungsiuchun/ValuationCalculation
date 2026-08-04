@@ -54,13 +54,15 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
         class FakeTicker:
             calls = 0
             symbols = []
+            timeouts = []
 
             def __init__(self, ticker):
                 self.ticker = ticker
                 FakeTicker.symbols.append(ticker)
 
-            def history(self, period, auto_adjust):
+            def history(self, period, auto_adjust, timeout):
                 FakeTicker.calls += 1
+                FakeTicker.timeouts.append(timeout)
                 if FakeTicker.calls == 1:
                     raise RuntimeError("Too Many Requests")
                 return prices
@@ -72,6 +74,7 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
         self.assertIs(result, prices)
         self.assertEqual(FakeTicker.calls, 2)
         self.assertEqual(FakeTicker.symbols, ["XYZ", "XYZ"])
+        self.assertEqual(FakeTicker.timeouts, [30, 30])
         sleep.assert_called_once_with(0)
 
     def test_price_history_returns_empty_after_retries_are_exhausted(self):
@@ -79,7 +82,7 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
             def __init__(self, ticker):
                 self.ticker = ticker
 
-            def history(self, period, auto_adjust):
+            def history(self, period, auto_adjust, timeout):
                 raise RuntimeError("Too Many Requests")
 
         with patch.object(generate_valuation.yf, "Ticker", FakeTicker):
