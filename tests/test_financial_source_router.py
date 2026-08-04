@@ -10,6 +10,7 @@ from financial_source_router import (
     FinancialSourceResult,
     FinancialSourceRouter,
     FinancialSourceError,
+    FinancialSourceStale,
 )
 from sec_company_facts import SECInvalidPayloadError, SECTickerNotFoundError
 
@@ -34,7 +35,7 @@ class FinancialSourceRouterTests(unittest.TestCase):
         router = FinancialSourceRouter(
             sec_fetcher=lambda symbol: rows("2026-06-30", "2026-03-31"),
             fmp_fetcher=fmp,
-            clock=lambda: 1_780_000_000,
+            clock=lambda: 1_785_800_000,
         )
 
         result = router.route("aapl")
@@ -53,7 +54,7 @@ class FinancialSourceRouterTests(unittest.TestCase):
         router = FinancialSourceRouter(
             sec_fetcher=Mock(side_effect=SECTickerNotFoundError("not covered")),
             fmp_fetcher=fmp,
-            clock=lambda: 1_780_000_000,
+            clock=lambda: 1_785_800_000,
         )
 
         result = router.fetch_financials("TSM")
@@ -72,6 +73,27 @@ class FinancialSourceRouterTests(unittest.TestCase):
         with self.assertRaises((SECInvalidPayloadError, FinancialSourceError)):
             router.route("AAPL")
         fmp.assert_not_called()
+
+    def test_sec_no_us_gaap_payload_does_not_fallback(self):
+        fmp = Mock(return_value=rows("2026-06-30"))
+        router = FinancialSourceRouter(
+            sec_fetcher=Mock(side_effect=SECInvalidPayloadError("SEC Company Facts payload has no us-gaap facts")),
+            fmp_fetcher=fmp,
+        )
+
+        with self.assertRaises((SECInvalidPayloadError, FinancialSourceError)):
+            router.route("AAPL")
+        fmp.assert_not_called()
+
+    def test_source_data_age_is_fail_closed(self):
+        router = FinancialSourceRouter(
+            sec_fetcher=lambda symbol: rows("2020-01-01"),
+            fmp_fetcher=Mock(),
+            clock=lambda: 1_785_800_000,
+        )
+
+        with self.assertRaises(FinancialSourceStale):
+            router.route("AAPL")
 
     def test_fmp_rate_limit_opens_circuit_and_second_call_is_blocked(self):
         fmp = Mock(side_effect=FMPRateLimitError("429"))

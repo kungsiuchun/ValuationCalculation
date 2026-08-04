@@ -35,6 +35,7 @@ from foreign_issuer_coverage import (
     ForeignIssuerCoverageError,
     ForeignIssuerCoverageResult,
     ForeignIssuerUnavailable,
+    FOREIGN_ISSUER_CIKS,
     SEC_FOREIGN_FACTS_URL,
     SEC_FOREIGN_SOURCE,
     SEC_FOREIGN_SOURCE_TYPE,
@@ -48,6 +49,7 @@ SEC_SOURCE = "SEC Company Facts"
 SEC_SOURCE_TYPE = "SEC_COMPANY_FACTS"
 FMP_SOURCE = "Financial Modeling Prep"
 FMP_SOURCE_TYPE = "FMP"
+MAX_SOURCE_AGE_DAYS = 730
 
 
 class FinancialSourceError(RuntimeError):
@@ -353,11 +355,7 @@ def _is_sec_unsupported(error: BaseException) -> bool:
         # reports the taxonomy mismatch as ``no us-gaap facts``; that is an
         # explicit hand-off to the dedicated foreign lane, not permission to
         # substitute Yahoo/FMP data for a known foreign issuer.
-        return (
-            "lacks quarterly revenue/net income" in text
-            or "no quarterly observations" in text
-            or "no us-gaap facts" in text
-        )
+        return "lacks quarterly revenue/net income" in text or "no quarterly observations" in text
     return False
 
 
@@ -455,7 +453,7 @@ class FinancialSourceRouter:
             payload,
             source=SEC_FOREIGN_SOURCE,
             source_type=SEC_FOREIGN_SOURCE_TYPE,
-            source_url=SEC_FOREIGN_FACTS_URL,
+            source_url=SEC_FOREIGN_FACTS_URL.format(cik=FOREIGN_ISSUER_CIKS.get(symbol, "")),
         )
 
     def _result(
@@ -499,6 +497,12 @@ class FinancialSourceRouter:
         ):
             raise FinancialSourceInvalid(source + " rows lack revenue/netIncome anchors")
         data_as_of = dated[0][0].isoformat()
+        now_date = datetime.fromtimestamp(float(self.clock()), tz=timezone.utc).date()
+        data_age_days = (now_date - dated[0][0]).days
+        if data_age_days < 0 or data_age_days > MAX_SOURCE_AGE_DAYS:
+            raise FinancialSourceStale(
+                f"{source} dataAsOf {data_as_of} is outside the {MAX_SOURCE_AGE_DAYS}-day freshness window"
+            )
         filing_dates: List[date] = []
         for row in rows:
             value = row.get("filingDate") or row.get("filed")

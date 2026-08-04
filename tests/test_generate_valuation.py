@@ -21,6 +21,20 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
 
         self.assertEqual(result, (None, None, None))
 
+    def test_build_quarterly_ttm_rejects_unknown_currency_instead_of_scaling_as_usd(self):
+        rows = [
+            {
+                "date": "2026-06-30",
+                "reportedCurrency": "JPY",
+                "revenue": 100,
+                "netIncome": 10,
+                "freeCashFlow": 5,
+                "numberOfShares": 10,
+            }
+        ]
+        with self.assertRaisesRegex(RuntimeError, "unsupported financial currency JPY"):
+            generate_valuation._build_quarterly_ttm_from_rows(rows)
+
     def test_fragmented_fetch_skips_missing_api_keys(self):
         calls = []
 

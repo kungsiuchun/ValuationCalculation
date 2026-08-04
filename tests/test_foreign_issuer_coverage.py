@@ -95,13 +95,14 @@ class ForeignIssuerRouterTests(unittest.TestCase):
             sec_fetcher=domestic_sec,
             foreign_fetcher=lambda symbol: foreign_rows,
             fmp_fetcher=fmp,
-            clock=lambda: 1_780_000_000,
+            clock=lambda: 1_785_800_000,
         )
 
         result = router.route("TSM")
 
         self.assertEqual(result.source_type, SEC_FOREIGN_SOURCE_TYPE)
         self.assertEqual(result.rows[0]["reportedCurrency"], "TWD")
+        self.assertIn("CIK0001046179", result.source_url)
         domestic_sec.assert_not_called()
         fmp.assert_not_called()
 

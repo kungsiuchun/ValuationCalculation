@@ -58,6 +58,7 @@ DOW_30 = list(DEFAULT_TICKERS)
 
 WINDOWS = {"1Y": 252, "2Y": 504, "3Y": 756, "5Y": 1260}
 QUARTERS = ['q1', 'q2', 'q3', 'q4']
+SUPPORTED_FX_RATES = {"USD": 1.0, "TWD": 32.5}
 CACHE_EXPIRY_DAYS = 3
 YFINANCE_MAX_ATTEMPTS = 3
 YFINANCE_RETRY_DELAY_SECONDS = 15
@@ -348,7 +349,10 @@ def _build_quarterly_ttm_from_rows(rows):
 
     currency_values = source_df["reportedCurrency"].dropna()
     currency = str(currency_values.iloc[-1]).upper() if not currency_values.empty else "USD"
-    fx_rate = 32.5 if currency == "TWD" else 1.0
+    try:
+        fx_rate = SUPPORTED_FX_RATES[currency]
+    except KeyError as error:
+        raise RuntimeError(f"unsupported financial currency {currency}; refusing unscaled valuation") from error
     df_main = source_df[["eps", "revenue", "netIncome", "freeCashFlow", "numberOfShares"]].copy().ffill()
     df_main["sales_ps_adj"] = (df_main["revenue"] / df_main["numberOfShares"]) / fx_rate
     df_main["eps_adj"] = (df_main["netIncome"] / df_main["numberOfShares"]) / fx_rate
@@ -401,7 +405,10 @@ def build_quarterly_ttm(ticker, *, source_router=None):
 
     # --- é—œéµä¿®æ­£ï¼šè‡ªå‹•åµæ¸¬åŒ¯çŽ‡èˆ‡ ADR æ¯”ä¾‹ ---
     currency = df_inc['reportedCurrency'].iloc[-1] if 'reportedCurrency' in df_inc.columns else "USD"
-    fx_rate = 32.5 if currency == "TWD" else 1.0  # å°ç©é›»æ•¸æ“šé€šå¸¸æ˜¯ TWD
+    try:
+        fx_rate = SUPPORTED_FX_RATES[str(currency).upper()]
+    except KeyError as error:
+        raise RuntimeError(f"unsupported financial currency {currency}; refusing unscaled valuation") from error
 
     # --- è¨ˆç®— P/S å¿…å‚™çš„ Revenue TTM ---
     # å…ˆè¨ˆç®—æ¯å­£åº¦çš„ Sales Per Share
