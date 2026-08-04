@@ -37,7 +37,7 @@ DEFAULT_TICKERS = (
     "BA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
     "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
     "ABBV", "ETSY", "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL",
-    "AAL", "ET", "COIN", "RIVN", "RIOT", "CPRX",
+    "AAL", "ET", "COIN", "RIVN", "RIOT",
     "ROKU", "DOCU", "ZM", "PINS", "TLRY", "MGM",
     "C", "GS", "WFC", "ADBE", "PEP", "UNH", "CARR", "SIRI", "FUBO", "RKT",
 )
