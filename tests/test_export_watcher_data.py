@@ -66,6 +66,9 @@ class WatcherExportTests(unittest.TestCase):
 
 
 class TickerUniverseTests(unittest.TestCase):
+    def test_default_universe_excludes_unbackfilled_legacy_sq_symbol(self):
+        self.assertNotIn("SQ", resolve_tickers())
+
     def test_retired_wba_symbol_is_rejected_and_not_in_default_universe(self):
         self.assertNotIn("WBA", resolve_tickers())
         with self.assertRaisesRegex(UniverseValidationError, "retired/delisted"):

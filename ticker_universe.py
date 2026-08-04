@@ -31,7 +31,7 @@ DEFAULT_TICKERS = (
     "AAPL", "TSLA", "AMZN", "MSFT", "NVDA", "GOOGL", "META", "NFLX", "JPM", "V",
     "BAC", "PYPL", "DIS", "T", "PFE", "COST", "INTC", "KO", "TGT", "NKE",
     "BA", "BABA", "XOM", "WMT", "GE", "CSCO", "VZ", "JNJ", "CVX", "PLTR",
-    "SQ", "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
+    "SHOP", "SBUX", "SOFI", "HOOD", "RBLX", "SNAP", "AMD", "UBER", "FDX",
     "ABBV", "ETSY", "MRNA", "LMT", "GM", "F", "LCID", "CCL", "DAL", "UAL",
     "AAL", "TSM", "SONY", "ET", "COIN", "RIVN", "RIOT", "CPRX", "NOK",
     "ROKU", "BIDU", "DOCU", "ZM", "PINS", "TLRY", "MGM",
