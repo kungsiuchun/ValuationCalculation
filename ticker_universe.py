@@ -18,6 +18,10 @@ SYMBOL_RE = re.compile(r"^[A-Z0-9][A-Z0-9.-]{0,14}$")
 YAHOO_SYMBOL_ALIASES = {
     "SQ": "XYZ",
 }
+# Kept as a read-only compatibility alias for callers that imported the old
+# name.  Financial/cache code must continue to use ``normalize_symbol`` rather
+# than this market-data mapping.
+SYMBOL_ALIASES = YAHOO_SYMBOL_ALIASES
 
 # These symbols no longer have a live Yahoo price series and must not enter a
 # release. Keep the rejection explicit so a stale registry request is visible
@@ -43,11 +47,18 @@ class UniverseValidationError(ValueError):
     pass
 
 
+def is_retired_symbol(value: Any) -> bool:
+    """Return whether a raw symbol is explicitly retired from coverage."""
+
+    symbol = str(value or "").strip().upper()
+    return bool(SYMBOL_RE.fullmatch(symbol)) and symbol in RETIRED_SYMBOLS
+
+
 def normalize_symbol(value: Any) -> str:
     symbol = str(value or "").strip().upper()
     if not SYMBOL_RE.fullmatch(symbol):
         raise UniverseValidationError(f"Invalid ticker symbol: {value!r}")
-    if symbol in RETIRED_SYMBOLS:
+    if is_retired_symbol(symbol):
         raise UniverseValidationError(f"Ticker {symbol} is retired/delisted; remove it from coverage registry")
     return symbol
 

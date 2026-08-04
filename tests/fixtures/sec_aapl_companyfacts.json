@@ -1,0 +1,89 @@
+{
+  "cik": 320193,
+  "entityName": "Fixture Apple Inc.",
+  "facts": {
+    "us-gaap": {
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {
+        "label": "Revenue",
+        "units": {
+          "USD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 100, "accn": "0001", "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": 110, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 120, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-01-01", "end": "2024-06-30", "val": 210, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01"},
+            {"start": "2024-01-01", "end": "2024-09-30", "val": 330, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 500, "accn": "0004", "fy": 2024, "fp": "FY", "form": "10-K", "filed": "2025-02-01", "frame": "CY2024"}
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "Net income",
+        "units": {
+          "USD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 30, "accn": "0001", "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": -10, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 12, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 100, "accn": "0004", "fy": 2024, "fp": "FY", "form": "10-K", "filed": "2025-02-01", "frame": "CY2024"}
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "Diluted EPS",
+        "units": {
+          "USD/shares": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 1.5, "accn": "0001", "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": -0.5, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 0.6, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 4.5, "accn": "0004", "fy": 2024, "fp": "FY", "form": "10-K", "filed": "2025-02-01", "frame": "CY2024"}
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "Operating cash flow",
+        "units": {
+          "USD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 30, "accn": "0001", "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-01-01", "end": "2024-06-30", "val": 28, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01"},
+            {"start": "2024-01-01", "end": "2024-09-30", "val": 40, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 150, "accn": "0004", "fy": 2024, "fp": "FY", "form": "10-K", "filed": "2025-02-01", "frame": "CY2024"}
+          ]
+        }
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+        "label": "Capital expenditure",
+        "units": {
+          "USD": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 5, "accn": "0001", "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-01-01", "end": "2024-06-30", "val": 7, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01"},
+            {"start": "2024-01-01", "end": "2024-09-30", "val": 9, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01"},
+            {"start": "2024-01-01", "end": "2024-12-31", "val": 30, "accn": "0004", "fy": 2024, "fp": "FY", "form": "10-K", "filed": "2025-02-01", "frame": "CY2024"}
+          ]
+        }
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+        "label": "Diluted shares",
+        "units": {
+          "shares": [
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 100, "accn": "0001", "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-05-01", "frame": "CY2024Q1"},
+            {"start": "2024-04-01", "end": "2024-06-30", "val": 99, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01", "frame": "CY2024Q2"},
+            {"start": "2024-07-01", "end": "2024-09-30", "val": 98, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01", "frame": "CY2024Q3"},
+            {"start": "2024-10-01", "end": "2024-12-31", "val": 97, "accn": "0004", "fy": 2024, "fp": "FY", "form": "10-K", "filed": "2025-02-01", "frame": "CY2024Q4"}
+          ]
+        }
+      }
+    },
+    "dei": {
+      "EntityCommonStockSharesOutstanding": {
+        "label": "Shares outstanding",
+        "units": {
+          "shares": [
+            {"end": "2024-03-31", "val": 101, "accn": "0001", "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-05-01"},
+            {"end": "2024-06-30", "val": 100, "accn": "0002", "fy": 2024, "fp": "Q2", "form": "10-Q", "filed": "2024-08-01"},
+            {"end": "2024-09-30", "val": 99, "accn": "0003", "fy": 2024, "fp": "Q3", "form": "10-Q", "filed": "2024-11-01"},
+            {"end": "2024-12-31", "val": 98, "accn": "0004", "fy": 2024, "fp": "FY", "form": "10-K", "filed": "2025-02-01"}
+          ]
+        }
+      }
+    }
+  }
+}

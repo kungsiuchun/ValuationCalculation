@@ -10,6 +10,7 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 
+from price_adapter import PriceSourceUnavailable, YahooPriceAdapter
 from ticker_universe import DEFAULT_TICKERS, UniverseValidationError, resolve_tickers, yahoo_symbol
 
 # from dotenv import load_dotenv
@@ -375,37 +376,26 @@ def fetch_price_history(
     delay_seconds=YFINANCE_RETRY_DELAY_SECONDS,
     timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
 ):
-    last_error = None
+    """Compatibility wrapper around the testable Yahoo price adapter.
 
-    for attempt in range(1, attempts + 1):
-        try:
-            prices = yf.Ticker(yahoo_symbol(ticker)).history(
-                period="10y",
-                auto_adjust=False,
-                timeout=timeout_seconds,
-            )
-            if prices.empty:
-                logger.warning("<%s> No Yahoo price data returned.", ticker)
-                return prices
-            missing_columns = {"Close", "Adj Close"} - set(prices.columns)
-            if missing_columns:
-                logger.warning("<%s> Yahoo price data missing columns: %s", ticker, sorted(missing_columns))
-                return pd.DataFrame()
-            return prices
-        except Exception as exc:
-            last_error = exc
-            logger.warning(
-                "<%s> Yahoo price fetch failed on attempt %s/%s: %s",
-                ticker,
-                attempt,
-                attempts,
-                exc,
-            )
-            if attempt < attempts:
-                time.sleep(delay_seconds)
+    Existing callers use an empty DataFrame as the failure sentinel, so the
+    wrapper keeps that contract while the adapter raises a typed,
+    observable ``PriceSourceUnavailable`` for source-aware callers.
+    """
 
-    logger.error("<%s> Skipping after Yahoo price fetch failed: %s", ticker, last_error)
-    return pd.DataFrame()
+    adapter = YahooPriceAdapter(
+        ticker_factory=yf.Ticker,
+        max_attempts=attempts,
+        retry_delay_seconds=delay_seconds,
+        timeout_seconds=timeout_seconds,
+        sleep=time.sleep,
+        logger=logger,
+    )
+    try:
+        return adapter.fetch_history(ticker)
+    except PriceSourceUnavailable as error:
+        logger.error("<%s> Skipping after price source exhaustion: %s", ticker, error)
+        return pd.DataFrame()
 
 # --- 5. ä¸»ç¨‹åº ---
 def parse_args(argv=None):
