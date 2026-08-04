@@ -71,6 +71,30 @@ class GenerateValuationBehaviorTests(unittest.TestCase):
                                     with self.assertRaisesRegex(RuntimeError, "refusing stale financial release"):
                                         generate_valuation.get_fmp_fragmented("income-statement", "XYZ")
 
+    def test_fragmented_fetch_rejects_http_success_with_stale_dates(self):
+        class StaleResponse:
+            def raise_for_status(self):
+                return None
+
+            def json(self):
+                return [{"date": "2020-01-01", "value": 1}]
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            cache_dir = Path(tmpdir) / "XYZ"
+            cache_dir.mkdir(parents=True)
+            for quarter in ("q1", "q2", "q3", "q4"):
+                (cache_dir / f"income-statement_{quarter}.json").write_text(
+                    json.dumps([{"date": "2025-01-01", "value": 1}]), encoding="utf-8"
+                )
+            with patch.object(generate_valuation, "CACHE_BASE_DIR", str(Path(tmpdir))):
+                with patch.object(generate_valuation, "FMP_API_KEY", "KEY"):
+                    with patch.object(generate_valuation, "FMP_API_KEY_2", None):
+                        with patch.object(generate_valuation, "FMP_API_KEY_3", None):
+                            with patch.object(generate_valuation, "get_latest_processed_quarter", return_value="q3"):
+                                with patch.object(generate_valuation.requests, "get", return_value=StaleResponse()):
+                                    with self.assertRaisesRegex(RuntimeError, "refusing stale financial release"):
+                                        generate_valuation.get_fmp_fragmented("income-statement", "XYZ")
+
     def test_price_history_retries_then_returns_data(self):
         prices = pd.DataFrame({"Close": [10.0], "Adj Close": [9.5]})
 

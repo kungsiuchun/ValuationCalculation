@@ -169,6 +169,27 @@ def get_fmp_fragmented(endpoint, ticker):
 
                     if isinstance(res_json, list):
                         if len(res_json) > 0:
+                            incoming_dates = []
+                            invalid_date = False
+                            for item in res_json:
+                                try:
+                                    incoming_dates.append(pd.to_datetime(item["date"], errors="raise"))
+                                except (KeyError, TypeError, ValueError):
+                                    invalid_date = True
+                                    break
+                            if invalid_date or not incoming_dates:
+                                logger.error(f"<{ticker}> API returned records with invalid dates for {q} {endpoint} using key: {api_key}.")
+                                continue
+                            existing_dates = []
+                            for item in existing_data:
+                                try:
+                                    existing_dates.append(pd.to_datetime(item["date"], errors="raise"))
+                                except (KeyError, TypeError, ValueError):
+                                    existing_dates = []
+                                    break
+                            if existing_dates and max(incoming_dates) <= max(existing_dates):
+                                logger.error(f"<{ticker}> API returned stale dates for {q} {endpoint} using key: {api_key}; refusing stale refresh.")
+                                continue
                             # åŸ·è¡Œå¢žé‡åˆä½µé‚è¼¯
                             data_map = {item['date']: item for item in existing_data}
                             for item in res_json:
