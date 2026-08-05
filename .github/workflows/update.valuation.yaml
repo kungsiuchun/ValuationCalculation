@@ -248,7 +248,7 @@ jobs:
         print(f"watcher export schema passed for {len(actual)} tickers")
         '@ | python -
 
-    - name: Ensure 45-day R2 release cleanup
+    - name: Ensure 14-day R2 release cleanup
       if: github.ref == 'refs/heads/master' && success()
       shell: pwsh
       env:
@@ -259,8 +259,8 @@ jobs:
         $list = & npx --yes wrangler@4.118.0 r2 bucket lifecycle list valuation-watcher-data 2>&1
         if ($LASTEXITCODE -ne 0) { throw "R2 lifecycle inspection failed: $($list | Out-String)" }
         if (($list | Out-String) -notmatch 'valuation-release-expiry') {
-          & npx --yes wrangler@4.118.0 r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 45 --force
-          if ($LASTEXITCODE -ne 0) { throw 'R2 45-day release lifecycle setup failed.' }
+          & npx --yes wrangler@4.118.0 r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 14 --force
+          if ($LASTEXITCODE -ne 0) { throw 'R2 14-day release lifecycle setup failed.' }
         }
 
     - name: Publish Stock Watcher exports to private R2
