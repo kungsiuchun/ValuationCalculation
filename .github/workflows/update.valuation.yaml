@@ -258,8 +258,13 @@ jobs:
         $ErrorActionPreference = 'Stop'
         $list = & npx --yes wrangler@4.118.0 r2 bucket lifecycle list valuation-watcher-data 2>&1
         if ($LASTEXITCODE -ne 0) { throw "R2 lifecycle inspection failed: $($list | Out-String)" }
+        $listText = $list | Out-String
         # Reconcile on every release: an existing rule may still carry the old
-        # retention period, so presence-only checks would leave 45-day expiry active.
+        # retention period, and R2 rejects duplicate rule IDs rather than replacing.
+        if ($listText -match 'valuation-release-expiry') {
+          & npx --yes wrangler@4.118.0 r2 bucket lifecycle remove valuation-watcher-data --name valuation-release-expiry
+          if ($LASTEXITCODE -ne 0) { throw 'R2 existing release lifecycle rule removal failed.' }
+        }
         & npx --yes wrangler@4.118.0 r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 14 --force
         if ($LASTEXITCODE -ne 0) { throw 'R2 14-day release lifecycle setup failed.' }
 
