@@ -258,10 +258,10 @@ jobs:
         $ErrorActionPreference = 'Stop'
         $list = & npx --yes wrangler@4.118.0 r2 bucket lifecycle list valuation-watcher-data 2>&1
         if ($LASTEXITCODE -ne 0) { throw "R2 lifecycle inspection failed: $($list | Out-String)" }
-        if (($list | Out-String) -notmatch 'valuation-release-expiry') {
-          & npx --yes wrangler@4.118.0 r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 14 --force
-          if ($LASTEXITCODE -ne 0) { throw 'R2 14-day release lifecycle setup failed.' }
-        }
+        # Reconcile on every release: an existing rule may still carry the old
+        # retention period, so presence-only checks would leave 45-day expiry active.
+        & npx --yes wrangler@4.118.0 r2 bucket lifecycle add valuation-watcher-data valuation-release-expiry releases/ --expire-days 14 --force
+        if ($LASTEXITCODE -ne 0) { throw 'R2 14-day release lifecycle setup failed.' }
 
     - name: Publish Stock Watcher exports to private R2
       if: github.ref == 'refs/heads/master' && success()
