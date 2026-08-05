@@ -11,6 +11,18 @@ from ticker_universe import yahoo_symbol
 
 
 class GenerateValuationBehaviorTests(unittest.TestCase):
+    def test_fresh_valuation_cannot_skip_when_routed_financial_artifact_is_missing(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "AAPL_combined.json"
+            self.assertFalse(generate_valuation._has_routed_financial_artifact(path))
+            path.write_text(json.dumps([{
+                "source": "SEC Company Facts",
+                "sourceType": "sec_companyfacts",
+                "sourceFetchedAt": "2026-08-05T00:00:00Z",
+                "sourceDataAsOf": "2026-06-30",
+            }]), encoding="utf-8")
+            self.assertTrue(generate_valuation._has_routed_financial_artifact(path))
+
     def test_legacy_sq_uses_current_yahoo_symbol_without_changing_cache_key(self):
         self.assertEqual(yahoo_symbol("SQ"), "XYZ")
         self.assertEqual(yahoo_symbol("XYZ"), "XYZ")

@@ -557,6 +557,28 @@ def parse_args(argv=None):
     return parser.parse_args(argv)
 
 
+def _has_routed_financial_artifact(path):
+    """Return true only when the routed rows needed by earnings export exist.
+
+    A fresh valuation result can be safely reused only if its source-financial
+    artifact is also present. The CI runner starts from a clean checkout, so
+    checking the valuation timestamp alone would skip regeneration and leave
+    earnings exports without provenance.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            rows = json.load(handle)
+        return bool(rows) and all(
+            isinstance(row, dict)
+            and all(str(row.get(field) or "").strip() for field in (
+                "source", "sourceType", "sourceFetchedAt", "sourceDataAsOf"
+            ))
+            for row in rows
+        )
+    except (OSError, json.JSONDecodeError, TypeError):
+        return False
+
+
 def main(argv=None):
     args = parse_args(argv)
     try:
@@ -576,13 +598,14 @@ def main(argv=None):
     for ticker in tickers:
         final_dir = os.path.join(OUTPUT_DIR, "results", ticker.upper())
         output_file = os.path.join(final_dir, "valuation_summary.json")
+        source_file = os.path.join(SOURCE_FINANCIAL_DIR, f"{ticker.upper()}_combined.json")
 
         if os.path.exists(output_file):
             with open(output_file, 'r') as f:
                 try:
                     data = json.load(f)
                     last_updated_str = data.get("last_updated")
-                    if last_updated_str:
+                    if last_updated_str and _has_routed_financial_artifact(source_file):
                         last_updated = datetime.strptime(last_updated_str, "%Y-%m-%d %H:%M:%S")
                         if (datetime.now() - last_updated).days < 1:
                             print(f"Skipping {ticker}: Valuation data is less than 1 day old.")
@@ -610,8 +633,8 @@ def main(argv=None):
 
         if LAST_FINANCIAL_SOURCE_RESULT is not None:
             os.makedirs(SOURCE_FINANCIAL_DIR, exist_ok=True)
-            with open(os.path.join(SOURCE_FINANCIAL_DIR, f"{ticker.upper()}_combined.json"), "w", encoding="utf-8") as source_file:
-                json.dump(list(LAST_FINANCIAL_SOURCE_RESULT.rows), source_file, indent=2)
+            with open(source_file, "w", encoding="utf-8") as source_handle:
+                json.dump(list(LAST_FINANCIAL_SOURCE_RESULT.rows), source_handle, indent=2)
 
         # 3. è¨ˆç®—ä¼°å€¼å¸¶
         pe_res, pe_avgs = calculate_bands(ticker, prices_df, eps_ttm, 'eps_ttm')
