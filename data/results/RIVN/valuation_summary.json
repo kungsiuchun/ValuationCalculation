@@ -1,6 +1,6 @@
 {
     "ticker": "RIVN",
-    "last_updated": "2026-08-21 22:13:06",
+    "last_updated": "2026-08-22 22:11:22",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -117529,11 +117529,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-21T22:13:05Z",
+        "fetchedAt": "2026-08-22T22:11:21Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-30",
         "freshness": {
-            "fetchedAt": "2026-08-21T22:13:05Z",
+            "fetchedAt": "2026-08-22T22:11:21Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-30",
             "status": "fresh"
