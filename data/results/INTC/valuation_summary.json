@@ -1,6 +1,6 @@
 {
     "ticker": "INTC",
-    "last_updated": "2026-08-22 22:09:59",
+    "last_updated": "2026-08-23 22:09:41",
     "averages": {
         "pe": {
             "1Y": 131.03,
@@ -7967,7 +7967,7 @@
                 "1Y": {
                     "pe": {
                         "mean": 51.24,
-                        "up1": 56.05,
+                        "up1": 56.06,
                         "up2": 60.87,
                         "down1": 46.42,
                         "down2": 41.6
@@ -41653,7 +41653,7 @@
                         "up1": 50.63,
                         "up2": 56.5,
                         "down1": 38.88,
-                        "down2": 33.0
+                        "down2": 33.01
                     },
                     "fcf": {
                         "mean": 0.0,
@@ -51772,7 +51772,7 @@
             "valuation": {
                 "1Y": {
                     "pe": {
-                        "mean": 33.99,
+                        "mean": 33.98,
                         "up1": 40.76,
                         "up2": 47.54,
                         "down1": 27.21,
@@ -66889,7 +66889,7 @@
                     "pe": {
                         "mean": 34.08,
                         "up1": 41.82,
-                        "up2": 49.57,
+                        "up2": 49.56,
                         "down1": 26.33,
                         "down2": 18.59
                     },
@@ -79239,7 +79239,7 @@
                         "up1": 40.21,
                         "up2": 46.58,
                         "down1": 27.47,
-                        "down2": 21.1
+                        "down2": 21.09
                     },
                     "fcf": {
                         "mean": 0.0,
@@ -84604,7 +84604,7 @@
                     "pe": {
                         "mean": 35.95,
                         "up1": 41.44,
-                        "up2": 46.93,
+                        "up2": 46.94,
                         "down1": 30.45,
                         "down2": 24.96
                     },
@@ -138697,11 +138697,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-22T22:09:57Z",
+        "fetchedAt": "2026-08-23T22:09:40Z",
         "dataAsOf": "2026-06-27",
         "filingDate": "2026-07-24",
         "freshness": {
-            "fetchedAt": "2026-08-22T22:09:57Z",
+            "fetchedAt": "2026-08-23T22:09:40Z",
             "dataAsOf": "2026-06-27",
             "filingDate": "2026-07-24",
             "status": "fresh"

@@ -1,6 +1,6 @@
 {
     "ticker": "DOCU",
-    "last_updated": "2026-08-22 22:11:29",
+    "last_updated": "2026-08-23 22:10:49",
     "averages": {
         "pe": {
             "1Y": 39.17,
@@ -138697,11 +138697,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-22T22:11:27Z",
+        "fetchedAt": "2026-08-23T22:10:48Z",
         "dataAsOf": "2026-04-30",
         "filingDate": "2026-06-05",
         "freshness": {
-            "fetchedAt": "2026-08-22T22:11:27Z",
+            "fetchedAt": "2026-08-23T22:10:48Z",
             "dataAsOf": "2026-04-30",
             "filingDate": "2026-06-05",
             "status": "fresh"

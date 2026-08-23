@@ -1,6 +1,6 @@
 {
     "ticker": "ADBE",
-    "last_updated": "2026-08-22 22:11:49",
+    "last_updated": "2026-08-23 22:11:06",
     "averages": {
         "pe": {
             "1Y": 16.97,
@@ -138697,11 +138697,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-22T22:11:47Z",
+        "fetchedAt": "2026-08-23T22:11:05Z",
         "dataAsOf": "2026-05-29",
         "filingDate": "2026-06-15",
         "freshness": {
-            "fetchedAt": "2026-08-22T22:11:47Z",
+            "fetchedAt": "2026-08-23T22:11:05Z",
             "dataAsOf": "2026-05-29",
             "filingDate": "2026-06-15",
             "status": "fresh"

@@ -1,6 +1,6 @@
 {
     "ticker": "WFC",
-    "last_updated": "2026-08-22 22:11:47",
+    "last_updated": "2026-08-23 22:11:04",
     "averages": {
         "pe": {
             "1Y": 12.38,
@@ -104030,7 +104030,7 @@
                 "2Y": {
                     "pe": {
                         "mean": 57.5,
-                        "up1": 68.97,
+                        "up1": 68.96,
                         "up2": 80.43,
                         "down1": 46.03,
                         "down2": 34.57
@@ -127452,7 +127452,7 @@
                 "2Y": {
                     "pe": {
                         "mean": 81.52,
-                        "up1": 87.66,
+                        "up1": 87.65,
                         "up2": 93.79,
                         "down1": 75.39,
                         "down2": 69.25
@@ -133836,7 +133836,7 @@
                     },
                     "ps": {
                         "mean": 81.63,
-                        "up1": 89.95,
+                        "up1": 89.94,
                         "up2": 98.26,
                         "down1": 73.32,
                         "down2": 65.0
@@ -138697,11 +138697,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-22T22:11:45Z",
+        "fetchedAt": "2026-08-23T22:11:03Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-28",
         "freshness": {
-            "fetchedAt": "2026-08-22T22:11:45Z",
+            "fetchedAt": "2026-08-23T22:11:03Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-28",
             "status": "fresh"

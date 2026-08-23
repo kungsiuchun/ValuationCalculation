@@ -1,6 +1,6 @@
 {
     "ticker": "DAL",
-    "last_updated": "2026-08-22 22:11:10",
+    "last_updated": "2026-08-23 22:10:35",
     "averages": {
         "pe": {
             "1Y": 9.53,
@@ -21810,7 +21810,7 @@
                         "mean": 39.39,
                         "up1": 48.07,
                         "up2": 56.75,
-                        "down1": 30.71,
+                        "down1": 30.72,
                         "down2": 22.04
                     },
                     "fcf": {
@@ -21824,7 +21824,7 @@
                         "mean": 39.39,
                         "up1": 48.07,
                         "up2": 56.75,
-                        "down1": 30.71,
+                        "down1": 30.72,
                         "down2": 22.04
                     }
                 },
@@ -109715,7 +109715,7 @@
                     "pe": {
                         "mean": 47.54,
                         "up1": 59.36,
-                        "up2": 71.17,
+                        "up2": 71.18,
                         "down1": 35.72,
                         "down2": 23.9
                     },
@@ -110697,7 +110697,7 @@
                         "up1": 60.98,
                         "up2": 73.07,
                         "down1": 36.79,
-                        "down2": 24.69
+                        "down2": 24.7
                     },
                     "fcf": {
                         "mean": 75.62,
@@ -117675,7 +117675,7 @@
                 "3Y": {
                     "pe": {
                         "mean": 48.22,
-                        "up1": 60.79,
+                        "up1": 60.78,
                         "up2": 73.35,
                         "down1": 35.65,
                         "down2": 23.08
@@ -126678,7 +126678,7 @@
                         "up1": 143.46,
                         "up2": 181.87,
                         "down1": 66.62,
-                        "down2": 28.2
+                        "down2": 28.21
                     },
                     "ps": {
                         "mean": 56.1,
@@ -138697,11 +138697,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-22T22:11:09Z",
+        "fetchedAt": "2026-08-23T22:10:34Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-10",
         "freshness": {
-            "fetchedAt": "2026-08-22T22:11:09Z",
+            "fetchedAt": "2026-08-23T22:10:34Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-10",
             "status": "fresh"
