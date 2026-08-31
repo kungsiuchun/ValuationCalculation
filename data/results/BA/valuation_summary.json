@@ -1,6 +1,6 @@
 {
     "ticker": "BA",
-    "last_updated": "2026-08-29 23:41:24",
+    "last_updated": "2026-08-31 00:00:32",
     "averages": {
         "pe": {
             "1Y": 72.41,
@@ -36304,7 +36304,7 @@
                     "ps": {
                         "mean": 198.86,
                         "up1": 229.08,
-                        "up2": 259.31,
+                        "up2": 259.3,
                         "down1": 168.64,
                         "down2": 138.41
                     }
@@ -56027,7 +56027,7 @@
                         "up1": 227.39,
                         "up2": 261.05,
                         "down1": 160.07,
-                        "down2": 126.4
+                        "down2": 126.41
                     }
                 },
                 "3Y": {
@@ -139187,11 +139187,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-29T23:41:22Z",
+        "fetchedAt": "2026-08-31T00:00:31Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-28",
         "freshness": {
-            "fetchedAt": "2026-08-29T23:41:22Z",
+            "fetchedAt": "2026-08-31T00:00:31Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-28",
             "status": "fresh"

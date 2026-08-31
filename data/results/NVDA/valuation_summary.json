@@ -1,6 +1,6 @@
 {
     "ticker": "NVDA",
-    "last_updated": "2026-08-29 23:40:44",
+    "last_updated": "2026-08-31 00:00:06",
     "averages": {
         "pe": {
             "1Y": 34.52,
@@ -100503,7 +100503,7 @@
                     "pe": {
                         "mean": 45.38,
                         "up1": 68.07,
-                        "up2": 90.75,
+                        "up2": 90.76,
                         "down1": 22.69,
                         "down2": 0.0
                     },
@@ -119689,7 +119689,7 @@
                         "mean": 131.66,
                         "up1": 182.47,
                         "up2": 233.28,
-                        "down1": 80.85,
+                        "down1": 80.84,
                         "down2": 30.03
                     },
                     "fcf": {
@@ -139187,11 +139187,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-29T23:40:42Z",
+        "fetchedAt": "2026-08-31T00:00:05Z",
         "dataAsOf": "2026-07-26",
         "filingDate": "2026-08-26",
         "freshness": {
-            "fetchedAt": "2026-08-29T23:40:42Z",
+            "fetchedAt": "2026-08-31T00:00:05Z",
             "dataAsOf": "2026-07-26",
             "filingDate": "2026-08-26",
             "status": "fresh"

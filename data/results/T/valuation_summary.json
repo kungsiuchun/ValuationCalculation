@@ -1,6 +1,6 @@
 {
     "ticker": "T",
-    "last_updated": "2026-08-29 23:41:06",
+    "last_updated": "2026-08-31 00:00:20",
     "averages": {
         "pe": {
             "1Y": 8.03,
@@ -40120,14 +40120,14 @@
                         "mean": 14.91,
                         "up1": 15.87,
                         "up2": 16.83,
-                        "down1": 13.95,
+                        "down1": 13.96,
                         "down2": 13.0
                     },
                     "ps": {
                         "mean": 14.91,
                         "up1": 15.87,
                         "up2": 16.83,
-                        "down1": 13.95,
+                        "down1": 13.96,
                         "down2": 13.0
                     }
                 },
@@ -139187,11 +139187,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-08-29T23:41:04Z",
+        "fetchedAt": "2026-08-31T00:00:19Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-22",
         "freshness": {
-            "fetchedAt": "2026-08-29T23:41:04Z",
+            "fetchedAt": "2026-08-31T00:00:19Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-22",
             "status": "fresh"
