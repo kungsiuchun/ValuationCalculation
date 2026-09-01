@@ -1,6 +1,6 @@
 {
     "ticker": "RBLX",
-    "last_updated": "2026-09-01 00:52:27",
+    "last_updated": "2026-09-01 23:39:03",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -134675,8 +134675,8 @@
             }
         },
         {
-            "date": "2026-08-28",
-            "price": 38.53,
+            "date": "2026-08-31",
+            "price": 41.29,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -134773,8 +134773,8 @@
             }
         },
         {
-            "date": "2026-08-31",
-            "price": 41.29,
+            "date": "2026-09-01",
+            "price": 40.67,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -134875,11 +134875,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-01T00:52:26Z",
+        "fetchedAt": "2026-09-01T23:39:02Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-30",
         "freshness": {
-            "fetchedAt": "2026-09-01T00:52:26Z",
+            "fetchedAt": "2026-09-01T23:39:02Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-30",
             "status": "fresh"

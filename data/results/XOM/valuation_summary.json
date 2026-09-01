@@ -1,6 +1,6 @@
 {
     "ticker": "XOM",
-    "last_updated": "2026-09-01 00:52:04",
+    "last_updated": "2026-09-01 23:38:31",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -139085,8 +139085,8 @@
             }
         },
         {
-            "date": "2026-08-28",
-            "price": 156.71,
+            "date": "2026-08-31",
+            "price": 160.95,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -139183,8 +139183,8 @@
             }
         },
         {
-            "date": "2026-08-31",
-            "price": 160.95,
+            "date": "2026-09-01",
+            "price": 164.55,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -139285,11 +139285,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-01T00:52:03Z",
+        "fetchedAt": "2026-09-01T23:38:30Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-03",
         "freshness": {
-            "fetchedAt": "2026-09-01T00:52:03Z",
+            "fetchedAt": "2026-09-01T23:38:30Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-03",
             "status": "fresh"
