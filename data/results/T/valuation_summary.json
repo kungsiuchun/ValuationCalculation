@@ -1,6 +1,6 @@
 {
     "ticker": "T",
-    "last_updated": "2026-09-04 23:30:23",
+    "last_updated": "2026-09-05 23:26:36",
     "averages": {
         "pe": {
             "1Y": 7.98,
@@ -40120,14 +40120,14 @@
                         "mean": 14.91,
                         "up1": 15.87,
                         "up2": 16.83,
-                        "down1": 13.96,
+                        "down1": 13.95,
                         "down2": 13.0
                     },
                     "ps": {
                         "mean": 14.91,
                         "up1": 15.87,
                         "up2": 16.83,
-                        "down1": 13.96,
+                        "down1": 13.95,
                         "down2": 13.0
                     }
                 },
@@ -92424,7 +92424,7 @@
                         "up1": 16.9,
                         "up2": 18.43,
                         "down1": 13.84,
-                        "down2": 12.31
+                        "down2": 12.32
                     },
                     "ps": {
                         "mean": 15.39,
@@ -99281,7 +99281,7 @@
                     },
                     "fcf": {
                         "mean": 15.72,
-                        "up1": 17.58,
+                        "up1": 17.59,
                         "up2": 19.45,
                         "down1": 13.85,
                         "down2": 11.98
@@ -102609,7 +102609,7 @@
                         "up1": 18.26,
                         "up2": 21.3,
                         "down1": 12.18,
-                        "down2": 9.14
+                        "down2": 9.15
                     },
                     "fcf": {
                         "mean": 15.94,
@@ -116746,7 +116746,7 @@
             "valuation": {
                 "1Y": {
                     "pe": {
-                        "mean": 41.94,
+                        "mean": 41.93,
                         "up1": 47.05,
                         "up2": 52.16,
                         "down1": 36.82,
@@ -120520,7 +120520,7 @@
                         "up1": 40.6,
                         "up2": 49.0,
                         "down1": 23.81,
-                        "down2": 15.41
+                        "down2": 15.42
                     },
                     "fcf": {
                         "mean": 19.37,
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-04T23:30:22Z",
+        "fetchedAt": "2026-09-05T23:26:35Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-22",
         "freshness": {
-            "fetchedAt": "2026-09-04T23:30:22Z",
+            "fetchedAt": "2026-09-05T23:26:35Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-22",
             "status": "fresh"

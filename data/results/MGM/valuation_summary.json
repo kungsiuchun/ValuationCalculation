@@ -1,6 +1,6 @@
 {
     "ticker": "MGM",
-    "last_updated": "2026-09-04 23:31:46",
+    "last_updated": "2026-09-05 23:28:29",
     "averages": {
         "pe": {
             "1Y": 19.13,
@@ -9854,21 +9854,21 @@
                         "mean": 28.18,
                         "up1": 34.31,
                         "up2": 40.44,
-                        "down1": 22.06,
+                        "down1": 22.05,
                         "down2": 15.93
                     },
                     "fcf": {
                         "mean": 28.18,
                         "up1": 34.31,
                         "up2": 40.44,
-                        "down1": 22.06,
+                        "down1": 22.05,
                         "down2": 15.93
                     },
                     "ps": {
                         "mean": 28.18,
                         "up1": 34.31,
                         "up2": 40.44,
-                        "down1": 22.06,
+                        "down1": 22.05,
                         "down2": 15.93
                     }
                 },
@@ -44495,7 +44495,7 @@
                         "up1": 38.63,
                         "up2": 45.73,
                         "down1": 24.45,
-                        "down2": 17.36
+                        "down2": 17.35
                     },
                     "fcf": {
                         "mean": 31.47,
@@ -53683,7 +53683,7 @@
                         "mean": 34.37,
                         "up1": 42.79,
                         "up2": 51.22,
-                        "down1": 25.95,
+                        "down1": 25.94,
                         "down2": 17.52
                     },
                     "fcf": {
@@ -110559,7 +110559,7 @@
                     "ps": {
                         "mean": 42.34,
                         "up1": 50.11,
-                        "up2": 57.88,
+                        "up2": 57.89,
                         "down1": 34.56,
                         "down2": 26.79
                     }
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-04T23:31:45Z",
+        "fetchedAt": "2026-09-05T23:28:28Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-29",
         "freshness": {
-            "fetchedAt": "2026-09-04T23:31:45Z",
+            "fetchedAt": "2026-09-05T23:28:28Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-29",
             "status": "fresh"
