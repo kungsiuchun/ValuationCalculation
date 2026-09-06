@@ -1,6 +1,6 @@
 {
     "ticker": "DIS",
-    "last_updated": "2026-09-05 23:26:34",
+    "last_updated": "2026-09-06 23:19:24",
     "averages": {
         "pe": {
             "1Y": 18.06,
@@ -23152,7 +23152,7 @@
         },
         {
             "date": "2021-12-09",
-            "price": 148.29,
+            "price": 148.28,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -31090,7 +31090,7 @@
         },
         {
             "date": "2022-04-06",
-            "price": 128.54,
+            "price": 128.53,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -89844,7 +89844,7 @@
                     "pe": {
                         "mean": 110.5,
                         "up1": 136.67,
-                        "up2": 162.85,
+                        "up2": 162.84,
                         "down1": 84.33,
                         "down2": 58.16
                     },
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-05T23:26:32Z",
+        "fetchedAt": "2026-09-06T23:19:22Z",
         "dataAsOf": "2026-06-27",
         "filingDate": "2026-08-05",
         "freshness": {
-            "fetchedAt": "2026-09-05T23:26:32Z",
+            "fetchedAt": "2026-09-06T23:19:22Z",
             "dataAsOf": "2026-06-27",
             "filingDate": "2026-08-05",
             "status": "fresh"

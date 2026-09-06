@@ -1,6 +1,6 @@
 {
     "ticker": "AMZN",
-    "last_updated": "2026-09-05 23:26:07",
+    "last_updated": "2026-09-06 23:18:57",
     "averages": {
         "pe": {
             "1Y": 26.96,
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-05T23:26:06Z",
+        "fetchedAt": "2026-09-06T23:18:55Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-31",
         "freshness": {
-            "fetchedAt": "2026-09-05T23:26:06Z",
+            "fetchedAt": "2026-09-06T23:18:55Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-31",
             "status": "fresh"

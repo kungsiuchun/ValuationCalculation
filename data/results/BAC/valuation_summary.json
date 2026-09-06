@@ -1,6 +1,6 @@
 {
     "ticker": "BAC",
-    "last_updated": "2026-09-05 23:26:29",
+    "last_updated": "2026-09-06 23:19:18",
     "averages": {
         "pe": {
             "1Y": 12.88,
@@ -25632,7 +25632,7 @@
                         "mean": 29.22,
                         "up1": 36.66,
                         "up2": 44.11,
-                        "down1": 21.78,
+                        "down1": 21.77,
                         "down2": 14.33
                     },
                     "fcf": {
@@ -99305,7 +99305,7 @@
                         "mean": 42.29,
                         "up1": 45.54,
                         "up2": 48.79,
-                        "down1": 39.04,
+                        "down1": 39.05,
                         "down2": 35.8
                     },
                     "fcf": {
@@ -103406,7 +103406,7 @@
                         "mean": 34.58,
                         "up1": 41.73,
                         "up2": 48.87,
-                        "down1": 27.43,
+                        "down1": 27.44,
                         "down2": 20.29
                     }
                 }
@@ -115009,7 +115009,7 @@
                         "up1": 50.2,
                         "up2": 55.91,
                         "down1": 38.78,
-                        "down2": 33.08
+                        "down2": 33.07
                     },
                     "fcf": {
                         "mean": null,
@@ -116785,7 +116785,7 @@
                     "ps": {
                         "mean": 42.75,
                         "up1": 48.46,
-                        "up2": 54.17,
+                        "up2": 54.16,
                         "down1": 37.04,
                         "down2": 31.34
                     }
@@ -130701,7 +130701,7 @@
                     "ps": {
                         "mean": 52.69,
                         "up1": 56.2,
-                        "up2": 59.7,
+                        "up2": 59.71,
                         "down1": 49.19,
                         "down2": 45.68
                     }
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-05T23:26:27Z",
+        "fetchedAt": "2026-09-06T23:19:17Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-31",
         "freshness": {
-            "fetchedAt": "2026-09-05T23:26:27Z",
+            "fetchedAt": "2026-09-06T23:19:17Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-31",
             "status": "fresh"

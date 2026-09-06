@@ -1,6 +1,6 @@
 {
     "ticker": "NVDA",
-    "last_updated": "2026-09-05 23:26:12",
+    "last_updated": "2026-09-06 23:19:02",
     "averages": {
         "pe": {
             "1Y": 34.24,
@@ -70486,7 +70486,7 @@
         },
         {
             "date": "2023-11-10",
-            "price": 48.24,
+            "price": 48.25,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -107843,7 +107843,7 @@
                     },
                     "ps": {
                         "mean": 51.42,
-                        "up1": 77.14,
+                        "up1": 77.13,
                         "up2": 102.85,
                         "down1": 25.71,
                         "down2": 0.0
@@ -118707,7 +118707,7 @@
                 "1Y": {
                     "pe": {
                         "mean": 122.58,
-                        "up1": 173.24,
+                        "up1": 173.25,
                         "up2": 223.91,
                         "down1": 71.92,
                         "down2": 21.26
@@ -119689,7 +119689,7 @@
                         "mean": 131.66,
                         "up1": 182.47,
                         "up2": 233.28,
-                        "down1": 80.84,
+                        "down1": 80.85,
                         "down2": 30.03
                     },
                     "fcf": {
@@ -125960,7 +125960,7 @@
                     "pe": {
                         "mean": 199.96,
                         "up1": 238.54,
-                        "up2": 277.11,
+                        "up2": 277.12,
                         "down1": 161.38,
                         "down2": 122.8
                     },
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-05T23:26:11Z",
+        "fetchedAt": "2026-09-06T23:19:00Z",
         "dataAsOf": "2026-07-26",
         "filingDate": "2026-08-26",
         "freshness": {
-            "fetchedAt": "2026-09-05T23:26:11Z",
+            "fetchedAt": "2026-09-06T23:19:00Z",
             "dataAsOf": "2026-07-26",
             "filingDate": "2026-08-26",
             "status": "fresh"

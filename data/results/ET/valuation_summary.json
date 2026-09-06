@@ -1,6 +1,6 @@
 {
     "ticker": "ET",
-    "last_updated": "2026-09-05 23:28:08",
+    "last_updated": "2026-09-06 23:21:03",
     "averages": {
         "pe": {
             "1Y": 10.06,
@@ -60934,21 +60934,21 @@
                     "pe": {
                         "mean": 6.83,
                         "up1": 8.75,
-                        "up2": 10.67,
+                        "up2": 10.66,
                         "down1": 4.91,
                         "down2": 3.0
                     },
                     "fcf": {
                         "mean": 6.83,
                         "up1": 8.75,
-                        "up2": 10.67,
+                        "up2": 10.66,
                         "down1": 4.91,
                         "down2": 3.0
                     },
                     "ps": {
                         "mean": 6.83,
                         "up1": 8.75,
-                        "up2": 10.67,
+                        "up2": 10.66,
                         "down1": 4.91,
                         "down2": 3.0
                     }
@@ -105259,7 +105259,7 @@
                     },
                     "fcf": {
                         "mean": 8.25,
-                        "up1": 11.66,
+                        "up1": 11.67,
                         "up2": 15.08,
                         "down1": 4.84,
                         "down2": 1.43
@@ -109926,7 +109926,7 @@
                         "mean": 13.21,
                         "up1": 15.38,
                         "up2": 17.55,
-                        "down1": 11.05,
+                        "down1": 11.04,
                         "down2": 8.88
                     }
                 },
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-05T23:28:06Z",
+        "fetchedAt": "2026-09-06T23:21:01Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-06",
         "freshness": {
-            "fetchedAt": "2026-09-05T23:28:06Z",
+            "fetchedAt": "2026-09-06T23:21:01Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-06",
             "status": "fresh"
