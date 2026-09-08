@@ -1,6 +1,6 @@
 {
     "ticker": "TSLA",
-    "last_updated": "2026-09-06 23:18:54",
+    "last_updated": "2026-09-07 23:50:14",
     "averages": {
         "pe": {
             "1Y": 330.66,
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-06T23:18:52Z",
+        "fetchedAt": "2026-09-07T23:50:12Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-23",
         "freshness": {
-            "fetchedAt": "2026-09-06T23:18:52Z",
+            "fetchedAt": "2026-09-07T23:50:12Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-23",
             "status": "fresh"

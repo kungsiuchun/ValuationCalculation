@@ -1,6 +1,6 @@
 {
     "ticker": "CSCO",
-    "last_updated": "2026-09-06 23:19:57",
+    "last_updated": "2026-09-07 23:51:12",
     "averages": {
         "pe": {
             "1Y": 27.99,
@@ -60000,7 +60000,7 @@
         },
         {
             "date": "2023-06-09",
-            "price": 45.53,
+            "price": 45.54,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -65586,7 +65586,7 @@
         },
         {
             "date": "2023-08-31",
-            "price": 52.99,
+            "price": 52.98,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -97088,7 +97088,7 @@
                         "mean": 47.77,
                         "up1": 51.19,
                         "up2": 54.6,
-                        "down1": 44.35,
+                        "down1": 44.36,
                         "down2": 40.94
                     }
                 },
@@ -100745,7 +100745,7 @@
                     "pe": {
                         "mean": 41.29,
                         "up1": 47.55,
-                        "up2": 53.81,
+                        "up2": 53.82,
                         "down1": 35.02,
                         "down2": 28.76
                     },
@@ -102297,7 +102297,7 @@
                     "fcf": {
                         "mean": 57.99,
                         "up1": 62.34,
-                        "up2": 66.69,
+                        "up2": 66.7,
                         "down1": 53.64,
                         "down2": 49.29
                     },
@@ -102394,7 +102394,7 @@
                     },
                     "fcf": {
                         "mean": 58.01,
-                        "up1": 62.36,
+                        "up1": 62.37,
                         "up2": 66.72,
                         "down1": 53.66,
                         "down2": 49.31
@@ -133701,7 +133701,7 @@
                 "1Y": {
                     "pe": {
                         "mean": 87.21,
-                        "up1": 90.16,
+                        "up1": 90.17,
                         "up2": 93.12,
                         "down1": 84.25,
                         "down2": 81.29
@@ -139677,11 +139677,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-06T23:19:55Z",
+        "fetchedAt": "2026-09-07T23:51:10Z",
         "dataAsOf": "2026-07-25",
         "filingDate": "2026-09-02",
         "freshness": {
-            "fetchedAt": "2026-09-06T23:19:55Z",
+            "fetchedAt": "2026-09-07T23:51:10Z",
             "dataAsOf": "2026-07-25",
             "filingDate": "2026-09-02",
             "status": "fresh"
