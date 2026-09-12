@@ -1,6 +1,6 @@
 {
     "ticker": "F",
-    "last_updated": "2026-09-11 23:39:11",
+    "last_updated": "2026-09-12 23:32:13",
     "averages": {
         "pe": {
             "1Y": 11.79,
@@ -44454,7 +44454,7 @@
                     "fcf": {
                         "mean": 9.92,
                         "up1": 11.71,
-                        "up2": 13.49,
+                        "up2": 13.5,
                         "down1": 8.13,
                         "down2": 6.34
                     },
@@ -56169,7 +56169,7 @@
                     "ps": {
                         "mean": 8.05,
                         "up1": 10.36,
-                        "up2": 12.67,
+                        "up2": 12.66,
                         "down1": 5.75,
                         "down2": 3.44
                     }
@@ -98875,7 +98875,7 @@
                         "mean": 11.09,
                         "up1": 12.32,
                         "up2": 13.56,
-                        "down1": 9.85,
+                        "down1": 9.86,
                         "down2": 8.62
                     }
                 },
@@ -113936,7 +113936,7 @@
                     "fcf": {
                         "mean": 19.29,
                         "up1": 25.25,
-                        "up2": 31.21,
+                        "up2": 31.22,
                         "down1": 13.33,
                         "down2": 7.37
                     },
@@ -117615,7 +117615,7 @@
                     "ps": {
                         "mean": 11.55,
                         "up1": 13.28,
-                        "up2": 15.01,
+                        "up2": 15.02,
                         "down1": 9.81,
                         "down2": 8.08
                     }
@@ -123888,7 +123888,7 @@
                         "mean": 11.84,
                         "up1": 13.31,
                         "up2": 14.77,
-                        "down1": 10.37,
+                        "down1": 10.38,
                         "down2": 8.91
                     }
                 }
@@ -140069,11 +140069,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-11T23:39:11Z",
+        "fetchedAt": "2026-09-12T23:32:12Z",
         "dataAsOf": "2026-03-31",
         "filingDate": "2026-04-30",
         "freshness": {
-            "fetchedAt": "2026-09-11T23:39:11Z",
+            "fetchedAt": "2026-09-12T23:32:12Z",
             "dataAsOf": "2026-03-31",
             "filingDate": "2026-04-30",
             "status": "fresh"

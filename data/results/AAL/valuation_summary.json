@@ -1,6 +1,6 @@
 {
     "ticker": "AAL",
-    "last_updated": "2026-09-11 23:39:20",
+    "last_updated": "2026-09-12 23:32:25",
     "averages": {
         "pe": {
             "1Y": 42.02,
@@ -140069,11 +140069,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-11T23:39:19Z",
+        "fetchedAt": "2026-09-12T23:32:23Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-23",
         "freshness": {
-            "fetchedAt": "2026-09-11T23:39:19Z",
+            "fetchedAt": "2026-09-12T23:32:23Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-23",
             "status": "fresh"
