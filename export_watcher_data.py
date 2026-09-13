@@ -139,6 +139,14 @@ def _quarter_growth(current: dict[str, Any], previous: dict[str, Any] | None, fi
     value, base = current.get(field), previous.get(field)
     if not all(isinstance(item, (int, float)) and not isinstance(item, bool) and isfinite(item) for item in (value, base)) or base <= 0:
         return None
+    if field == "eps":
+        incomes = (current.get("netIncome"), previous.get("netIncome"))
+        if value == 0 or not all(isinstance(item, (int, float)) and not isinstance(item, bool) and isfinite(item) for item in incomes):
+            return None
+        current_shares, previous_shares = incomes[0] / value, incomes[1] / base
+        # Reported EPS across a stock split can use incompatible share bases.
+        if previous_shares <= 0 or not 0.8 <= current_shares / previous_shares <= 1.25:
+            return None
     return (value / base - 1) * 100
 
 

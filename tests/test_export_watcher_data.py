@@ -87,6 +87,14 @@ class WatcherExportTests(unittest.TestCase):
         self.assertIsNone(q3["revenue_qoq"])
         self.assertIsNotNone(q3["revenue_yoy"])
 
+    def test_eps_growth_stays_missing_across_incompatible_share_bases(self):
+        rows = self.quarterly_rows()
+        rows[11]["eps"] *= 10  # Pre-split EPS paired with post-split EPS.
+        latest = export_financials(rows, "TEST", "2026-07-31T00:00:00Z")["quarters"][0]
+        self.assertIsNone(latest["eps_yoy"])
+        self.assertIsNotNone(latest["eps_qoq"])
+        self.assertIsNotNone(latest["revenue_yoy"])
+
     def test_does_not_publish_manifest_when_a_symbol_is_incomplete(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
