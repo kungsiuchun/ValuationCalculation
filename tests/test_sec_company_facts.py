@@ -56,6 +56,21 @@ class SECCompanyFactsNormalizationTests(unittest.TestCase):
         self.assertEqual(q2["capexSigned"], -2)
         self.assertEqual(q2["freeCashFlow"], -4)
 
+    def test_reported_date_ignores_later_comparatives_and_proxy_facts(self):
+        payload = copy.deepcopy(self.payload)
+        net_income = payload["facts"]["us-gaap"]["NetIncomeLoss"]["units"]["USD"]
+        annual = next(row for row in net_income if row["end"] == "2024-12-31")
+        net_income.extend([
+            {**annual, "filed": "2026-02-01", "form": "10-K"},
+            {**annual, "filed": "2026-05-12", "form": "DEF 14A"},
+        ])
+
+        rows = normalize_company_facts(payload, "AAPL", "0000320193", max_quarters=12)
+        self.assertEqual(rows[0]["date"], "2024-12-31")
+        self.assertEqual(rows[0]["filingDate"], "2025-02-01")
+        original = normalize_company_facts(self.payload, "AAPL", "0000320193", max_quarters=12)
+        self.assertEqual(rows[0]["netIncome"], original[0]["netIncome"])
+
     def test_missing_fact_is_a_null_field_not_a_fabricated_value(self):
         payload = copy.deepcopy(self.payload)
         del payload["facts"]["us-gaap"]["EarningsPerShareDiluted"]

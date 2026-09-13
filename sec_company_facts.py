@@ -441,8 +441,16 @@ def normalize_company_facts(
     field_maps: Dict[str, Dict[date, _QuarterValue]] = {}
     instant_maps: Dict[str, List[_Observation]] = {}
     selected_tags: Dict[str, str] = {}
+    first_report_dates: Dict[date, str] = {}
     for field in _FACT_TAGS:
         observations, tag = _fact_observations(us_gaap, field)
+        if field in ("revenue", "netIncome"):
+            for observation in observations:
+                if observation.form not in ("10-K", "10-K/A", "10-Q", "10-Q/A") or not observation.filed:
+                    continue
+                current = first_report_dates.get(observation.end)
+                if current is None or observation.filed < current:
+                    first_report_dates[observation.end] = observation.filed
         entity_share_observations: List[_Observation] = []
         entity_share_tag: Optional[str] = None
         if field == "shares":
@@ -479,7 +487,6 @@ def normalize_company_facts(
     endpoint = source_url or "https://data.sec.gov/api/xbrl/companyfacts"
     for period_end in sorted(all_dates, reverse=True):
         row_values: Dict[str, Any] = {}
-        provenance: List[_Observation] = []
         period: Optional[str] = None
         fiscal_year: Optional[int] = None
         for field in _FACT_TAGS:
@@ -496,7 +503,6 @@ def normalize_company_facts(
                     row_values[field] = instant.value
                     observation = instant
             if observation is not None:
-                provenance.append(observation)
                 fiscal_year = fiscal_year or observation.fy
 
         # Shares are exposed under both names so existing FMP-shaped consumers
@@ -523,8 +529,9 @@ def normalize_company_facts(
         # Do not publish rows consisting solely of an instant share fallback.
         if all(row_values.get(field) is None for field in ("revenue", "netIncome", "eps", "operatingCashFlow", "capex")):
             continue
-        filing_dates = [row.filed for row in provenance if row.filed]
-        filing_date = max(filing_dates) if filing_dates else None
+        # The fact chosen for a value may be a later comparative disclosure or
+        # proxy statement.  "Reported" means the first 10-K/10-Q for this end.
+        filing_date = first_report_dates.get(period_end)
         if fiscal_year is None:
             fiscal_year = period_end.year
         normalized.append(
