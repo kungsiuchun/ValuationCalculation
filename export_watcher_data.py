@@ -8,7 +8,8 @@ from __future__ import annotations
 
 import json
 import argparse
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
+from math import isfinite
 from pathlib import Path
 from typing import Any
 
@@ -118,6 +119,29 @@ def export_valuation(summary: dict[str, Any], symbol: str, metric: str, window: 
     }
 
 
+def _quarter_growth(current: dict[str, Any], previous: dict[str, Any] | None, field: str, periods: int) -> float | None:
+    if previous is None:
+        return None
+    current_quarter = current.get("period")
+    previous_quarter = previous.get("period")
+    if current_quarter not in ("Q1", "Q2", "Q3", "Q4") or previous_quarter not in ("Q1", "Q2", "Q3", "Q4"):
+        return None
+    if periods == 1 and int(current_quarter[1]) != int(previous_quarter[1]) % 4 + 1:
+        return None
+    if periods == 4 and current_quarter != previous_quarter:
+        return None
+    try:
+        days = (date.fromisoformat(current["date"]) - date.fromisoformat(previous["date"])).days
+    except ValueError:
+        return None
+    if not (60 <= days <= 120 if periods == 1 else 330 <= days <= 400):
+        return None
+    value, base = current.get(field), previous.get(field)
+    if not all(isinstance(item, (int, float)) and not isinstance(item, bool) and isfinite(item) for item in (value, base)) or base <= 0:
+        return None
+    return (value / base - 1) * 100
+
+
 def export_financials(rows: Any, symbol: str, generated_at: str) -> dict[str, Any]:
     if not isinstance(rows, list):
         raise ExportValidationError(f"{symbol} earnings report is not a list")
@@ -161,6 +185,18 @@ def export_financials(rows: Any, symbol: str, generated_at: str) -> dict[str, An
         raise ExportValidationError(f"{symbol} earnings report has no dated rows")
     if source_metadata is None:
         raise ExportValidationError(f"{symbol} earnings report has no financial source provenance")
+    for index, row in enumerate(normalized[:12]):
+        for field in ("revenue", "netIncome", "eps", "operatingCashFlow"):
+            for suffix, periods in (("qoq", 1), ("yoy", 4)):
+                key = f"{field}_{suffix}"
+                existing = row.get(key)
+                if isinstance(existing, (int, float)) and not isinstance(existing, bool) and isfinite(existing):
+                    continue
+                row[key] = next(
+                    (growth for candidate in normalized[index + 1:]
+                     if (growth := _quarter_growth(row, candidate, field, periods)) is not None),
+                    None,
+                )
     return {
         "schemaVersion": SCHEMA_VERSION,
         "source": "ValuationCalculation financial statements export",

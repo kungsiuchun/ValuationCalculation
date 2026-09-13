@@ -399,7 +399,7 @@ class FinancialSourceRouter:
         except (TypeError, ValueError):
             return self.sec_fetcher(symbol)
         if "max_quarters" in signature.parameters:
-            return self.sec_fetcher(symbol, max_quarters=12)
+            return self.sec_fetcher(symbol, max_quarters=16)
         return self.sec_fetcher(symbol)
 
     def _call_fmp(self, symbol: str) -> Any:
@@ -427,7 +427,7 @@ class FinancialSourceRouter:
             return self.foreign_fetcher(symbol)
         parameters = signature.parameters
         if "max_quarters" in parameters:
-            return self.foreign_fetcher(symbol, max_quarters=12)
+            return self.foreign_fetcher(symbol, max_quarters=16)
         return self.foreign_fetcher(symbol)
 
     @staticmethod

@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from export_watcher_data import ExportValidationError, export_all
+from export_watcher_data import ExportValidationError, export_all, export_financials
 from ticker_universe import UniverseValidationError, resolve_tickers
 
 
@@ -26,6 +26,21 @@ def source_row_fields():
 
 
 class WatcherExportTests(unittest.TestCase):
+    def quarterly_rows(self):
+        return [
+            {
+                "date": f"{2022 + index // 4}-{(index % 4 + 1) * 3:02d}-28",
+                "period": f"Q{index % 4 + 1}",
+                "reportedCurrency": "USD",
+                "revenue": 100 + index * 10,
+                "netIncome": 10 + index,
+                "eps": 1 + index / 10,
+                "operatingCashFlow": 20 + index,
+                **source_row_fields(),
+            }
+            for index in range(16)
+        ]
+
     def write_fixture(self, root: Path, symbol="TEST", quarters=13):
         results = root / "results" / symbol
         processed = root / "processed"
@@ -49,6 +64,28 @@ class WatcherExportTests(unittest.TestCase):
             valuation = json.loads((root / "exports/valuation/TEST/pe/1Y.json").read_text())
             self.assertEqual(valuation["latest"]["bands"]["mean"], 100)
             self.assertEqual(valuation["generatedAt"], "2026-07-30T22:00:00Z")
+
+    def test_computes_missing_growth_before_limiting_to_twelve_quarters(self):
+        rows = self.quarterly_rows()
+        rows[-1]["revenue_qoq"] = 7.5
+        financials = export_financials(rows, "TEST", "2026-07-31T00:00:00Z")
+        self.assertEqual(len(financials["quarters"]), 12)
+        self.assertEqual(financials["quarters"][0]["revenue_qoq"], 7.5)
+        self.assertTrue(all(row["revenue_yoy"] is not None for row in financials["quarters"]))
+        self.assertTrue(all(row["eps_yoy"] is not None for row in financials["quarters"]))
+        self.assertAlmostEqual(financials["quarters"][0]["eps_yoy"], (2.5 / 2.1 - 1) * 100)
+
+    def test_growth_stays_missing_for_gaps_and_nonpositive_bases(self):
+        rows = self.quarterly_rows()
+        rows[14]["revenue"] = 0
+        rows[11]["eps"] = -1
+        rows.pop(13)
+        quarters = export_financials(rows, "TEST", "2026-07-31T00:00:00Z")["quarters"]
+        self.assertIsNone(quarters[0]["revenue_qoq"])
+        self.assertIsNone(quarters[0]["eps_yoy"])
+        q3 = next(row for row in quarters if row["period"] == "Q3" and row["date"].startswith("2025"))
+        self.assertIsNone(q3["revenue_qoq"])
+        self.assertIsNotNone(q3["revenue_yoy"])
 
     def test_does_not_publish_manifest_when_a_symbol_is_incomplete(self):
         with tempfile.TemporaryDirectory() as temp:
