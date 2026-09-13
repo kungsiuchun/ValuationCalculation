@@ -1,6 +1,6 @@
 {
     "ticker": "INTC",
-    "last_updated": "2026-09-13 02:38:13",
+    "last_updated": "2026-09-13 23:44:39",
     "averages": {
         "pe": {
             "1Y": 57.19,
@@ -4475,7 +4475,7 @@
                         "down2": 0.0
                     },
                     "ps": {
-                        "mean": 47.79,
+                        "mean": 47.8,
                         "up1": 53.14,
                         "up2": 58.49,
                         "down1": 42.45,
@@ -11216,7 +11216,7 @@
                     "ps": {
                         "mean": 49.51,
                         "up1": 55.07,
-                        "up2": 60.62,
+                        "up2": 60.63,
                         "down1": 43.95,
                         "down2": 38.39
                     }
@@ -25504,7 +25504,7 @@
         },
         {
             "date": "2022-01-13",
-            "price": 50.95,
+            "price": 50.96,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -136778,7 +136778,7 @@
                         "mean": 31.71,
                         "up1": 45.16,
                         "up2": 58.61,
-                        "down1": 18.27,
+                        "down1": 18.26,
                         "down2": 4.82
                     }
                 },
@@ -140069,11 +140069,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-13T02:38:11Z",
+        "fetchedAt": "2026-09-13T23:44:38Z",
         "dataAsOf": "2026-06-27",
         "filingDate": "2026-07-24",
         "freshness": {
-            "fetchedAt": "2026-09-13T02:38:11Z",
+            "fetchedAt": "2026-09-13T23:44:38Z",
             "dataAsOf": "2026-06-27",
             "filingDate": "2026-07-24",
             "status": "fresh"
