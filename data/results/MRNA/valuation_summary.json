@@ -1,6 +1,6 @@
 {
     "ticker": "MRNA",
-    "last_updated": "2026-09-13 02:13:36",
+    "last_updated": "2026-09-13 02:39:15",
     "averages": {
         "pe": {
             "1Y": 44.43,
@@ -140069,11 +140069,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-13T02:13:35Z",
+        "fetchedAt": "2026-09-13T02:39:14Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-31",
         "freshness": {
-            "fetchedAt": "2026-09-13T02:13:35Z",
+            "fetchedAt": "2026-09-13T02:39:14Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-31",
             "status": "fresh"

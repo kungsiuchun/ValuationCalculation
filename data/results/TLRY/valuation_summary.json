@@ -1,6 +1,6 @@
 {
     "ticker": "TLRY",
-    "last_updated": "2026-09-13 02:14:08",
+    "last_updated": "2026-09-13 02:39:57",
     "averages": {
         "pe": {
             "1Y": 28.54,
@@ -140069,11 +140069,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-13T02:14:07Z",
+        "fetchedAt": "2026-09-13T02:39:55Z",
         "dataAsOf": "2026-05-31",
         "filingDate": "2026-07-28",
         "freshness": {
-            "fetchedAt": "2026-09-13T02:14:07Z",
+            "fetchedAt": "2026-09-13T02:39:55Z",
             "dataAsOf": "2026-05-31",
             "filingDate": "2026-07-28",
             "status": "fresh"
