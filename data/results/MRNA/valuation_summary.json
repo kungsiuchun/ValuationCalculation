@@ -1,12 +1,12 @@
 {
     "ticker": "MRNA",
-    "last_updated": "2026-09-13 23:45:39",
+    "last_updated": "2026-09-15 00:05:08",
     "averages": {
         "pe": {
             "1Y": 44.43,
             "2Y": 44.43,
             "3Y": 44.43,
-            "5Y": 54.75
+            "5Y": 54.68
         },
         "fcf": {
             "1Y": 0.0,
@@ -15,10 +15,10 @@
             "5Y": 0.0
         },
         "ps": {
-            "1Y": 9.05,
-            "2Y": 6.71,
+            "1Y": 9.07,
+            "2Y": 6.7,
             "3Y": 7.69,
-            "5Y": 10.95
+            "5Y": 10.94
         }
     },
     "data": [
@@ -140063,17 +140063,115 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-09-14",
+            "price": null,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 51.62,
+                        "up1": 77.42,
+                        "up2": 103.23,
+                        "down1": 25.81,
+                        "down2": 0.0
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 38.15,
+                        "up1": 57.22,
+                        "up2": 76.3,
+                        "down1": 19.07,
+                        "down2": 0.0
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 43.73,
+                        "up1": 65.59,
+                        "up2": 87.45,
+                        "down1": 21.86,
+                        "down2": 0.0
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 62.24,
+                        "up1": 93.37,
+                        "up2": 124.49,
+                        "down1": 31.12,
+                        "down2": 0.0
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-13T23:45:37Z",
+        "fetchedAt": "2026-09-15T00:05:07Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-31",
         "freshness": {
-            "fetchedAt": "2026-09-13T23:45:37Z",
+            "fetchedAt": "2026-09-15T00:05:07Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-31",
             "status": "fresh"
