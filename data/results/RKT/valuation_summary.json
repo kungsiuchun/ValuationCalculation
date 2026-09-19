@@ -1,6 +1,6 @@
 {
     "ticker": "RKT",
-    "last_updated": "2026-09-18 23:44:38",
+    "last_updated": "2026-09-19 23:46:19",
     "averages": {
         "pe": {
             "1Y": 81.89,
@@ -1610,7 +1610,7 @@
                         "down2": 13.69
                     },
                     "ps": {
-                        "mean": 17.78,
+                        "mean": 17.77,
                         "up1": 18.82,
                         "up2": 19.86,
                         "down1": 16.73,
@@ -1633,7 +1633,7 @@
                         "down2": 13.69
                     },
                     "ps": {
-                        "mean": 17.78,
+                        "mean": 17.77,
                         "up1": 18.82,
                         "up2": 19.86,
                         "down1": 16.73,
@@ -1656,7 +1656,7 @@
                         "down2": 13.69
                     },
                     "ps": {
-                        "mean": 17.78,
+                        "mean": 17.77,
                         "up1": 18.82,
                         "up2": 19.86,
                         "down1": 16.73,
@@ -1679,7 +1679,7 @@
                         "down2": 13.69
                     },
                     "ps": {
-                        "mean": 17.78,
+                        "mean": 17.77,
                         "up1": 18.82,
                         "up2": 19.86,
                         "down1": 16.73,
@@ -116046,9 +116046,9 @@
                     },
                     "ps": {
                         "mean": 51.71,
-                        "up1": 77.57,
+                        "up1": 77.56,
                         "up2": 103.42,
-                        "down1": 25.86,
+                        "down1": 25.85,
                         "down2": 0.0
                     }
                 }
@@ -140559,11 +140559,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-18T23:44:37Z",
+        "fetchedAt": "2026-09-19T23:46:18Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-07",
         "freshness": {
-            "fetchedAt": "2026-09-18T23:44:37Z",
+            "fetchedAt": "2026-09-19T23:46:18Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-07",
             "status": "fresh"

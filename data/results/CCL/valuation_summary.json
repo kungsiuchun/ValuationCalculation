@@ -1,6 +1,6 @@
 {
     "ticker": "CCL",
-    "last_updated": "2026-09-18 23:43:56",
+    "last_updated": "2026-09-19 23:45:28",
     "averages": {
         "pe": {
             "1Y": 12.68,
@@ -132453,7 +132453,7 @@
                         "up1": 40.3,
                         "up2": 47.34,
                         "down1": 26.22,
-                        "down2": 19.18
+                        "down2": 19.19
                     },
                     "fcf": {
                         "mean": 32.62,
@@ -135031,7 +135031,7 @@
                         "up1": 43.39,
                         "up2": 52.95,
                         "down1": 24.26,
-                        "down2": 14.69
+                        "down2": 14.7
                     },
                     "ps": {
                         "mean": 21.77,
@@ -135054,7 +135054,7 @@
                         "up1": 43.39,
                         "up2": 52.95,
                         "down1": 24.26,
-                        "down2": 14.69
+                        "down2": 14.7
                     },
                     "ps": {
                         "mean": 13.05,
@@ -138458,7 +138458,7 @@
                     },
                     "fcf": {
                         "mean": 33.31,
-                        "up1": 42.86,
+                        "up1": 42.85,
                         "up2": 52.4,
                         "down1": 23.77,
                         "down2": 14.22
@@ -138481,7 +138481,7 @@
                     },
                     "fcf": {
                         "mean": 33.31,
-                        "up1": 42.86,
+                        "up1": 42.85,
                         "up2": 52.4,
                         "down1": 23.77,
                         "down2": 14.22
@@ -140559,11 +140559,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-18T23:43:55Z",
+        "fetchedAt": "2026-09-19T23:45:27Z",
         "dataAsOf": "2026-05-31",
         "filingDate": "2026-06-26",
         "freshness": {
-            "fetchedAt": "2026-09-18T23:43:55Z",
+            "fetchedAt": "2026-09-19T23:45:27Z",
             "dataAsOf": "2026-05-31",
             "filingDate": "2026-06-26",
             "status": "fresh"
