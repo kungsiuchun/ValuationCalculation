@@ -1,6 +1,6 @@
 {
     "ticker": "MGM",
-    "last_updated": "2026-09-19 23:45:57",
+    "last_updated": "2026-09-20 23:41:21",
     "averages": {
         "pe": {
             "1Y": 19.78,
@@ -26037,7 +26037,7 @@
                     "ps": {
                         "mean": 32.17,
                         "up1": 41.56,
-                        "up2": 50.95,
+                        "up2": 50.94,
                         "down1": 22.79,
                         "down2": 13.4
                     }
@@ -49580,7 +49580,7 @@
                     "ps": {
                         "mean": 33.37,
                         "up1": 41.64,
-                        "up2": 49.91,
+                        "up2": 49.9,
                         "down1": 25.11,
                         "down2": 16.84
                     }
@@ -140559,11 +140559,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-19T23:45:56Z",
+        "fetchedAt": "2026-09-20T23:41:20Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-29",
         "freshness": {
-            "fetchedAt": "2026-09-19T23:45:56Z",
+            "fetchedAt": "2026-09-20T23:41:20Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-29",
             "status": "fresh"
