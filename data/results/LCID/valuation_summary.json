@@ -1,6 +1,6 @@
 {
     "ticker": "LCID",
-    "last_updated": "2026-09-20 23:40:57",
+    "last_updated": "2026-09-22 00:21:26",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -15,10 +15,10 @@
             "5Y": 0.0
         },
         "ps": {
-            "1Y": 3.23,
-            "2Y": 6.06,
-            "3Y": 8.19,
-            "5Y": 27.74
+            "1Y": 3.22,
+            "2Y": 6.05,
+            "3Y": 8.17,
+            "5Y": 27.7
         }
     },
     "data": [
@@ -140553,17 +140553,115 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-09-21",
+            "price": null,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 14.85,
+                        "up1": 22.27,
+                        "up2": 29.69,
+                        "down1": 7.42,
+                        "down2": 0.0
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 27.89,
+                        "up1": 41.83,
+                        "up2": 55.78,
+                        "down1": 13.94,
+                        "down2": 0.0
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 37.7,
+                        "up1": 56.54,
+                        "up2": 75.39,
+                        "down1": 18.85,
+                        "down2": 0.0
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 127.77,
+                        "up1": 191.65,
+                        "up2": 255.53,
+                        "down1": 63.88,
+                        "down2": 0.0
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-20T23:40:56Z",
+        "fetchedAt": "2026-09-22T00:21:25Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-04",
         "freshness": {
-            "fetchedAt": "2026-09-20T23:40:56Z",
+            "fetchedAt": "2026-09-22T00:21:25Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-04",
             "status": "fresh"

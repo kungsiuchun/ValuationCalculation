@@ -1,6 +1,6 @@
 {
     "ticker": "RIVN",
-    "last_updated": "2026-09-20 23:41:09",
+    "last_updated": "2026-09-22 00:21:36",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -119385,17 +119385,115 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-09-21",
+            "price": null,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 15.91,
+                        "up1": 17.96,
+                        "up2": 20.01,
+                        "down1": 13.86,
+                        "down2": 11.81
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 14.06,
+                        "up1": 16.6,
+                        "up2": 19.14,
+                        "down1": 11.52,
+                        "down2": 8.98
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 14.34,
+                        "up1": 17.77,
+                        "up2": 21.19,
+                        "down1": 10.92,
+                        "down2": 7.5
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 26.67,
+                        "up1": 40.01,
+                        "up2": 53.34,
+                        "down1": 13.34,
+                        "down2": 0.0
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-20T23:41:08Z",
+        "fetchedAt": "2026-09-22T00:21:35Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-30",
         "freshness": {
-            "fetchedAt": "2026-09-20T23:41:08Z",
+            "fetchedAt": "2026-09-22T00:21:35Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-30",
             "status": "fresh"
