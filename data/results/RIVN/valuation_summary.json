@@ -1,6 +1,6 @@
 {
     "ticker": "RIVN",
-    "last_updated": "2026-09-22 23:55:46",
+    "last_updated": "2026-09-24 00:07:47",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -17,7 +17,7 @@
         "ps": {
             "1Y": 3.4,
             "2Y": 3.0,
-            "3Y": 3.06,
+            "3Y": 3.05,
             "5Y": 5.68
         }
     },
@@ -119581,17 +119581,115 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-09-23",
+            "price": null,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 15.93,
+                        "up1": 17.96,
+                        "up2": 20.0,
+                        "down1": 13.89,
+                        "down2": 11.85
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 14.07,
+                        "up1": 16.61,
+                        "up2": 19.15,
+                        "down1": 11.53,
+                        "down2": 8.99
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 14.32,
+                        "up1": 17.7,
+                        "up2": 21.07,
+                        "down1": 10.94,
+                        "down2": 7.56
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 26.65,
+                        "up1": 39.98,
+                        "up2": 53.3,
+                        "down1": 13.33,
+                        "down2": 0.0
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-22T23:55:45Z",
+        "fetchedAt": "2026-09-24T00:07:45Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-30",
         "freshness": {
-            "fetchedAt": "2026-09-22T23:55:45Z",
+            "fetchedAt": "2026-09-24T00:07:45Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-30",
             "status": "fresh"

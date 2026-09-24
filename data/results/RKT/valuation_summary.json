@@ -1,10 +1,10 @@
 {
     "ticker": "RKT",
-    "last_updated": "2026-09-22 23:56:19",
+    "last_updated": "2026-09-24 00:08:29",
     "averages": {
         "pe": {
-            "1Y": 81.89,
-            "2Y": 61.49,
+            "1Y": 82.04,
+            "2Y": 61.5,
             "3Y": 54.55,
             "5Y": 54.55
         },
@@ -140749,17 +140749,115 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-09-23",
+            "price": null,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": 13.0,
+                        "up1": 19.21,
+                        "up2": 25.41,
+                        "down1": 6.79,
+                        "down2": 0.58
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 8.92,
+                        "up1": 12.03,
+                        "up2": 15.15,
+                        "down1": 5.81,
+                        "down2": 2.69
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": 9.74,
+                        "up1": 14.61,
+                        "up2": 19.49,
+                        "down1": 4.87,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 7.33,
+                        "up1": 10.14,
+                        "up2": 12.96,
+                        "down1": 4.51,
+                        "down2": 1.7
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": 8.64,
+                        "up1": 12.96,
+                        "up2": 17.28,
+                        "down1": 4.32,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 10.04,
+                        "up1": 15.06,
+                        "up2": 20.07,
+                        "down1": 5.02,
+                        "down2": 0.0
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": 8.64,
+                        "up1": 12.96,
+                        "up2": 17.28,
+                        "down1": 4.32,
+                        "down2": 0.0
+                    },
+                    "fcf": {
+                        "mean": 0.0,
+                        "up1": 0.0,
+                        "up2": 0.0,
+                        "down1": 0.0,
+                        "down2": 0.0
+                    },
+                    "ps": {
+                        "mean": 14.69,
+                        "up1": 22.04,
+                        "up2": 29.39,
+                        "down1": 7.35,
+                        "down2": 0.0
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-22T23:56:18Z",
+        "fetchedAt": "2026-09-24T00:08:28Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-07",
         "freshness": {
-            "fetchedAt": "2026-09-22T23:56:18Z",
+            "fetchedAt": "2026-09-24T00:08:28Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-07",
             "status": "fresh"
