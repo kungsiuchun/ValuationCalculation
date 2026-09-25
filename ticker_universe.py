@@ -103,10 +103,41 @@ def load_registry_symbols(path: Path | None) -> list[str]:
     return deduplicate_symbols(values)
 
 
-def resolve_tickers(explicit_symbols: str | None = None, registry_path: Path | None = None) -> list[str]:
+def load_curated_watchlist_symbols(path: Path | None) -> list[str]:
+    """Read the public Watcher's D1-backed admin-curated universe response."""
+
+    if path is None:
+        return []
+    try:
+        body = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise UniverseValidationError(f"Cannot read curated Watcher universe {path}: {error}") from error
+    raw = body.get("raw") if isinstance(body, dict) and body.get("ok") is True else None
+    stocks = raw.get("stocks") if isinstance(raw, dict) and raw.get("source") == "d1_tracking" else None
+    if not isinstance(stocks, list) or not stocks:
+        raise UniverseValidationError(
+            f"Curated Watcher universe {path} must contain a non-empty D1-backed raw.stocks array"
+        )
+    values: list[Any] = []
+    for stock in stocks:
+        if not isinstance(stock, dict):
+            raise UniverseValidationError(f"Curated Watcher universe {path} contains an invalid stock record")
+        values.append(stock.get("symbol"))
+    return deduplicate_symbols(values)
+
+
+def resolve_tickers(
+    explicit_symbols: str | None = None,
+    registry_path: Path | None = None,
+    curated_watchlist_path: Path | None = None,
+) -> list[str]:
     if explicit_symbols is not None:
         values = [value.strip() for value in explicit_symbols.split(",") if value.strip()]
         if not values:
             raise UniverseValidationError("--symbols must contain at least one ticker")
         return deduplicate_symbols(values)
-    return deduplicate_symbols([*DEFAULT_TICKERS, *load_registry_symbols(registry_path)])
+    return deduplicate_symbols([
+        *DEFAULT_TICKERS,
+        *load_registry_symbols(registry_path),
+        *load_curated_watchlist_symbols(curated_watchlist_path),
+    ])

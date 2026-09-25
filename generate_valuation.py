@@ -553,6 +553,7 @@ def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Generate valuation data for the configured ticker universe.")
     parser.add_argument("--symbols", help="Comma-separated symbols. When present, does not include the default universe.")
     parser.add_argument("--universe-file", type=Path, help="Local copy of the private coverage/universe.json R2 object.")
+    parser.add_argument("--curated-universe-file", type=Path, help="Public D1-backed Stock Watcher get_watchlist response.")
     parser.add_argument("--write-resolved-symbols", type=Path, help="Write the exact resolved universe for downstream export validation.")
     return parser.parse_args(argv)
 
@@ -582,7 +583,7 @@ def _has_routed_financial_artifact(path):
 def main(argv=None):
     args = parse_args(argv)
     try:
-        tickers = resolve_tickers(args.symbols, args.universe_file)
+        tickers = resolve_tickers(args.symbols, args.universe_file, args.curated_universe_file)
     except UniverseValidationError as error:
         raise RuntimeError(f"Ticker universe is invalid: {error}") from error
     if args.write_resolved_symbols:

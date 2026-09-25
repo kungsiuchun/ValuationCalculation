@@ -106,6 +106,14 @@ def export_valuation(summary: dict[str, Any], symbol: str, metric: str, window: 
     if not points:
         raise ExportValidationError(f"{symbol} has no {metric}/{window} valuation points")
     latest = points[-1]
+    latest_price = latest.get("price")
+    if (
+        not isinstance(latest_price, (int, float))
+        or isinstance(latest_price, bool)
+        or not isfinite(latest_price)
+        or latest_price <= 0
+    ):
+        raise ExportValidationError(f"{symbol} latest valuation price is missing or invalid")
     return {
         "schemaVersion": SCHEMA_VERSION,
         "source": "ValuationCalculation hybrid valuation model",

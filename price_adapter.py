@@ -118,6 +118,22 @@ def validate_price_history(prices: Any) -> str | None:
     return None
 
 
+def _complete_price_history(prices: pd.DataFrame) -> pd.DataFrame:
+    """Drop provider placeholder rows that have no complete tradable close."""
+
+    numeric = prices.loc[:, sorted(REQUIRED_PRICE_COLUMNS)].apply(
+        pd.to_numeric,
+        errors="coerce",
+    )
+    complete = numeric.apply(lambda column: column.map(math.isfinite)).all(axis=1)
+    if complete.all():
+        return prices
+    cleaned = prices.loc[complete].copy()
+    for column in REQUIRED_PRICE_COLUMNS:
+        cleaned[column] = numeric.loc[complete, column]
+    return cleaned
+
+
 class YahooPriceAdapter:
     """Fetch Yahoo history through a bounded and injectable source seam.
 
@@ -238,7 +254,19 @@ class YahooPriceAdapter:
 
                 invalid_reason = validate_price_history(prices)
                 if invalid_reason is None:
-                    return prices
+                    cleaned = _complete_price_history(prices)
+                    if cleaned.empty:
+                        invalid_reason = "no row has complete finite Close and Adj Close values"
+                    else:
+                        dropped = len(prices.index) - len(cleaned.index)
+                        if dropped:
+                            self._logger.warning(
+                                "<%s> %s dropped %s incomplete price row(s)",
+                                cache_symbol,
+                                source_label,
+                                dropped,
+                            )
+                        return cleaned
                 attempts.append(
                     PriceFetchAttempt(
                         source=source_label,

@@ -105,6 +105,28 @@ class PriceAdapterBehaviorTests(unittest.TestCase):
         self.assertIn("missing columns: Adj Close", str(context.exception))
         self.assertEqual(len(context.exception.attempts), 1)
 
+    def test_incomplete_trailing_provider_row_is_removed_before_valuation(self):
+        prices = pd.DataFrame({
+            "Close": [10.0, 11.0],
+            "Adj Close": [9.5, float("nan")],
+        }, index=pd.to_datetime(["2026-09-22", "2026-09-23"]))
+
+        class PartialTicker:
+            def __init__(self, _symbol):
+                pass
+
+            def history(self, **_kwargs):
+                return prices
+
+        result = YahooPriceAdapter(
+            ticker_factory=PartialTicker,
+            retry_delay_seconds=0,
+            sleep=lambda _delay: None,
+        ).fetch_history("AAPL")
+
+        self.assertEqual(result.index.tolist(), [pd.Timestamp("2026-09-22")])
+        self.assertEqual(result.iloc[-1]["Adj Close"], 9.5)
+
     def test_fallback_exhaustion_is_typed_and_observable(self):
         calls = []
 

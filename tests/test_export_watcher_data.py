@@ -133,6 +133,17 @@ class WatcherExportTests(unittest.TestCase):
                 export_all(results, processed, root / "exports")
             self.assertFalse((root / "exports/manifest.json").exists())
 
+    def test_aborts_when_latest_valuation_price_is_missing(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            results, processed = self.write_fixture(root)
+            payload = json.loads((results / "TEST" / "valuation_summary.json").read_text(encoding="utf-8"))
+            payload["data"][-1]["price"] = None
+            (results / "TEST" / "valuation_summary.json").write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ExportValidationError, "latest valuation price"):
+                export_all(results, processed, root / "exports")
+            self.assertFalse((root / "exports/manifest.json").exists())
+
 
 class TickerUniverseTests(unittest.TestCase):
     def test_default_universe_excludes_unbackfilled_legacy_sq_symbol(self):
@@ -155,6 +166,31 @@ class TickerUniverseTests(unittest.TestCase):
             tickers = resolve_tickers(registry_path=registry)
             self.assertEqual(tickers.count("TSM"), 1)
             self.assertEqual(tickers.count("IBM"), 1)
+
+    def test_admin_curated_d1_watchlist_is_unioned_with_other_sources(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            registry = root / "universe.json"
+            registry.write_text(json.dumps({"schemaVersion": "1.0", "symbols": [{"symbol": "IBM", "state": "queued"}]}), encoding="utf-8")
+            curated = root / "watchlist.json"
+            curated.write_text(json.dumps({
+                "ok": True,
+                "raw": {
+                    "source": "d1_tracking",
+                    "stocks": [{"symbol": "AVGO"}, {"symbol": "HD"}, {"symbol": "IBM"}],
+                },
+            }), encoding="utf-8")
+            tickers = resolve_tickers(registry_path=registry, curated_watchlist_path=curated)
+            self.assertIn("AVGO", tickers)
+            self.assertIn("HD", tickers)
+            self.assertEqual(tickers.count("IBM"), 1)
+
+    def test_admin_curated_watchlist_must_be_d1_backed_and_nonempty(self):
+        with tempfile.TemporaryDirectory() as temp:
+            curated = Path(temp) / "watchlist.json"
+            curated.write_text(json.dumps({"ok": True, "raw": {"source": "static", "stocks": []}}), encoding="utf-8")
+            with self.assertRaisesRegex(UniverseValidationError, "D1-backed"):
+                resolve_tickers(curated_watchlist_path=curated)
 
     def test_explicit_symbols_are_deduplicated_and_invalid_symbol_fails(self):
         self.assertEqual(resolve_tickers("tsm,TSM,nvda"), ["TSM", "NVDA"])

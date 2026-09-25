@@ -91,10 +91,19 @@ jobs:
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       run: |
         $ErrorActionPreference = 'Stop'
-        $output = & npx --yes wrangler@4.118.0 r2 bucket list 2>&1
-        if ($LASTEXITCODE -ne 0) {
-          $message = ($output | Out-String).Trim()
-          throw "Cloudflare R2 access preflight failed. Check CLOUDFLARE_R2_API_TOKEN permissions. Details: $message"
+        $output = ''
+        $exitCode = 1
+        foreach ($attempt in 1..3) {
+          $output = (& npx --yes wrangler@4.118.0 r2 bucket list 2>&1 | Out-String)
+          $exitCode = $LASTEXITCODE
+          if ($exitCode -eq 0) { break }
+          $isTransient = $output -match '(?i)internal error|code:\s*10001'
+          if (-not $isTransient -or $attempt -eq 3) { break }
+          Write-Warning "Cloudflare R2 preflight returned a transient internal error on attempt $attempt/3; retrying."
+          Start-Sleep -Seconds 5
+        }
+        if ($exitCode -ne 0) {
+          throw "Cloudflare R2 access preflight failed. Details: $($output.Trim())"
         }
 
     - name: Read private Stock Watcher coverage registry
@@ -129,11 +138,24 @@ jobs:
         $ErrorActionPreference = 'Stop'
         @{ schemaVersion = '1.0'; symbols = @() } | ConvertTo-Json -Compress | Set-Content -NoNewline data/watcher_coverage_universe.json
 
+    - name: Read admin-curated Stock Watcher universe
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $body = @{ tool = 'get_watchlist'; params = @{} } | ConvertTo-Json -Compress
+        $response = Invoke-RestMethod -Method Post -Uri 'https://sius-ai-workshop.pages.dev/api/stocks-intelligence-watcher' -ContentType 'application/json' -Body $body -TimeoutSec 30
+        if (-not $response.ok) { throw "Curated Watcher universe request failed: $($response.error)" }
+        if ($response.raw.source -ne 'd1_tracking') { throw "Curated Watcher universe has unexpected source: $($response.raw.source)" }
+        $stocks = @($response.raw.stocks)
+        if ($stocks.Count -eq 0) { throw 'Curated Watcher universe is empty.' }
+        $response | ConvertTo-Json -Depth 8 -Compress | Set-Content -NoNewline data/watcher_curated_universe.json
+        Write-Host "Loaded $($stocks.Count) admin-curated Watcher tickers."
+
     - name: Run Pipeline Script
       env:
         FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
         SEC_USER_AGENT: "ValuationCalculation/1.0 contact@sius.ai"
-      run: python generate_valuation.py --universe-file data/watcher_coverage_universe.json --write-resolved-symbols data/watcher_coverage_symbols.json
+      run: python generate_valuation.py --universe-file data/watcher_coverage_universe.json --curated-universe-file data/watcher_curated_universe.json --write-resolved-symbols data/watcher_coverage_symbols.json
 
     - name: Build quarterly earnings reports
       run: python generate_earning_report.py
