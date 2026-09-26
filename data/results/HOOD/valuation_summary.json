@@ -1,6 +1,6 @@
 {
     "ticker": "HOOD",
-    "last_updated": "2026-09-25 03:43:09",
+    "last_updated": "2026-09-26 00:15:25",
     "averages": {
         "pe": {
             "1Y": 46.12,
@@ -126937,11 +126937,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-25T03:43:09Z",
+        "fetchedAt": "2026-09-26T00:15:24Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-30",
         "freshness": {
-            "fetchedAt": "2026-09-25T03:43:09Z",
+            "fetchedAt": "2026-09-26T00:15:24Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-30",
             "status": "fresh"

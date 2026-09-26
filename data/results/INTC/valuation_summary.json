@@ -1,6 +1,6 @@
 {
     "ticker": "INTC",
-    "last_updated": "2026-09-25 03:42:44",
+    "last_updated": "2026-09-26 00:14:45",
     "averages": {
         "pe": {
             "1Y": 57.19,
@@ -25504,7 +25504,7 @@
         },
         {
             "date": "2022-01-13",
-            "price": 50.96,
+            "price": 50.95,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -76653,7 +76653,7 @@
                         "up1": 52.28,
                         "up2": 61.25,
                         "down1": 34.32,
-                        "down2": 25.34
+                        "down2": 25.35
                     }
                 }
             }
@@ -77828,7 +77828,7 @@
                         "mean": 43.41,
                         "up1": 52.41,
                         "up2": 61.41,
-                        "down1": 34.4,
+                        "down1": 34.41,
                         "down2": 25.4
                     }
                 }
@@ -90642,7 +90642,7 @@
                     "ps": {
                         "mean": 36.27,
                         "up1": 44.3,
-                        "up2": 52.32,
+                        "up2": 52.33,
                         "down1": 28.24,
                         "down2": 20.21
                     }
@@ -93212,7 +93212,7 @@
                     },
                     "ps": {
                         "mean": 41.1,
-                        "up1": 51.16,
+                        "up1": 51.17,
                         "up2": 61.23,
                         "down1": 31.04,
                         "down2": 20.98
@@ -111048,7 +111048,7 @@
                     },
                     "ps": {
                         "mean": 35.54,
-                        "up1": 45.84,
+                        "up1": 45.85,
                         "up2": 56.15,
                         "down1": 25.23,
                         "down2": 14.92
@@ -140951,11 +140951,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-25T03:42:44Z",
+        "fetchedAt": "2026-09-26T00:14:43Z",
         "dataAsOf": "2026-06-27",
         "filingDate": "2026-07-24",
         "freshness": {
-            "fetchedAt": "2026-09-25T03:42:44Z",
+            "fetchedAt": "2026-09-26T00:14:43Z",
             "dataAsOf": "2026-06-27",
             "filingDate": "2026-07-24",
             "status": "fresh"
