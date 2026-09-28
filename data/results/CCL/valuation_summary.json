@@ -1,6 +1,6 @@
 {
     "ticker": "CCL",
-    "last_updated": "2026-09-27 00:00:59",
+    "last_updated": "2026-09-28 00:07:10",
     "averages": {
         "pe": {
             "1Y": 12.58,
@@ -126013,7 +126013,7 @@
                     "fcf": {
                         "mean": 32.17,
                         "up1": 40.89,
-                        "up2": 49.6,
+                        "up2": 49.61,
                         "down1": 23.45,
                         "down2": 14.74
                     },
@@ -126036,7 +126036,7 @@
                     "fcf": {
                         "mean": 32.17,
                         "up1": 40.89,
-                        "up2": 49.6,
+                        "up2": 49.61,
                         "down1": 23.45,
                         "down2": 14.74
                     },
@@ -136160,7 +136160,7 @@
                         "mean": 31.53,
                         "up1": 34.87,
                         "up2": 38.21,
-                        "down1": 28.19,
+                        "down1": 28.2,
                         "down2": 24.86
                     },
                     "ps": {
@@ -141049,11 +141049,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-09-27T00:00:58Z",
+        "fetchedAt": "2026-09-28T00:07:09Z",
         "dataAsOf": "2026-05-31",
         "filingDate": "2026-06-26",
         "freshness": {
-            "fetchedAt": "2026-09-27T00:00:58Z",
+            "fetchedAt": "2026-09-28T00:07:09Z",
             "dataAsOf": "2026-05-31",
             "filingDate": "2026-06-26",
             "status": "fresh"
