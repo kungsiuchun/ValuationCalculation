@@ -1,6 +1,6 @@
 {
     "ticker": "INTC",
-    "last_updated": "2026-10-04 00:12:22",
+    "last_updated": "2026-10-05 00:17:59",
     "averages": {
         "pe": {
             "1Y": 57.19,
@@ -136459,7 +136459,7 @@
                     },
                     "ps": {
                         "mean": 42.58,
-                        "up1": 54.16,
+                        "up1": 54.17,
                         "up2": 65.75,
                         "down1": 30.99,
                         "down2": 19.41
@@ -141539,11 +141539,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-04T00:12:20Z",
+        "fetchedAt": "2026-10-05T00:17:58Z",
         "dataAsOf": "2026-06-27",
         "filingDate": "2026-07-24",
         "freshness": {
-            "fetchedAt": "2026-10-04T00:12:20Z",
+            "fetchedAt": "2026-10-05T00:17:58Z",
             "dataAsOf": "2026-06-27",
             "filingDate": "2026-07-24",
             "status": "fresh"

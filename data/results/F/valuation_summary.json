@@ -1,6 +1,6 @@
 {
     "ticker": "F",
-    "last_updated": "2026-10-04 00:13:28",
+    "last_updated": "2026-10-05 00:18:44",
     "averages": {
         "pe": {
             "1Y": 13.34,
@@ -37142,7 +37142,7 @@
                 "5Y": {
                     "pe": {
                         "mean": 7.57,
-                        "up1": 9.77,
+                        "up1": 9.76,
                         "up2": 11.96,
                         "down1": 5.37,
                         "down2": 3.17
@@ -45809,7 +45809,7 @@
                     },
                     "ps": {
                         "mean": 10.81,
-                        "up1": 12.03,
+                        "up1": 12.04,
                         "up2": 13.26,
                         "down1": 9.59,
                         "down2": 8.37
@@ -57844,7 +57844,7 @@
         },
         {
             "date": "2023-05-09",
-            "price": 9.72,
+            "price": 9.71,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -78730,7 +78730,7 @@
                     },
                     "fcf": {
                         "mean": 10.75,
-                        "up1": 13.18,
+                        "up1": 13.19,
                         "up2": 15.62,
                         "down1": 8.31,
                         "down2": 5.88
@@ -83874,7 +83874,7 @@
                         "mean": 14.73,
                         "up1": 18.51,
                         "up2": 22.28,
-                        "down1": 10.95,
+                        "down1": 10.96,
                         "down2": 7.18
                     },
                     "ps": {
@@ -109284,7 +109284,7 @@
                     },
                     "ps": {
                         "mean": 11.78,
-                        "up1": 14.21,
+                        "up1": 14.22,
                         "up2": 16.65,
                         "down1": 9.35,
                         "down2": 6.92
@@ -141539,11 +141539,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-04T00:13:27Z",
+        "fetchedAt": "2026-10-05T00:18:43Z",
         "dataAsOf": "2026-03-31",
         "filingDate": "2026-04-30",
         "freshness": {
-            "fetchedAt": "2026-10-04T00:13:27Z",
+            "fetchedAt": "2026-10-05T00:18:43Z",
             "dataAsOf": "2026-03-31",
             "filingDate": "2026-04-30",
             "status": "fresh"
