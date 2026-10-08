@@ -1,6 +1,6 @@
 {
     "ticker": "ET",
-    "last_updated": "2026-10-07 01:07:45",
+    "last_updated": "2026-10-08 01:25:38",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -811,11 +811,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-07T01:07:45Z",
+        "fetchedAt": "2026-10-08T01:25:38Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-06",
         "freshness": {
-            "fetchedAt": "2026-10-07T01:07:45Z",
+            "fetchedAt": "2026-10-08T01:25:38Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-06",
             "status": "fresh"
