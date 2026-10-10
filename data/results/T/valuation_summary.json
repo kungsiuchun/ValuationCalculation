@@ -1,6 +1,6 @@
 {
     "ticker": "T",
-    "last_updated": "2026-10-09 01:32:34",
+    "last_updated": "2026-10-10 01:22:20",
     "averages": {
         "pe": {
             "1Y": 7.81,
@@ -79612,7 +79612,7 @@
                     },
                     "fcf": {
                         "mean": 15.73,
-                        "up1": 16.73,
+                        "up1": 16.72,
                         "up2": 17.72,
                         "down1": 14.74,
                         "down2": 13.74
@@ -85047,7 +85047,7 @@
                         "down2": 6.2
                     },
                     "fcf": {
-                        "mean": 16.86,
+                        "mean": 16.85,
                         "up1": 18.22,
                         "up2": 19.59,
                         "down1": 15.49,
@@ -96492,7 +96492,7 @@
                     "fcf": {
                         "mean": 17.07,
                         "up1": 18.83,
-                        "up2": 20.59,
+                        "up2": 20.58,
                         "down1": 15.31,
                         "down2": 13.55
                     },
@@ -119898,7 +119898,7 @@
                     "ps": {
                         "mean": 25.45,
                         "up1": 27.13,
-                        "up2": 28.82,
+                        "up2": 28.81,
                         "down1": 23.77,
                         "down2": 22.08
                     }
@@ -141931,11 +141931,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-09T01:32:32Z",
+        "fetchedAt": "2026-10-10T01:22:20Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-22",
         "freshness": {
-            "fetchedAt": "2026-10-09T01:32:32Z",
+            "fetchedAt": "2026-10-10T01:22:20Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-22",
             "status": "fresh"
