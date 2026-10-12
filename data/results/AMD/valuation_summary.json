@@ -1,6 +1,6 @@
 {
     "ticker": "AMD",
-    "last_updated": "2026-10-11 00:35:40",
+    "last_updated": "2026-10-12 00:49:07",
     "averages": {
         "pe": {
             "1Y": 106.79,
@@ -142029,11 +142029,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-11T00:35:39Z",
+        "fetchedAt": "2026-10-12T00:49:06Z",
         "dataAsOf": "2026-06-27",
         "filingDate": "2026-08-05",
         "freshness": {
-            "fetchedAt": "2026-10-11T00:35:39Z",
+            "fetchedAt": "2026-10-12T00:49:06Z",
             "dataAsOf": "2026-06-27",
             "filingDate": "2026-08-05",
             "status": "fresh"

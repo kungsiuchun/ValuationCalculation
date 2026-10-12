@@ -1,6 +1,6 @@
 {
     "ticker": "UAL",
-    "last_updated": "2026-10-11 00:36:13",
+    "last_updated": "2026-10-12 00:49:31",
     "averages": {
         "pe": {
             "1Y": 9.89,
@@ -142029,11 +142029,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-11T00:36:11Z",
+        "fetchedAt": "2026-10-12T00:49:30Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-16",
         "freshness": {
-            "fetchedAt": "2026-10-11T00:36:11Z",
+            "fetchedAt": "2026-10-12T00:49:30Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-16",
             "status": "fresh"
