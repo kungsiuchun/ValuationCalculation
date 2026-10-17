@@ -1,6 +1,6 @@
 {
     "ticker": "BAC",
-    "last_updated": "2026-10-15 23:58:04",
+    "last_updated": "2026-10-17 00:01:03",
     "averages": {
         "pe": {
             "1Y": 12.76,
@@ -29982,7 +29982,7 @@
                         "up1": 35.97,
                         "up2": 43.09,
                         "down1": 21.74,
-                        "down2": 14.62
+                        "down2": 14.63
                     }
                 },
                 "5Y": {
@@ -108464,7 +108464,7 @@
                     "pe": {
                         "mean": 36.13,
                         "up1": 43.69,
-                        "up2": 51.26,
+                        "up2": 51.25,
                         "down1": 28.57,
                         "down2": 21.01
                     },
@@ -110128,7 +110128,7 @@
                 },
                 "3Y": {
                     "pe": {
-                        "mean": 36.66,
+                        "mean": 36.65,
                         "up1": 44.31,
                         "up2": 51.96,
                         "down1": 29.0,
@@ -111025,7 +111025,7 @@
                     },
                     "ps": {
                         "mean": 37.69,
-                        "up1": 43.45,
+                        "up1": 43.44,
                         "up2": 49.2,
                         "down1": 31.94,
                         "down2": 26.19
@@ -142421,11 +142421,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-15T23:58:04Z",
+        "fetchedAt": "2026-10-17T00:01:02Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-31",
         "freshness": {
-            "fetchedAt": "2026-10-15T23:58:04Z",
+            "fetchedAt": "2026-10-17T00:01:02Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-31",
             "status": "fresh"

@@ -1,6 +1,6 @@
 {
     "ticker": "T",
-    "last_updated": "2026-10-15 23:58:08",
+    "last_updated": "2026-10-17 00:01:08",
     "averages": {
         "pe": {
             "1Y": 7.76,
@@ -35176,7 +35176,7 @@
                         "up1": 16.9,
                         "up2": 18.26,
                         "down1": 14.16,
-                        "down2": 12.8
+                        "down2": 12.79
                     }
                 },
                 "5Y": {
@@ -142421,11 +142421,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-15T23:58:08Z",
+        "fetchedAt": "2026-10-17T00:01:08Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-22",
         "freshness": {
-            "fetchedAt": "2026-10-15T23:58:08Z",
+            "fetchedAt": "2026-10-17T00:01:08Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-22",
             "status": "fresh"

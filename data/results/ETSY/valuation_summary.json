@@ -1,6 +1,6 @@
 {
     "ticker": "ETSY",
-    "last_updated": "2026-10-15 23:58:45",
+    "last_updated": "2026-10-17 00:01:55",
     "averages": {
         "pe": {
             "1Y": 32.59,
@@ -142421,11 +142421,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-15T23:58:45Z",
+        "fetchedAt": "2026-10-17T00:01:54Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-05",
         "freshness": {
-            "fetchedAt": "2026-10-15T23:58:45Z",
+            "fetchedAt": "2026-10-17T00:01:54Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-05",
             "status": "fresh"
