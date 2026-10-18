@@ -1,6 +1,6 @@
 {
     "ticker": "INTC",
-    "last_updated": "2026-10-17 23:35:47",
+    "last_updated": "2026-10-18 23:46:34",
     "averages": {
         "pe": {
             "1Y": 57.19,
@@ -68027,7 +68027,7 @@
                     "ps": {
                         "mean": 41.92,
                         "up1": 50.59,
-                        "up2": 59.25,
+                        "up2": 59.26,
                         "down1": 33.25,
                         "down2": 24.58
                     }
@@ -71653,7 +71653,7 @@
                     "ps": {
                         "mean": 42.45,
                         "up1": 51.27,
-                        "up2": 60.09,
+                        "up2": 60.1,
                         "down1": 33.62,
                         "down2": 24.8
                     }
@@ -84686,7 +84686,7 @@
                     },
                     "ps": {
                         "mean": 43.08,
-                        "up1": 52.33,
+                        "up1": 52.34,
                         "up2": 61.59,
                         "down1": 33.83,
                         "down2": 24.58
@@ -90718,7 +90718,7 @@
                         "mean": 32.86,
                         "up1": 39.63,
                         "up2": 46.41,
-                        "down1": 26.08,
+                        "down1": 26.09,
                         "down2": 19.31
                     }
                 },
@@ -140352,7 +140352,7 @@
                         "mean": 34.47,
                         "up1": 47.57,
                         "up2": 60.67,
-                        "down1": 21.36,
+                        "down1": 21.37,
                         "down2": 8.26
                     }
                 }
@@ -142519,11 +142519,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-17T23:35:46Z",
+        "fetchedAt": "2026-10-18T23:46:32Z",
         "dataAsOf": "2026-06-27",
         "filingDate": "2026-07-24",
         "freshness": {
-            "fetchedAt": "2026-10-17T23:35:46Z",
+            "fetchedAt": "2026-10-18T23:46:32Z",
             "dataAsOf": "2026-06-27",
             "filingDate": "2026-07-24",
             "status": "fresh"

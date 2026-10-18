@@ -1,6 +1,6 @@
 {
     "ticker": "F",
-    "last_updated": "2026-10-17 23:36:57",
+    "last_updated": "2026-10-18 23:47:38",
     "averages": {
         "pe": {
             "1Y": 13.34,
@@ -78572,7 +78572,7 @@
                 },
                 "3Y": {
                     "pe": {
-                        "mean": 14.35,
+                        "mean": 14.34,
                         "up1": 18.08,
                         "up2": 21.82,
                         "down1": 10.61,
@@ -115060,7 +115060,7 @@
                     "fcf": {
                         "mean": 29.94,
                         "up1": 41.43,
-                        "up2": 52.92,
+                        "up2": 52.91,
                         "down1": 18.46,
                         "down2": 6.97
                     },
@@ -142519,11 +142519,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-17T23:36:55Z",
+        "fetchedAt": "2026-10-18T23:47:36Z",
         "dataAsOf": "2026-03-31",
         "filingDate": "2026-04-30",
         "freshness": {
-            "fetchedAt": "2026-10-17T23:36:55Z",
+            "fetchedAt": "2026-10-18T23:47:36Z",
             "dataAsOf": "2026-03-31",
             "filingDate": "2026-04-30",
             "status": "fresh"

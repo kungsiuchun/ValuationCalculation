@@ -1,6 +1,6 @@
 {
     "ticker": "XOM",
-    "last_updated": "2026-10-17 23:36:00",
+    "last_updated": "2026-10-18 23:46:46",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -142519,11 +142519,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-17T23:35:58Z",
+        "fetchedAt": "2026-10-18T23:46:44Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-03",
         "freshness": {
-            "fetchedAt": "2026-10-17T23:35:58Z",
+            "fetchedAt": "2026-10-18T23:46:44Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-03",
             "status": "fresh"
