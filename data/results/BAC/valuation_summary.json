@@ -1,6 +1,6 @@
 {
     "ticker": "BAC",
-    "last_updated": "2026-10-25 09:56:21",
+    "last_updated": "2026-10-25 23:40:04",
     "averages": {
         "pe": {
             "1Y": 12.71,
@@ -70094,7 +70094,7 @@
         },
         {
             "date": "2023-11-06",
-            "price": 26.37,
+            "price": 26.36,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -71299,7 +71299,7 @@
                     "pe": {
                         "mean": 29.83,
                         "up1": 34.71,
-                        "up2": 39.6,
+                        "up2": 39.59,
                         "down1": 24.95,
                         "down2": 20.07
                     },
@@ -74157,7 +74157,7 @@
                         "up1": 34.98,
                         "up2": 39.47,
                         "down1": 26.0,
-                        "down2": 21.51
+                        "down2": 21.5
                     }
                 },
                 "3Y": {
@@ -79804,7 +79804,7 @@
                         "up1": 29.62,
                         "up2": 33.72,
                         "down1": 21.4,
-                        "down2": 17.3
+                        "down2": 17.29
                     },
                     "fcf": {
                         "mean": null,
@@ -86121,7 +86121,7 @@
                         "mean": 28.57,
                         "up1": 33.46,
                         "up2": 38.35,
-                        "down1": 23.69,
+                        "down1": 23.68,
                         "down2": 18.8
                     },
                     "fcf": {
@@ -113437,7 +113437,7 @@
                 },
                 "2Y": {
                     "pe": {
-                        "mean": 42.24,
+                        "mean": 42.25,
                         "up1": 49.54,
                         "up2": 56.84,
                         "down1": 34.95,
@@ -123494,7 +123494,7 @@
                     },
                     "ps": {
                         "mean": 44.44,
-                        "up1": 51.13,
+                        "up1": 51.12,
                         "up2": 57.81,
                         "down1": 37.75,
                         "down2": 31.06
@@ -143009,11 +143009,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000070858.json",
-        "fetchedAt": "2026-10-25T09:56:20Z",
+        "fetchedAt": "2026-10-25T23:40:03Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-31",
         "freshness": {
-            "fetchedAt": "2026-10-25T09:56:20Z",
+            "fetchedAt": "2026-10-25T23:40:03Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-31",
             "status": "fresh"

@@ -1,6 +1,6 @@
 {
     "ticker": "PLTR",
-    "last_updated": "2026-10-25 09:56:54",
+    "last_updated": "2026-10-25 23:40:32",
     "averages": {
         "pe": {
             "1Y": 163.19,
@@ -143009,11 +143009,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001321655.json",
-        "fetchedAt": "2026-10-25T09:56:53Z",
+        "fetchedAt": "2026-10-25T23:40:31Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-04",
         "freshness": {
-            "fetchedAt": "2026-10-25T09:56:53Z",
+            "fetchedAt": "2026-10-25T23:40:31Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-04",
             "status": "fresh"
