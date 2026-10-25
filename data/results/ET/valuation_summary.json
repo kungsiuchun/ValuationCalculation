@@ -1,6 +1,6 @@
 {
     "ticker": "ET",
-    "last_updated": "2026-10-24 23:52:52",
+    "last_updated": "2026-10-25 03:29:06",
     "averages": {
         "pe": {
             "1Y": 10.13,
@@ -73146,7 +73146,7 @@
                         "mean": 10.29,
                         "up1": 11.02,
                         "up2": 11.75,
-                        "down1": 9.56,
+                        "down1": 9.55,
                         "down2": 8.82
                     },
                     "ps": {
@@ -103354,7 +103354,7 @@
                         "up1": 14.04,
                         "up2": 15.99,
                         "down1": 10.14,
-                        "down2": 8.19
+                        "down2": 8.2
                     },
                     "ps": {
                         "mean": 12.84,
@@ -143009,11 +143009,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-24T23:52:51Z",
+        "fetchedAt": "2026-10-25T03:29:06Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-06",
         "freshness": {
-            "fetchedAt": "2026-10-24T23:52:51Z",
+            "fetchedAt": "2026-10-25T03:29:06Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-06",
             "status": "fresh"
