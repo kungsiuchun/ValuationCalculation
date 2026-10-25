@@ -6,6 +6,10 @@
 
 ## 🚀 腳本核心流程 (Pipeline Decomposition)
 
+Watcher 發布流程只用公共來源，不注入 FMP credential。SEC EPS 與加權平均股數
+只採用直接季度觀測；不以年度或累計比率相減推算季度值。缺少直接季度 EPS
+時輸出 `null`，不補零或用常數代替；營收、盈利及現金流仍可由累計金額推算。
+
 本腳本遵循數據工程中的 **ETL (Extract, Transform, Load)** 架構：
 
 ### 1. 數據抽取層 (Extract)

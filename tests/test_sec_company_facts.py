@@ -56,6 +56,35 @@ class SECCompanyFactsNormalizationTests(unittest.TestCase):
         self.assertEqual(q2["capexSigned"], -2)
         self.assertEqual(q2["freeCashFlow"], -4)
 
+    def test_eps_is_never_derived_by_subtracting_annual_or_ytd_ratios(self):
+        payload = copy.deepcopy(self.payload)
+        units = payload["facts"]["us-gaap"]["EarningsPerShareDiluted"]["units"]["USD/shares"]
+        # A pre-split quarter (6.04) and post-split annual EPS (2.94) do
+        # not share a denominator. Even without a split, EPS is a ratio.
+        template = units[0]
+        payload["facts"]["us-gaap"]["EarningsPerShareDiluted"]["units"]["USD/shares"] = [
+            {**template, "start": "2024-01-01", "end": "2024-03-31", "val": 6.04, "fp": "Q1", "frame": "CY2024Q1"},
+            {**template, "start": "2024-04-01", "end": "2024-06-30", "val": 0.61, "fp": "Q2", "frame": "CY2024Q2"},
+            {**template, "start": "2024-07-01", "end": "2024-09-30", "val": 0.78, "fp": "Q3", "frame": "CY2024Q3"},
+            {**template, "start": "2024-01-01", "end": "2024-12-31", "val": 2.94, "fp": "FY", "frame": "CY2024", "form": "10-K"},
+        ]
+        rows = normalize_company_facts(payload, "NVDA", "0001045810", max_quarters=12)
+        self.assertIsNone(rows[0]["eps"])
+        self.assertEqual(rows[0]["revenue"], 170)
+        self.assertEqual(rows[1]["eps"], 0.78)
+        # Missing direct Q2 must not be manufactured from a YTD ratio.
+        units = payload["facts"]["us-gaap"]["EarningsPerShareDiluted"]["units"]["USD/shares"]
+        units[1] = {**units[1], "start": "2024-01-01", "val": 1.28, "frame": None}
+        rows = normalize_company_facts(payload, "NVDA", "0001045810", max_quarters=12)
+        self.assertIsNone(next(row for row in rows if row["period"] == "Q2")["eps"])
+
+    def test_direct_quarter_eps_is_preserved_without_annual_arithmetic(self):
+        payload = copy.deepcopy(self.payload)
+        units = payload["facts"]["us-gaap"]["EarningsPerShareDiluted"]["units"]["USD/shares"]
+        units.append({**units[0], "start": "2024-10-01", "end": "2024-12-31", "val": 0.89, "fp": "FY", "form": "10-K", "filed": "2025-02-01", "frame": "CY2024Q4"})
+        rows = normalize_company_facts(payload, "NVDA", "0001045810", max_quarters=12)
+        self.assertEqual(rows[0]["eps"], 0.89)
+
     def test_reported_date_ignores_later_comparatives_and_proxy_facts(self):
         payload = copy.deepcopy(self.payload)
         net_income = payload["facts"]["us-gaap"]["NetIncomeLoss"]["units"]["USD"]

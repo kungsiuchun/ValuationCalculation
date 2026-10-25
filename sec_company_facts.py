@@ -358,10 +358,10 @@ def _normalise_duration_fact(
             values[period] = _QuarterValue(row.value, row, period)
 
         if not derive_annual:
-            # Weighted-average share facts are not additive.  Never subtract
-            # Q1-Q3 from an annual average (that produces impossible negative
-            # share counts); direct quarter observations are the only safe
-            # duration values.  Instant DEI shares are merged separately.
+            # EPS ratios and weighted-average shares are not additive. Their
+            # denominators can change, including across stock splits. Only
+            # direct quarter observations are safe; never manufacture a
+            # quarter by subtracting annual/YTD ratios or averages.
             for quarter_value in values.values():
                 output[quarter_value.observation.end] = quarter_value
             continue
@@ -463,7 +463,7 @@ def normalize_company_facts(
         if tag:
             selected_tags[field] = tag
         if observations:
-            duration_map, instant = _normalise_fact(observations, derive_annual=field != "shares")
+            duration_map, instant = _normalise_fact(observations, derive_annual=field not in ("shares", "eps"))
             field_maps[field] = duration_map
             instant_maps[field] = instant
         if entity_share_observations and field == "shares":
