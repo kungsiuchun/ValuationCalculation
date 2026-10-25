@@ -1,6 +1,6 @@
 {
     "ticker": "RIOT",
-    "last_updated": "2026-10-25 03:29:10",
+    "last_updated": "2026-10-25 09:57:35",
     "averages": {
         "pe": {
             "1Y": 72.57,
@@ -143008,12 +143008,12 @@
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
-        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-25T03:29:10Z",
+        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001167419.json",
+        "fetchedAt": "2026-10-25T09:57:34Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-10",
         "freshness": {
-            "fetchedAt": "2026-10-25T03:29:10Z",
+            "fetchedAt": "2026-10-25T09:57:34Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-10",
             "status": "fresh"

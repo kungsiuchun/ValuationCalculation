@@ -1,6 +1,6 @@
 {
     "ticker": "ZM",
-    "last_updated": "2026-10-25 03:29:14",
+    "last_updated": "2026-10-25 09:57:40",
     "averages": {
         "pe": {
             "1Y": 12.93,
@@ -143008,12 +143008,12 @@
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
-        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-25T03:29:13Z",
+        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001585521.json",
+        "fetchedAt": "2026-10-25T09:57:39Z",
         "dataAsOf": "2026-07-31",
         "filingDate": "2026-08-26",
         "freshness": {
-            "fetchedAt": "2026-10-25T03:29:13Z",
+            "fetchedAt": "2026-10-25T09:57:39Z",
             "dataAsOf": "2026-07-31",
             "filingDate": "2026-08-26",
             "status": "fresh"

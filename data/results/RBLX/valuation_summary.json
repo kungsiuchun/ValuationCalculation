@@ -1,6 +1,6 @@
 {
     "ticker": "RBLX",
-    "last_updated": "2026-10-25 03:28:44",
+    "last_updated": "2026-10-25 09:57:02",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -138598,12 +138598,12 @@
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
-        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-25T03:28:44Z",
+        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001315098.json",
+        "fetchedAt": "2026-10-25T09:57:01Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-30",
         "freshness": {
-            "fetchedAt": "2026-10-25T03:28:44Z",
+            "fetchedAt": "2026-10-25T09:57:01Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-30",
             "status": "fresh"

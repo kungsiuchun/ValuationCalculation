@@ -1,6 +1,6 @@
 {
     "ticker": "FUBO",
-    "last_updated": "2026-10-25 03:29:33",
+    "last_updated": "2026-10-25 09:58:02",
     "averages": {
         "pe": {
             "1Y": 98.58,
@@ -143008,12 +143008,12 @@
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
-        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-25T03:29:32Z",
+        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001484769.json",
+        "fetchedAt": "2026-10-25T09:58:01Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-05",
         "freshness": {
-            "fetchedAt": "2026-10-25T03:29:32Z",
+            "fetchedAt": "2026-10-25T09:58:01Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-05",
             "status": "fresh"

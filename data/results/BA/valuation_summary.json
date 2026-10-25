@@ -1,6 +1,6 @@
 {
     "ticker": "BA",
-    "last_updated": "2026-10-25 03:28:25",
+    "last_updated": "2026-10-25 09:56:39",
     "averages": {
         "pe": {
             "1Y": 70.94,
@@ -2557,7 +2557,7 @@
                         "mean": 283.9,
                         "up1": 369.14,
                         "up2": 454.38,
-                        "down1": 198.66,
+                        "down1": 198.65,
                         "down2": 113.41
                     },
                     "ps": {
@@ -3293,7 +3293,7 @@
                     },
                     "fcf": {
                         "mean": 309.34,
-                        "up1": 400.33,
+                        "up1": 400.32,
                         "up2": 491.31,
                         "down1": 218.36,
                         "down2": 127.38
@@ -3891,7 +3891,7 @@
                         "up1": 349.68,
                         "up2": 436.19,
                         "down1": 176.68,
-                        "down2": 90.17
+                        "down2": 90.18
                     }
                 },
                 "3Y": {
@@ -12928,7 +12928,7 @@
                     "ps": {
                         "mean": 276.96,
                         "up1": 355.6,
-                        "up2": 434.24,
+                        "up2": 434.23,
                         "down1": 198.33,
                         "down2": 119.69
                     }
@@ -143008,12 +143008,12 @@
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
-        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts",
-        "fetchedAt": "2026-10-25T03:28:25Z",
+        "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000012927.json",
+        "fetchedAt": "2026-10-25T09:56:38Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-07-28",
         "freshness": {
-            "fetchedAt": "2026-10-25T03:28:25Z",
+            "fetchedAt": "2026-10-25T09:56:38Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-07-28",
             "status": "fresh"
