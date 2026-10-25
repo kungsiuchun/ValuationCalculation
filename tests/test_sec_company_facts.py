@@ -44,6 +44,11 @@ class SECCompanyFactsNormalizationTests(unittest.TestCase):
         self.assertEqual(rows[0]["filingDate"], "2025-02-01")
         self.assertEqual(rows[0]["source"], "SEC Company Facts")
         self.assertEqual(rows[0]["cik"], "0000320193")
+        self.assertEqual(rows[0]["sourceUrl"], "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json")
+
+    def test_missing_cik_does_not_invent_a_dataset_url(self):
+        rows = normalize_company_facts(self.payload, "AAPL", max_quarters=1)
+        self.assertIsNone(rows[0]["sourceUrl"])
 
     def test_negative_values_are_preserved_and_capex_sign_is_explicit(self):
         rows = normalize_company_facts(self.payload, "AAPL", "0000320193", max_quarters=None)

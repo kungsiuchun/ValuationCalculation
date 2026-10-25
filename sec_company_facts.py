@@ -484,7 +484,7 @@ def normalize_company_facts(
 
     symbol = str(symbol or "").strip().upper() or str(payload.get("entityName") or "SEC")
     normalized: List[Dict[str, Any]] = []
-    endpoint = source_url or "https://data.sec.gov/api/xbrl/companyfacts"
+    endpoint = source_url or (SEC_FACTS_URL.format(cik=_normalise_cik(cik)) if cik is not None else None)
     for period_end in sorted(all_dates, reverse=True):
         row_values: Dict[str, Any] = {}
         period: Optional[str] = None
