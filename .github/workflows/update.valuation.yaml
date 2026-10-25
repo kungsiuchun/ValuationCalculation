@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'sec_company_facts.py'
+      - 'financial_source_router.py'
       - 'tests/**'
       - '.github/workflows/update.valuation.yaml'
   schedule:

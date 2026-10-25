@@ -476,6 +476,24 @@ class FinancialSourceRouter:
             raise FinancialSourceInvalid(str(error)) from error
         if not rows:
             raise FinancialSourceInvalid(source + " returned no financial rows")
+        if source_type == SEC_SOURCE_TYPE:
+            source_urls = set()
+            for row in rows:
+                row_url = row.get("sourceUrl")
+                if row_url is None:
+                    continue
+                match = re.fullmatch(
+                    r"https://data\.sec\.gov/api/xbrl/companyfacts/CIK([0-9]{10})\.json",
+                    row_url,
+                ) if isinstance(row_url, str) else None
+                if not match or (
+                    row.get("cik") is not None and str(row["cik"]).zfill(10) != match.group(1)
+                ):
+                    raise FinancialSourceInvalid("SEC dataset URL does not identify the row's issuer")
+                source_urls.add(row_url)
+            if len(source_urls) > 1:
+                raise FinancialSourceInvalid("SEC rows identify conflicting issuer datasets")
+            source_url = next(iter(source_urls), None)
         dated: List[Tuple[date, Dict[str, Any]]] = []
         for row in rows:
             row_freshness = row.get("sourceFreshness")
@@ -597,7 +615,7 @@ class FinancialSourceRouter:
                 payload,
                 source=SEC_SOURCE,
                 source_type=SEC_SOURCE_TYPE,
-                source_url="https://data.sec.gov/api/xbrl/companyfacts",
+                source_url=None,
             )
         except FinancialSourceError:
             # A successful SEC call with malformed/empty rows is not an

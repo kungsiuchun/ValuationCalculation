@@ -47,6 +47,57 @@ class FinancialSourceRouterTests(unittest.TestCase):
         self.assertEqual(result.rows[0]["sourceType"], "SEC_COMPANY_FACTS")
         self.assertEqual(result.rows[0]["sourceDataAsOf"], "2026-06-30")
         self.assertEqual(result.metadata["freshness"]["status"], "fresh")
+        self.assertIsNone(result.source_url)
+        fmp.assert_not_called()
+
+    def test_sec_issuer_dataset_url_survives_routing(self):
+        source_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json"
+        payload = rows("2026-06-30", "2026-03-31")
+        for row in payload:
+            row.update(sourceUrl=source_url, cik="0001045810")
+        router = FinancialSourceRouter(
+            sec_fetcher=lambda symbol: payload,
+            fmp_fetcher=Mock(),
+            clock=lambda: 1_785_800_000,
+        )
+
+        result = router.route("NVDA")
+
+        self.assertEqual(result.source_url, source_url)
+        self.assertEqual(result.metadata["sourceUrl"], source_url)
+        self.assertTrue(all(row["sourceUrl"] == source_url for row in result.rows))
+
+    def test_sec_invalid_or_mismatched_issuer_url_fails_without_fallback(self):
+        for source_url in (
+            "https://data.sec.gov/api/xbrl/companyfacts",
+            "https://example.com/CIK0001045810.json",
+            "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json",
+        ):
+            with self.subTest(source_url=source_url):
+                payload = rows("2026-06-30")
+                payload[0].update(sourceUrl=source_url, cik="0001045810")
+                fmp = Mock()
+                router = FinancialSourceRouter(
+                    sec_fetcher=lambda symbol: payload,
+                    fmp_fetcher=fmp,
+                    clock=lambda: 1_785_800_000,
+                )
+                with self.assertRaises(FinancialSourceInvalid):
+                    router.route("NVDA")
+                fmp.assert_not_called()
+
+    def test_sec_conflicting_issuer_urls_fail_without_fallback(self):
+        payload = rows("2026-06-30", "2026-03-31")
+        payload[0]["sourceUrl"] = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json"
+        payload[1]["sourceUrl"] = "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json"
+        fmp = Mock()
+        router = FinancialSourceRouter(
+            sec_fetcher=lambda symbol: payload,
+            fmp_fetcher=fmp,
+            clock=lambda: 1_785_800_000,
+        )
+        with self.assertRaises(FinancialSourceInvalid):
+            router.route("NVDA")
         fmp.assert_not_called()
 
     def test_only_explicit_sec_unsupported_enters_fmp_fallback(self):
