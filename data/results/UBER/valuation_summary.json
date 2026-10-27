@@ -1,6 +1,6 @@
 {
     "ticker": "UBER",
-    "last_updated": "2026-10-25 23:40:43",
+    "last_updated": "2026-10-27 00:59:11",
     "averages": {
         "pe": {
             "1Y": 16.35,
@@ -143009,11 +143009,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001543151.json",
-        "fetchedAt": "2026-10-25T23:40:43Z",
+        "fetchedAt": "2026-10-27T00:59:10Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-05",
         "freshness": {
-            "fetchedAt": "2026-10-25T23:40:43Z",
+            "fetchedAt": "2026-10-27T00:59:10Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-05",
             "status": "fresh"
