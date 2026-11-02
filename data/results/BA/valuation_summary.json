@@ -1,6 +1,6 @@
 {
     "ticker": "BA",
-    "last_updated": "2026-11-01 00:31:24",
+    "last_updated": "2026-11-02 01:06:14",
     "averages": {
         "pe": {
             "1Y": 69.04,
@@ -4788,7 +4788,7 @@
                         "mean": 328.1,
                         "up1": 409.49,
                         "up2": 490.87,
-                        "down1": 246.72,
+                        "down1": 246.71,
                         "down2": 165.33
                     },
                     "ps": {
@@ -5865,7 +5865,7 @@
                     "fcf": {
                         "mean": 328.1,
                         "up1": 409.55,
-                        "up2": 491.0,
+                        "up2": 490.99,
                         "down1": 246.65,
                         "down2": 165.21
                     },
@@ -17920,7 +17920,7 @@
                         "mean": 253.12,
                         "up1": 333.74,
                         "up2": 414.36,
-                        "down1": 172.5,
+                        "down1": 172.49,
                         "down2": 91.87
                     },
                     "ps": {
@@ -50320,7 +50320,7 @@
                         "up1": 192.52,
                         "up2": 216.66,
                         "down1": 144.23,
-                        "down2": 120.09
+                        "down2": 120.08
                     }
                 },
                 "2Y": {
@@ -143499,11 +143499,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000012927.json",
-        "fetchedAt": "2026-11-01T00:31:23Z",
+        "fetchedAt": "2026-11-02T01:06:13Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-10-27",
         "freshness": {
-            "fetchedAt": "2026-11-01T00:31:23Z",
+            "fetchedAt": "2026-11-02T01:06:13Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-10-27",
             "status": "fresh"

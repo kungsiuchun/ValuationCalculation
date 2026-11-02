@@ -1,6 +1,6 @@
 {
     "ticker": "SOFI",
-    "last_updated": "2026-11-01 00:31:37",
+    "last_updated": "2026-11-02 01:06:31",
     "averages": {
         "pe": {
             "1Y": 37.45,
@@ -143499,11 +143499,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001818874.json",
-        "fetchedAt": "2026-11-01T00:31:37Z",
+        "fetchedAt": "2026-11-02T01:06:30Z",
         "dataAsOf": "2026-06-30",
         "filingDate": "2026-08-06",
         "freshness": {
-            "fetchedAt": "2026-11-01T00:31:37Z",
+            "fetchedAt": "2026-11-02T01:06:30Z",
             "dataAsOf": "2026-06-30",
             "filingDate": "2026-08-06",
             "status": "fresh"
