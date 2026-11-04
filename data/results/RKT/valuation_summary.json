@@ -1,6 +1,6 @@
 {
     "ticker": "RKT",
-    "last_updated": "2026-11-03 03:09:31",
+    "last_updated": "2026-11-04 01:48:12",
     "averages": {
         "pe": {
             "1Y": 66.14,
@@ -143597,11 +143597,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001805284.json",
-        "fetchedAt": "2026-11-03T03:09:30Z",
+        "fetchedAt": "2026-11-04T01:48:11Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-10-30",
         "freshness": {
-            "fetchedAt": "2026-11-03T03:09:30Z",
+            "fetchedAt": "2026-11-04T01:48:11Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-10-30",
             "status": "fresh"

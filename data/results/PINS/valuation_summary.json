@@ -1,6 +1,6 @@
 {
     "ticker": "PINS",
-    "last_updated": "2026-11-03 03:09:14",
+    "last_updated": "2026-11-04 01:47:47",
     "averages": {
         "pe": {
             "1Y": 47.48,
@@ -143597,11 +143597,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001506293.json",
-        "fetchedAt": "2026-11-03T03:09:13Z",
+        "fetchedAt": "2026-11-04T01:47:46Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-10-29",
         "freshness": {
-            "fetchedAt": "2026-11-03T03:09:13Z",
+            "fetchedAt": "2026-11-04T01:47:46Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-10-29",
             "status": "fresh"
