@@ -1,6 +1,6 @@
 {
     "ticker": "SNAP",
-    "last_updated": "2026-11-08 00:58:21",
+    "last_updated": "2026-11-09 01:18:26",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -143989,11 +143989,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001564408.json",
-        "fetchedAt": "2026-11-08T00:58:20Z",
+        "fetchedAt": "2026-11-09T01:18:25Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-11-05",
         "freshness": {
-            "fetchedAt": "2026-11-08T00:58:20Z",
+            "fetchedAt": "2026-11-09T01:18:25Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-11-05",
             "status": "fresh"

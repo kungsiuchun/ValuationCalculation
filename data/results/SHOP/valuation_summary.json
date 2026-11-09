@@ -1,6 +1,6 @@
 {
     "ticker": "SHOP",
-    "last_updated": "2026-11-08 00:58:14",
+    "last_updated": "2026-11-09 01:18:16",
     "averages": {
         "pe": {
             "1Y": 111.91,
@@ -143989,11 +143989,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001594805.json",
-        "fetchedAt": "2026-11-08T00:58:14Z",
+        "fetchedAt": "2026-11-09T01:18:14Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-11-03",
         "freshness": {
-            "fetchedAt": "2026-11-08T00:58:14Z",
+            "fetchedAt": "2026-11-09T01:18:14Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-11-03",
             "status": "fresh"
