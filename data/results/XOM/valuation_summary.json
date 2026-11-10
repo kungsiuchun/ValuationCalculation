@@ -1,6 +1,6 @@
 {
     "ticker": "XOM",
-    "last_updated": "2026-11-09 01:17:58",
+    "last_updated": "2026-11-10 03:52:56",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -48926,7 +48926,7 @@
         },
         {
             "date": "2022-12-27",
-            "price": 97.44,
+            "price": 97.43,
             "valuation": {
                 "1Y": {
                     "pe": {
@@ -143983,17 +143983,115 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-11-09",
+            "price": 164.73,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0002115436.json",
-        "fetchedAt": "2026-11-09T01:17:57Z",
+        "fetchedAt": "2026-11-10T03:52:55Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-11-02",
         "freshness": {
-            "fetchedAt": "2026-11-09T01:17:57Z",
+            "fetchedAt": "2026-11-10T03:52:55Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-11-02",
             "status": "fresh"
