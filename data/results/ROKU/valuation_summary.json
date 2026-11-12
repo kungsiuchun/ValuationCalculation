@@ -1,6 +1,6 @@
 {
     "ticker": "ROKU",
-    "last_updated": "2026-11-10 03:53:28",
+    "last_updated": "2026-11-12 02:36:51",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -223,11 +223,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001428439.json",
-        "fetchedAt": "2026-11-10T03:53:28Z",
+        "fetchedAt": "2026-11-12T02:36:51Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-11-02",
         "freshness": {
-            "fetchedAt": "2026-11-10T03:53:28Z",
+            "fetchedAt": "2026-11-12T02:36:51Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-11-02",
             "status": "fresh"
