@@ -1,6 +1,6 @@
 {
     "ticker": "T",
-    "last_updated": "2026-11-12 02:35:19",
+    "last_updated": "2026-11-13 02:13:53",
     "averages": {
         "pe": {
             "1Y": 8.24,
@@ -96891,7 +96891,7 @@
                     "ps": {
                         "mean": 16.01,
                         "up1": 18.08,
-                        "up2": 20.14,
+                        "up2": 20.15,
                         "down1": 13.95,
                         "down2": 11.88
                     }
@@ -108615,7 +108615,7 @@
                         "mean": 25.62,
                         "up1": 28.98,
                         "up2": 32.34,
-                        "down1": 22.27,
+                        "down1": 22.26,
                         "down2": 18.91
                     },
                     "fcf": {
@@ -133161,7 +133161,7 @@
                         "mean": 31.07,
                         "up1": 40.15,
                         "up2": 49.23,
-                        "down1": 21.99,
+                        "down1": 21.98,
                         "down2": 12.9
                     },
                     "fcf": {
@@ -133184,7 +133184,7 @@
                         "mean": 31.07,
                         "up1": 40.15,
                         "up2": 49.23,
-                        "down1": 21.99,
+                        "down1": 21.98,
                         "down2": 12.9
                     },
                     "fcf": {
@@ -144283,11 +144283,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000732717.json",
-        "fetchedAt": "2026-11-12T02:35:18Z",
+        "fetchedAt": "2026-11-13T02:13:53Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-10-21",
         "freshness": {
-            "fetchedAt": "2026-11-12T02:35:18Z",
+            "fetchedAt": "2026-11-13T02:13:53Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-10-21",
             "status": "fresh"
