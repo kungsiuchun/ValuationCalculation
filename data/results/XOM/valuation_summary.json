@@ -1,6 +1,6 @@
 {
     "ticker": "XOM",
-    "last_updated": "2026-11-13 02:14:05",
+    "last_updated": "2026-11-14 01:54:23",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -144277,17 +144277,213 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-11-12",
+            "price": 169.78,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                }
+            }
+        },
+        {
+            "date": "2026-11-13",
+            "price": 170.59,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0002115436.json",
-        "fetchedAt": "2026-11-13T02:14:05Z",
+        "fetchedAt": "2026-11-14T01:54:21Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-11-02",
         "freshness": {
-            "fetchedAt": "2026-11-13T02:14:05Z",
+            "fetchedAt": "2026-11-14T01:54:21Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-11-02",
             "status": "fresh"
