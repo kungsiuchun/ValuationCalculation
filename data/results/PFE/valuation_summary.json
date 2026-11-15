@@ -1,6 +1,6 @@
 {
     "ticker": "PFE",
-    "last_updated": "2026-11-14 01:54:08",
+    "last_updated": "2026-11-15 01:25:22",
     "averages": {
         "pe": {
             "1Y": 28.17,
@@ -54081,7 +54081,7 @@
                     "fcf": {
                         "mean": 32.23,
                         "up1": 38.17,
-                        "up2": 44.12,
+                        "up2": 44.11,
                         "down1": 26.29,
                         "down2": 20.35
                     },
@@ -89389,7 +89389,7 @@
                         "down2": 17.4
                     },
                     "ps": {
-                        "mean": 30.69,
+                        "mean": 30.68,
                         "up1": 36.64,
                         "up2": 42.59,
                         "down1": 24.73,
@@ -111696,7 +111696,7 @@
                 },
                 "3Y": {
                     "pe": {
-                        "mean": 41.95,
+                        "mean": 41.96,
                         "up1": 56.62,
                         "up2": 71.29,
                         "down1": 27.29,
@@ -144479,11 +144479,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
-        "fetchedAt": "2026-11-14T01:54:07Z",
+        "fetchedAt": "2026-11-15T01:25:21Z",
         "dataAsOf": "2026-09-27",
         "filingDate": "2026-11-03",
         "freshness": {
-            "fetchedAt": "2026-11-14T01:54:07Z",
+            "fetchedAt": "2026-11-15T01:25:21Z",
             "dataAsOf": "2026-09-27",
             "filingDate": "2026-11-03",
             "status": "fresh"

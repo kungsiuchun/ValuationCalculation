@@ -1,6 +1,6 @@
 {
     "ticker": "NFLX",
-    "last_updated": "2026-11-14 01:53:54",
+    "last_updated": "2026-11-15 01:25:06",
     "averages": {
         "pe": {
             "1Y": 6.67,
@@ -144479,11 +144479,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001065280.json",
-        "fetchedAt": "2026-11-14T01:53:53Z",
+        "fetchedAt": "2026-11-15T01:25:05Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-10-21",
         "freshness": {
-            "fetchedAt": "2026-11-14T01:53:53Z",
+            "fetchedAt": "2026-11-15T01:25:05Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-10-21",
             "status": "fresh"
