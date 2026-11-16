@@ -1,6 +1,6 @@
 {
     "ticker": "RKT",
-    "last_updated": "2026-11-15 01:27:25",
+    "last_updated": "2026-11-16 01:29:29",
     "averages": {
         "pe": {
             "1Y": 64.15,
@@ -1318,7 +1318,7 @@
                     "ps": {
                         "mean": 17.73,
                         "up1": 18.74,
-                        "up2": 19.76,
+                        "up2": 19.75,
                         "down1": 16.71,
                         "down2": 15.7
                     }
@@ -1341,7 +1341,7 @@
                     "ps": {
                         "mean": 17.73,
                         "up1": 18.74,
-                        "up2": 19.76,
+                        "up2": 19.75,
                         "down1": 16.71,
                         "down2": 15.7
                     }
@@ -1364,7 +1364,7 @@
                     "ps": {
                         "mean": 17.73,
                         "up1": 18.74,
-                        "up2": 19.76,
+                        "up2": 19.75,
                         "down1": 16.71,
                         "down2": 15.7
                     }
@@ -1387,7 +1387,7 @@
                     "ps": {
                         "mean": 17.73,
                         "up1": 18.74,
-                        "up2": 19.76,
+                        "up2": 19.75,
                         "down1": 16.71,
                         "down2": 15.7
                     }
@@ -144479,11 +144479,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001805284.json",
-        "fetchedAt": "2026-11-15T01:27:23Z",
+        "fetchedAt": "2026-11-16T01:29:28Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-10-30",
         "freshness": {
-            "fetchedAt": "2026-11-15T01:27:23Z",
+            "fetchedAt": "2026-11-16T01:29:28Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-10-30",
             "status": "fresh"

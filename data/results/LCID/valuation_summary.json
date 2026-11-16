@@ -1,6 +1,6 @@
 {
     "ticker": "LCID",
-    "last_updated": "2026-11-15 01:26:30",
+    "last_updated": "2026-11-16 01:28:53",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -144479,11 +144479,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001811210.json",
-        "fetchedAt": "2026-11-15T01:26:29Z",
+        "fetchedAt": "2026-11-16T01:28:52Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-11-09",
         "freshness": {
-            "fetchedAt": "2026-11-15T01:26:29Z",
+            "fetchedAt": "2026-11-16T01:28:52Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-11-09",
             "status": "fresh"
