@@ -1,6 +1,6 @@
 {
     "ticker": "XOM",
-    "last_updated": "2026-11-17 04:14:36",
+    "last_updated": "2026-11-18 03:12:47",
     "averages": {
         "pe": {
             "1Y": 0.0,
@@ -144571,17 +144571,115 @@
                     }
                 }
             }
+        },
+        {
+            "date": "2026-11-17",
+            "price": 167.21,
+            "valuation": {
+                "1Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "2Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "3Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                },
+                "5Y": {
+                    "pe": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "fcf": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    },
+                    "ps": {
+                        "mean": null,
+                        "up1": null,
+                        "up2": null,
+                        "down1": null,
+                        "down2": null
+                    }
+                }
+            }
         }
     ],
     "financialSource": {
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0002115436.json",
-        "fetchedAt": "2026-11-17T04:14:35Z",
+        "fetchedAt": "2026-11-18T03:12:47Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-11-02",
         "freshness": {
-            "fetchedAt": "2026-11-17T04:14:35Z",
+            "fetchedAt": "2026-11-18T03:12:47Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-11-02",
             "status": "fresh"
