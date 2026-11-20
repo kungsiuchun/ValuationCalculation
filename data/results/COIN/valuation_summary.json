@@ -1,6 +1,6 @@
 {
     "ticker": "COIN",
-    "last_updated": "2026-11-19 02:53:58",
+    "last_updated": "2026-11-20 02:45:24",
     "averages": {
         "pe": {
             "1Y": 87.06,
@@ -138011,11 +138011,11 @@
         "source": "SEC Company Facts",
         "sourceType": "SEC_COMPANY_FACTS",
         "sourceUrl": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001679788.json",
-        "fetchedAt": "2026-11-19T02:53:58Z",
+        "fetchedAt": "2026-11-20T02:45:23Z",
         "dataAsOf": "2026-09-30",
         "filingDate": "2026-10-29",
         "freshness": {
-            "fetchedAt": "2026-11-19T02:53:58Z",
+            "fetchedAt": "2026-11-20T02:45:23Z",
             "dataAsOf": "2026-09-30",
             "filingDate": "2026-10-29",
             "status": "fresh"
